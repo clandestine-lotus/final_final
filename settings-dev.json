@@ -1,0 +1,22 @@
+
+/**
+ *   https://themeteorchef.com/snippets/making-use-of-settings-json/
+ * 
+ *   Usage: var cowboys = Meteor.settings.private.hackTheGibson;
+ *   load meteor with meteor --settings settings-dev.json
+
+
+
+     Keys in private are available on server only.
+     keys in public are avail on client too.
+ */
+
+{
+  "public": {
+    "imARidiculousHumanBeing": "butAtLeastImClean"
+  },
+  "private": {
+    "hackTheGibson": "keyboardCoWbOyS"
+  },
+  "imStillServerOnly": "soDontPanic"
+}
