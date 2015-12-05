@@ -5,6 +5,12 @@ var localIdentName = process.env.NODE_ENV === 'production' ? '[hash:base64:5]' :
 module.exports = {
   entry: './entry',
   module: {
+    preLoaders: [{
+      test: /\.jsx$|\.js$/,
+      loader: 'eslint-loader',
+      include: __dirname + '/assets',
+      exclude: /bundle\.js$/
+    }],
     loaders: [
       { test: /\.jsx?$/, loader: 'babel', query: { stage: 0 }, exclude: /node_modules/ },
       { test: /\.css$/, loader: 'css/locals?module&localIdentName=' + localIdentName },

@@ -1,5 +1,5 @@
 const ACCOUNT_USERNAME = 'test-user';
-const ACCOUNT_PASSWORD = 'test-password'
+const ACCOUNT_PASSWORD = 'test-password';
 
 export function loginToTestAccount(done) {
   if (Meteor.users.find({ username: ACCOUNT_USERNAME }).count() > 0) {

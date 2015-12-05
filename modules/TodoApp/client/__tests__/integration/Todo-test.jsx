@@ -39,7 +39,7 @@ describe('Todo', () => {
         expect(formEl[0].text.value).toEqual('');
         expect(taskEl2.first().find(`.${style.text}`).text()).toEqual('test-user - ' + testText2);
         done();
-      })
+      });
     });
   });
 

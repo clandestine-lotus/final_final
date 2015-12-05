@@ -5,11 +5,13 @@
   "main": "server/",
   "dependencies": {},
   "devDependencies": {
+    "babel-core": "^6.3.13",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^2.0.0",
     "eslint-loader": "^1.1.1",
     "eslint-plugin-meteor": "^1.7.0",
-    "eslint-plugin-react": "^3.11.2"
+    "eslint-plugin-react": "^3.11.2",
+    "pre-commit": "^1.1.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -28,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/clandestine-lotus/presentation/issues"
   },
-  "homepage": "https://github.com/clandestine-lotus/presentation#readme"
+  "homepage": "https://github.com/clandestine-lotus/presentation#readme",
+  "pre-commit": [
+    "lint"
+  ]
 }

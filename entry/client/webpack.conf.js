@@ -13,7 +13,8 @@ if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
         locals: ['module']
       }, {
         transform: 'react-transform-catch-errors',
-        imports: ['react', 'redbox-react']
+        // imports: ['react', 'redbox-react']
+        imports: ['react']
       }]
       // redbox-react is breaking the line numbers :-(
       // you might want to disable it
@@ -39,6 +40,12 @@ module.exports = {
   entry: './entry',
   plugins: plugins,
   module: {
+    preLoaders: [{
+      test: /\.jsx$|\.js$/,
+      loader: 'eslint-loader',
+      include: __dirname + '/assets',
+      exclude: /bundle\.js$/
+    }],
     loaders: [
       { test: /\.jsx?$/, loader: 'babel', query: babelSettings, exclude: /node_modules/ },
       { test: /\.css$/, loader: cssLoader },

@@ -25,5 +25,14 @@ module.exports = {
   resolve: {
     root: path.join(__dirname, '..', 'modules'),
     extensions: ['', '.js', '.jsx', '.json', '.css', '.scss']
+  },
+  module: {
+    preLoaders: [{
+      test: /\.jsx$|\.js$/,
+      loader: 'eslint-loader',
+      include: __dirname + '/assets',
+      exclude: /bundle\.js$/
+    }]
   }
+
 };
