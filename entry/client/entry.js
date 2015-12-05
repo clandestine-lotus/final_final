@@ -1,5 +1,8 @@
 // Methods for optimistic updates
-import 'TodoApp/todo-methods';
+// import 'TodoApp/todo-methods';
+
+import ReactDOM from 'react-dom';
+import React from 'react';
 
 import './routes';
 

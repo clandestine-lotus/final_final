@@ -23,6 +23,7 @@ module.exports = {
     reload: true
   },
   resolve: {
+    // set root dur to ../modules, so you can access a module directly
     root: path.join(__dirname, '..', 'modules'),
     extensions: ['', '.js', '.jsx', '.json', '.css', '.scss']
   }
