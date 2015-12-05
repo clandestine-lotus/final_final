@@ -26,8 +26,6 @@ reactrouter:react-router-ssr
 thereactivestack:blazetoreact
 
 # Testing stuff
-sanjo:jasmine
-velocity:console-reporter
 
 #accounts stuff
 accounts-ui
@@ -38,3 +36,4 @@ accounts-password
 
 
 #others
+sanjo:jasmine
