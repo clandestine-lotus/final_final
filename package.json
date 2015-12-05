@@ -1,11 +1,12 @@
 {
   "name": "final_final",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Presentation tools for the modern age",
   "main": "server/",
   "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.3.13",
+    "babel-eslint": "^4.1.6",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^2.0.0",
     "eslint-loader": "^1.1.1",
@@ -14,8 +15,8 @@
     "pre-commit": "^1.1.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --ignore-pattern **/bundle-*.js --ext .js,.jsx entry/** modules/**"
+    "test": "echo \"No tests specified\" && exit 0",
+    "lint": "eslint --ignore-pattern **/bundle-*.js --ext .js,.jsx --max-warnings 100 entry/** modules/**"
   },
   "repository": {
     "type": "git",
@@ -31,7 +32,5 @@
     "url": "https://github.com/clandestine-lotus/presentation/issues"
   },
   "homepage": "https://github.com/clandestine-lotus/presentation#readme",
-  "pre-commit": [
-    "lint"
-  ]
+  "pre-commit": "lint, test"
 }
