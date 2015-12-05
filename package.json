@@ -5,18 +5,12 @@
   "main": "server/",
   "dependencies": {},
   "devDependencies": {
-    "babel-core": "^6.3.13",
-    "babel-eslint": "^4.1.6",
-    "eslint": "^1.10.3",
-    "eslint-config-airbnb": "^2.0.0",
-    "eslint-loader": "^1.1.1",
-    "eslint-plugin-meteor": "^1.7.0",
-    "eslint-plugin-react": "^3.11.2",
-    "pre-commit": "^1.1.2"
+
   },
   "scripts": {
     "test": "echo \"No tests specified\" && exit 0",
-    "lint": "eslint --ignore-pattern **/bundle-*.js --ext .js,.jsx --max-warnings 100 entry/** modules/**"
+    "lint": "eslint --ignore-pattern **/bundle-*.js --ext .js,.jsx --max-warnings 100 entry/** modules/**",
+    "preinstall": "npm i -g phantomjs eslint eslint-config-airbnb eslint-loader eslint-plugin-meteor eslint-plugin-react pre-commit babel-core"
   },
   "repository": {
     "type": "git",
