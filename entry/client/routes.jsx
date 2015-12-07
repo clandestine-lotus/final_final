@@ -28,5 +28,5 @@ const rootRoute = {
 
 ReactDOM.render(
   <Router history={createBrowserHistory()} routes={rootRoute} />,
-  document.body
+  document.getElementById('main')
 )
