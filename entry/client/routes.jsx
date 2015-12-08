@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute } from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
+import { syncReduxAndRouter, routeReducer } from 'redux-simple-router';
 
 import Home from 'Home/routes';
 import Settings from 'Settings/routes';
