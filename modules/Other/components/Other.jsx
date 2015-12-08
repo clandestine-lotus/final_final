@@ -27,8 +27,8 @@ function select(state) {
 
 // console.log(Meteor);
 Meteor.call('doSomething', {}, function (e, data) {
-    console.log(e);
-    console.log(data);
+  console.log(e);
+  console.log(data);
 });
 
 export default connect(select)(Other)

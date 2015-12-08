@@ -19,14 +19,6 @@ if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
   finalCreateStore = createStore
 }
 
-// function configureStore(initialState) 
-  // const store = finalCreateStore();
-
-// const store = configureStore()
-
-
-// const store = createStore(reducer)
-
 const store = finalCreateStore(reducers)
 
 export default store
