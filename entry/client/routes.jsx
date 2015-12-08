@@ -4,10 +4,10 @@ import { Router, Route, Link, IndexRoute } from 'react-router'
 // import createBrowserHistory from 'history/lib/createBrowserHistory'
 import { createHistory } from 'history'
 import { syncReduxAndRouter, routeReducer } from 'redux-simple-router'
-import Redux from 'redux'
+import { compose, createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 // devtools import
-import { devtools, persistState } from 'redux-devtools'
+import { devTools, persistState } from 'redux-devtools'
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react'
 // import LogMonitor from 'redux-devtools-log-monitor'
 
@@ -16,28 +16,27 @@ import Home from 'Home/routes'
 import Settings from 'Settings/routes'
 import Other from 'Other/routes'
 
-console.log(Redux);
 let finalCreateStore;
 // devtools implementation
 if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
-  finalCreateStore = Redux.compose(
+  finalCreateStore = compose(
     // middleware
-    // Redux.applyMiddleware(),
+    // applyMiddleware(),
     // devtools
     devTools(),
     // Lets you write ?debug_session=<name> in address bar to persist debug sessions
     persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
-)(Redux.createStore);
+)(createStore);
 } else {
-  finalCreateStore = Redux.createStore
+  finalCreateStore = createStore
 }
 
-const reducer = Redux.combineReducers(Object.assign(
+const reducer = combineReducers(Object.assign(
   {},
   {routing: routeReducer}
   ))
 
-// const store = Redux.createStore(reducer)
+// const store = createStore(reducer)
 const store = finalCreateStore(reducer)
 const history = createHistory()
 syncReduxAndRouter(history, store)
@@ -69,7 +68,7 @@ ReactDOM.render(
       <Router history={history} routes={rootRoute} />
     </Provider>
     <DebugPanel top right bottom>
-      <devTools store={store} monitor={LogMonitor} />
+      <DevTools store={store} monitor={LogMonitor} />
     </DebugPanel>  
   </div>
   , document.getElementById('main')
