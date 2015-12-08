@@ -70,8 +70,8 @@ ReactDOM.render(
     </Provider>
     <DebugPanel top right bottom>
       <devTools store={store} monitor={LogMonitor} />
-    </DebugPanel>    
-</div>
+    </DebugPanel>  
+  </div>
   , document.getElementById('main')
 )
 
