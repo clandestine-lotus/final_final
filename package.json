@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"No tests specified\" && exit 0",
-    "lint": "eslint --ignore-pattern **/bundle-*.js --ext .js,.jsx --max-warnings 100 entry/** modules/**",
+    "lint": "eslint --ignore-pattern **/bundle-*.js --ext .js,.jsx --max-warnings 900 entry/** modules/**",
     "preinstall": "npm i -g phantomjs pre-commit babel-core"
   },
   "repository": {
