@@ -16,20 +16,29 @@ import Home from 'Home/routes'
 import Settings from 'Settings/routes'
 import Other from 'Other/routes'
 
+console.log(Redux);
+let finalCreateStore;
 // devtools implementation
-console.log(process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR);
 if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
-
-
-}else{
-
+  finalCreateStore = Redux.compose(
+    // middleware
+    // Redux.applyMiddleware(),
+    // devtools
+    devTools(),
+    // Lets you write ?debug_session=<name> in address bar to persist debug sessions
+    persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
+)(Redux.createStore);
+} else {
+  finalCreateStore = Redux.createStore
 }
+
 const reducer = Redux.combineReducers(Object.assign(
   {},
   {routing: routeReducer}
   ))
 
-const store = Redux.createStore(reducer)
+// const store = Redux.createStore(reducer)
+const store = finalCreateStore(reducer)
 const history = createHistory()
 syncReduxAndRouter(history, store)
 
@@ -55,10 +64,14 @@ const rootRoute = {
 console.log(store);
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history} routes={rootRoute} />
-  </Provider>
-
+  <div>
+    <Provider store={store}>
+      <Router history={history} routes={rootRoute} />
+    </Provider>
+    <DebugPanel top right bottom>
+      <devTools store={store} monitor={LogMonitor} />
+    </DebugPanel>    
+</div>
   , document.getElementById('main')
 )
 

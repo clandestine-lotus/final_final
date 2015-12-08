@@ -2,9 +2,9 @@
 // Do server-rendering only in proudction mode
 if (process.env.NODE_ENV === 'production') {
   // Load Webpack infos for SSR
-  ReactRouterSSR.LoadWebpackStats(WebpackStats);
+  // ReactRouterSSR.LoadWebpackStats(WebpackStats);
 
-  require('../client/routes');
+  // require('../client/routes');
 } else {
   // Add fixtures required for integration tests
   const context = require.context('../../modules', true, /\/server\/(.*)\/integration\/(.*)\-fixtures\.jsx?$/);
