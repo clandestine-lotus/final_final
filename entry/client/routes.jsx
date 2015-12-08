@@ -8,8 +8,8 @@ import { compose, createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 // devtools import
 import { devTools, persistState } from 'redux-devtools'
-import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react'
-// import LogMonitor from 'redux-devtools-log-monitor'
+// import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react'
+import LogMonitor from 'redux-devtools-log-monitor'
 
 // import reducers from './reducers.jsx'
 import Home from 'Home/routes'
@@ -67,10 +67,11 @@ ReactDOM.render(
     <Provider store={store}>
       <Router history={history} routes={rootRoute} />
     </Provider>
-    <DebugPanel top right bottom>
-      <DevTools store={store} monitor={LogMonitor} />
-    </DebugPanel>  
+    <LogMonitor store={store.devToolsStore} />
   </div>
   , document.getElementById('main')
 )
 
+// <DebugPanel top right bottom>
+//       <DevTools store={store} monitor={LogMonitor} />
+//     </DebugPanel>

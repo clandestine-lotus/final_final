@@ -30,5 +30,7 @@
   "react-redux": "^4.0.0",
   "redux-simple-router": "^0.0.10",
 
-  "redux-devtools": "^2.1.5"
+  "redux-devtools": "git://github.com/gaearon/redux-devtools.git#next",
+  "redux-devtools-log-monitor": "git://github.com/gaearon/redux-devtools-log-monitor.git"
+
 }
