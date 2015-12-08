@@ -1,3 +1,6 @@
+// import server files here
+import 'Other/test'
+
 
 // Do server-rendering only in proudction mode
 if (process.env.NODE_ENV === 'production') {

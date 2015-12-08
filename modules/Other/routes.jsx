@@ -6,3 +6,7 @@ module.exports = {
     })
   }
 }
+
+if (Meteor.isServer){
+  console.log('THIS IS SERVER');
+}
