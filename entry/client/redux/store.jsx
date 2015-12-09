@@ -1,5 +1,6 @@
 import { devTools, persistState } from 'redux-devtools'
 import { compose, createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 
 import DevTools from './DevTools.jsx'
 import reducers from './reducers.jsx'
@@ -9,7 +10,7 @@ let finalCreateStore;
 if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
   finalCreateStore = compose(
     // middleware
-    // applyMiddleware(),
+    applyMiddleware(thunk),
     // devtools
     DevTools.instrument(),
     // Lets you write ?debug_session=<name> in address bar to persist debug sessions

@@ -5,7 +5,7 @@ import { Router, Route, Link, IndexRoute } from 'react-router'
 /**
  *  Import module root routes here and add them to rootRoute below
  */
-import Home from 'Home/routes'
+import Home from 'Home/client/routes'
 import Settings from 'Settings/routes'
 import Other from 'Other/routes'
 
