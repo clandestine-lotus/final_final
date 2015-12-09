@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import style from '../css/other.css'
+import style from '../css/other.scss'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as CounterActions from './CounterActions.jsx'
