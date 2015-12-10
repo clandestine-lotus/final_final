@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux'
 
-import feature from './reducers/feature.jsx'
-import feature2 from './reducers/feature2.jsx'
+import addPreviews from './components/reducers.jsx'
 
 // add reducers here
 export default combineReducers({
-  feature: feature,
-  feature2: feature2,
+  addPreviews: addPreviews,
 })

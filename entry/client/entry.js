@@ -1,6 +1,5 @@
 // import Meteor Methods for optimistic updates
 // import 'TodoApp/todo-methods';
-import 'Other/test';
 import '_Template/client';
 import 'main_Presenter/client';
 
