@@ -16,6 +16,7 @@ module.exports = {
     'react-addons-update': 'React.addons.update',
     'react-addons-linked-state-mixin': 'React.addons.LinkedStateMixin',
     'react-addons-test-utils': 'React.addons.TestUtils'
+    // 'percolate:google-api': 'GoogleApi'
   },
   devServer: {
     // You can change this to your server IP address to access it remotely
