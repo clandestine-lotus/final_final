@@ -32,9 +32,11 @@ thereactivestack:blazetoreact
 #accounts stuff
 accounts-ui
 accounts-google
-accounts-facebook
-accounts-twitter
-accounts-password
 
 
 #others
+meteorhacks:npm
+
+
+npm-container
+percolate:google-api

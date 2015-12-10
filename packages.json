@@ -1,1 +1,3 @@
-//add npm packages to run on cleint + server here
+{
+  "google-slides-downloader" : "1.0.3"
+}
