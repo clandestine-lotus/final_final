@@ -1,10 +1,11 @@
 /*
   This is the entry point. Export a react component here.
 */
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import Preview from './components/Preview'
-import addPreviews from '../components/PresenterActions'
+import * as addPreviews from './components/PresenterActions'
 
 class Presenter extends Component {
   // This doesn't work anymore....................
@@ -16,8 +17,11 @@ class Presenter extends Component {
   // }
 
   getPresentationList() {
+    console.log(this, 'from the outside');
+    const addPreviews = this.props.addPreviews;
+
     // query for all presentations that are in user's google drive
-    return GoogleApi.get('drive/v2/files?q=mimeType="application/vnd.google-apps.presentation"', null, function (err, result) {
+    return GoogleApi.get('drive/v2/files?q=mimeType="application/vnd.google-apps.presentation"', {}, function (err, result) {
       if (err) console.error(err);
       // Map an array of preview objects with specific properties
       var previews = result.items.map((doc) => {
@@ -66,6 +70,7 @@ class Presenter extends Component {
       <div className="container">
         <header>
           <h1>OMG PREVIEWS PLZ</h1>
+          <button onClick={this.getPresentationList.bind(this)}>Bjarke</button>
 
           <ul className="presentation_list">
             {this.renderPreviews()}
@@ -78,11 +83,13 @@ class Presenter extends Component {
 
 function mapStateToProps(state) {
   return {
-    previews: state.get('previews')
+    // TODO: research the right way to get state props
+    // TODO: FIX PREVIEWS.PREVIEWS
+    previews: state.previews
   }
 }
-
+//
 // function mapDispatchToProps() {
 
 // }
-export default connect(mapStateToProps)(Presenter)
+export default connect(mapStateToProps, addPreviews)(Presenter)
