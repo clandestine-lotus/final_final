@@ -1,5 +1,6 @@
+/*eslint-disable*/
 import React, { Component } from 'react'
-// import style from '../css/other.scss'
+// import style from '../css/other.scss' // ESLINT: unused var
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as CounterActions from './CounterActions.jsx'
@@ -10,6 +11,10 @@ import Immutable from 'immutable'
 // @ReactMixin.decorate(ReactMeteorData)
 
 class Other extends Component {
+  getInitialState() {
+    console.log('GETTING INITIAL STATE?!!?')
+  }
+
   render() {
     // this gets injected by the connect() call
     const { counter, dispatch } = this.props;
@@ -26,7 +31,6 @@ function select(state) {
 }
 
 // ESLINT: console.logs, uppercase functions should be constructors
-/*eslint-disable*/
 console.log(Immutable);
 let a = Immutable.Map({a: 1, b: 2, c: 3})
 console.log(a.get('b'));
@@ -35,6 +39,5 @@ Meteor.call('doSomething', {}, function (e, data) {
   console.log(e);
   console.log(data);
 });
-/*eslint-enable*/
 
 export default connect(select)(Other)
