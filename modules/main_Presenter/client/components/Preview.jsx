@@ -11,9 +11,9 @@ export default class Preview extends Component {
   }
 
   // set state of svgs to empty array
-  getInitialState() {
-    return {svgs: []}
-  }
+  // getInitialState() {
+  //   return {svgs: []}
+  // }
 
   presentation() {
     // declare identifier variables in function scope
@@ -46,12 +46,11 @@ export default class Preview extends Component {
   render() {
     return (
       <li>
-        <div onClick={this.presentation}>
+        <div>
           <img src={this.props.data.thumbnail}/>
           <h1>{this.props.data.title}</h1>
         </div>
         <div>
-          {this.makeSlides()}
         </div>
       </li>
     )

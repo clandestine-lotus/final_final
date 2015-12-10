@@ -1,1 +1,1 @@
-export default Presentations = new Mongo.Collection('previews')
+// export default Presentations = new Mongo.Collection('previews')
