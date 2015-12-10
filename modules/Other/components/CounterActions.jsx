@@ -13,15 +13,19 @@ export function decrement() {
   };
 }
 
-export function incrementIfOdd() {
-  return (dispatch, getState) => {
-    const { counter } = getState();
+export function incrementIfOdd(counter) {
+
+  // return (dispatch, getState) => {
+    // const { counter } = getState();
+    // console.log(getState);
+
     if (counter % 2 === 0) {
-      return;
+      return {};
     }
 
-    dispatch(increment());
-  };
+    return increment();
+    // dispatch(increment());
+  // };
 }
 
 export function incrementAsync() {
