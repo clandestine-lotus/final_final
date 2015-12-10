@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as CounterActions from './CounterActions.jsx'
 import Counter from './Counter.jsx'
-
+import Immutable from 'immutable'
 // import ReactMixin from 'react-mixin';
 
 // @ReactMixin.decorate(ReactMeteorData)
@@ -24,7 +24,9 @@ function select(state) {
     counter: state.counter
   }
 }
-
+console.log(Immutable);
+let a = Immutable.Map({a: 1, b: 2, c: 3})
+console.log(a.get('b'));
 // console.log(Meteor);
 Meteor.call('doSomething', {}, function (e, data) {
   console.log(e);
