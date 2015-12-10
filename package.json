@@ -5,12 +5,12 @@
   "main": "server/",
   "dependencies": {},
   "devDependencies": {
-
   },
   "scripts": {
     "test": "echo \"No tests specified\" && exit 0",
-    "lint": "eslint --ignore-pattern **/bundle-*.js --ext .js,.jsx --max-warnings 100 entry/** modules/**",
-    "preinstall": "npm i -g phantomjs eslint eslint-config-airbnb eslint-loader eslint-plugin-meteor eslint-plugin-react pre-commit babel-core"
+    "lint": "eslint --ignore-pattern **/bundle-*.js --ext .js,.jsx --max-warnings 900 entry/** modules/**",
+    "preinstall": "npm i -g phantomjs pre-commit babel-core",
+    "fix": "bash sassfix.sh"
   },
   "repository": {
     "type": "git",

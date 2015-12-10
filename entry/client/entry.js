@@ -1,7 +1,11 @@
-// Methods for optimistic updates
-import 'TodoApp/todo-methods';
+// import Meteor Methods for optimistic updates
+// import 'TodoApp/todo-methods';
+import 'Other/test';
 
-import './routes';
+import ReactDOM from 'react-dom';
+import React from 'react';
+
+import './root';
 
 Accounts.ui.config({
   passwordSignupFields: 'USERNAME_ONLY'
