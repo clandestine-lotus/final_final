@@ -1,4 +1,6 @@
-var webpack = require('webpack');
+/*eslint-disable*/
+var webpack = require('webpack'); // ESLINT: unused var
+/*eslint-enable*/
 
 var localIdentName = process.env.NODE_ENV === 'production' ? '[hash:base64:5]' : '[name]__[local]__[hash:base64:5]';
 

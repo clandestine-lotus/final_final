@@ -1,8 +1,9 @@
 import { createHistory } from 'history'
 import { Provider } from 'react-redux'
 import { syncReduxAndRouter } from 'redux-simple-router'
-import { Router, Route, Link, IndexRoute } from 'react-router'
-
+/*eslint-disable*/
+import { Router, Route, Link, IndexRoute } from 'react-router' // ESLINT: unused vars (Route, Link, IndexRoute)
+/*eslint-enable*/
 
 // import redux elements
 import DevTools from './redux/DevTools.jsx'
@@ -32,7 +33,9 @@ class Root extends React.Component {
           </div>
         </Provider>
         )
-    } else {
+      /*eslint-disable*/
+    } else { // ESLINT: doesn't like the else after return
+      /*eslint-enable*/
       return (
       <Provider store={store}>
         <div>

@@ -1,3 +1,5 @@
+/*eslint-disable*/
+// ESLINT: Unused parameter, console.logs
 Meteor.methods({
   doSomething: function(obj) {
     if (this.isSimulation) {
