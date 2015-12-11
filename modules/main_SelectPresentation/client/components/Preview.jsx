@@ -18,26 +18,22 @@ export default class Preview extends Component {
     let react = this;
     // opens a query and waits for a change to occur
     // call method to create a presentation
-    Meteor.call('test');
-    // Meteor.call('createPresentation', link, user, gid, function (err, result) {
-    //   if(err){
-    //     console.error(err);
-    //   };
+    Meteor.call('createPresentation', link, user, gid, function (err, result) {
+      if(err){
+        console.error('from preview ', err);
+      };
+      console.log(result);
       // react.props.setPresentation(user);
       // reRoute to the projector view! 
-    // })
+    })
   }
 
   render() {
     return (
-      <li>
         <div onClick={this.presentation}>
           <img src={this.props.data.thumbnail}/>
           <h1>{this.props.data.title}</h1>
         </div>
-        <div>
-        </div>
-      </li>
     )
   }
 }

@@ -7,7 +7,7 @@ Meteor.methods({
     // change privacy setting of the presentation to public
     let doIt = Meteor.bindEnvironment((err, svgs)=>{
       if(err) {
-        console.error(err)
+        console.error('from bind env ' , err)
       }
       // update or insert a presentation in database
       Presentations.upsert({gid: gid}, {
@@ -21,10 +21,7 @@ Meteor.methods({
     console.log('inside teh method call')
     GoogleApi.post('drive/v2/files/' + gid + '/permissions', {data: {'type': 'anyone', 'role': 'reader'}}, function (err, result) {
       // pass in url to get an array of svgs
-      getSVG.getSVGs(url, doIt)
-    })
-  },
-  test: function () {
-    console.log('hello');
+      getSVG.getSVGs(url, doIt);
+    });
   }
 })

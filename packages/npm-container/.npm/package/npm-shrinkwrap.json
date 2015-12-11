@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "google-slides-downloader": {
-      "version": "1.0.3",
+      "version": "1.0.5",
       "dependencies": {
         "chai-as-promised": {
           "version": "5.1.0"

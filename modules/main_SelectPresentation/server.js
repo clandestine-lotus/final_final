@@ -3,4 +3,4 @@
 // ? Alternative : methodName(a,r,g,s)
 // ??? This previous sentence needs checking. Please do it.
 // import './globals/collections.js'
-// import './globals/example.js'
+import './globals/example.js'

@@ -16,7 +16,7 @@ import rootReducer from './reducers';
 let Presenter = React.createClass ({
   getInitialState: function (props) {
     this.props.dispatch(PresenterActions.getPreviews());
-    Meteor.call('doit');
+    Meteor.call('test');
     return {};
   },
 
