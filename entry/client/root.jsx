@@ -32,7 +32,9 @@ class Root extends React.Component {
           </div>
         </Provider>
         )
-    } else {
+      /*eslint-disable*/
+    } else { // ESLINT: doesn't like else after return
+      /*eslint-enable*/
       return (
       <Provider store={store}>
         <div>
