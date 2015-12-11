@@ -18,7 +18,7 @@ export default class Counter extends Component {
         {' '}
         <button onClick={decrement}>-</button>
         {' '}
-        <button onClick={incrementIfOdd}>Increment if odd</button>
+        <button onClick={incrementIfOdd.bind(null, this.props.counter)}>Increment if odd</button>
       </p>
     );
   }
