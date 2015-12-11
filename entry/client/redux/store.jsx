@@ -11,7 +11,7 @@ let finalCreateStore;
 if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
   finalCreateStore = compose(
     // Enable middleware:
-    applyMiddleware(thunk),
+    applyMiddleware(thunk), // any Redux middleware, e.g. redux-thunk
     // Enable devtools:
     DevTools.instrument(),
 
