@@ -1,4 +1,4 @@
-import Presentations from '../../globals/collections'
+// import Presentations from '../../globals/collections'
 
 const ADD_PREVIEWS = 'ADD_PREVIEWS';
 

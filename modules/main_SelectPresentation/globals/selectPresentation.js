@@ -1,6 +1,6 @@
-import Presentations from './collections'
+// import Presentations from './collections'
 
-export function choosePresentation (params) {
+export default function selectPresentation (params) {
   console.log(params);
   // Presentations.insert({
 

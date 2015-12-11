@@ -17,10 +17,10 @@ export default class Preview extends Component {
   // }
 
   selectPresentation() {
-    console.log('running');
+    let link = this.props.data.link.slice(0, this.props.data.link.length - 7) + 'embed';
     let params = {
       user: Meteor.user()._id,
-      link: this.props.data.link,
+      link: link,
       gid: this.props.data.gid
     }
     selectPresentation(params);
