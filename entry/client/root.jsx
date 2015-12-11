@@ -15,36 +15,26 @@ import rootRoute from './routes.jsx'
 const history = createHistory()
 syncReduxAndRouter(history, store)
 
-
+let showDevTools;
 if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
   // DEV: expose store as a global var
   window.store = store
+  showDevTools = <DevTools />
+} else {
+  showDevTools = ''
 }
 
 class Root extends React.Component {
   render() {
     const { store } = this.props;
-    if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR){
-      return (
-        <Provider store={store}>
-          <div>
-            <Router history={history} routes={rootRoute} />
-            <DevTools />
-          </div>
-        </Provider>
-        )
-      /*eslint-disable*/
-    } else { // ESLINT: doesn't like the else after return
-      /*eslint-enable*/
-      return (
+    return (
       <Provider store={store}>
         <div>
           <Router history={history} routes={rootRoute} />
-          <DevTools />
+          { showDevTools }
         </div>
       </Provider>
       )
-    }
   }
 }
 

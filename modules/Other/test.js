@@ -11,4 +11,4 @@ Meteor.methods({
     console.log('This is a test meteor method called from the client.');
     return 'some string';
   }
-})
+});
