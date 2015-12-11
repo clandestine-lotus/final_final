@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 
-import addPreviews from './components/reducers.jsx'
+import addPreviews from './components/PresenterReducers.jsx'
 
 // add reducers here
 export default combineReducers({
-  addPreviews: addPreviews,
+  list: addPreviews,
 })
