@@ -1,4 +1,6 @@
-var webpack = require('webpack');
+/*eslint-disable*/
+var webpack = require('webpack'); // ESLINT: unused vars
+/*eslint-enable*/
 var path = require('path');
 
 module.exports = {

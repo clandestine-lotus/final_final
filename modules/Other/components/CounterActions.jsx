@@ -17,11 +17,11 @@ export function incrementIfOdd(counter) {
 
   return (dispatch, getState) => {
     const { counter } = getState();
-
     if (counter % 2 === 0) {
       return {};
     }
 
+    return increment();
     dispatch(increment());
   };
 }

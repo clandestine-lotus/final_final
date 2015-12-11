@@ -1,5 +1,6 @@
+/*eslint-disable*/
 import React, { Component } from 'react'
-import '../css/other.scss'
+// import style from '../css/other.scss' // ESLINT: unused var
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as CounterActions from './CounterActions.jsx'
@@ -28,6 +29,8 @@ function select(state) {
     counter: state.counter
   }
 }
+
+// ESLINT: console.logs, uppercase functions should be constructors
 console.log(Immutable);
 let a = Immutable.Map({a: 1, b: 2, c: 3})
 console.log(a.get('b'));

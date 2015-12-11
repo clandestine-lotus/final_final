@@ -4,8 +4,10 @@ import '_Template/client';
 import 'main_SelectPresentation/client';
 import 'main_Presenter/client';
 
-import ReactDOM from 'react-dom';
-import React from 'react';
+/*eslint-disable*/
+import ReactDOM from 'react-dom'; // ESLINT: unused var
+import React from 'react'; // ESLINT: unused var
+/*eslint-enable*/
 
 import './root';
 
@@ -17,7 +19,7 @@ Accounts.ui.config({
   'passwordSignupFields': 'USERNAME_ONLY',
   'requestPermissions': { 'google': scopes },
   // TODO: figure out how to actually make tokens refreshify
-  'requestOfflineToken': { 'google': true}
+  'requestOfflineToken': { 'google': true }
 });
 
 // uncomment to enable tests

@@ -47,7 +47,6 @@ export default class Preview extends Component {
     return (
       <li>
         <div>
-        yoyoyo
           <img src={this.props.data.thumbnail}/>
           <h1>{this.props.data.title}</h1>
         </div>

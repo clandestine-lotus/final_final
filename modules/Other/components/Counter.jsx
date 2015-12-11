@@ -1,7 +1,8 @@
+/*eslint-disable*/
 import React, { Component, PropTypes } from 'react';
 
 export default class Counter extends Component {
-  static propTypes = {
+  const propTypes = {
     increment: PropTypes.func.isRequired,
     incrementIfOdd: PropTypes.func.isRequired,
     decrement: PropTypes.func.isRequired,

@@ -15,11 +15,6 @@ import Slides from '../../sub_Slides/client/index'
 
 
 let Presenter = React.createClass ({
-  // getInitialState: function (props) {
-  //   this.props.dispatch(PresenterActions.getPreviews());
-  //   return {};
-  // },
-
   render: function () {
     return (
       < div className="container" >
@@ -38,7 +33,4 @@ function mapStateToProps (state) {
   }
 }
 
-// function mapDispatchToProps() {
-
-// }
 export default connect(mapStateToProps)(Presenter)

@@ -1,5 +1,7 @@
 // Setup the singleton store based on environment
-import { devTools, persistState } from 'redux-devtools'
+/*eslint-disable*/
+import { devTools, persistState } from 'redux-devtools' // ESLINT: unused var (devTools)
+/*eslint-enable*/
 import { compose, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
@@ -11,7 +13,7 @@ let finalCreateStore;
 if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
   finalCreateStore = compose(
     // Enable middleware:
-    applyMiddleware(thunk), // any Redux middleware, e.g. redux-thunk
+    applyMiddleware(thunk),
     // Enable devtools:
     DevTools.instrument(),
 
