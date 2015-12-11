@@ -29,6 +29,9 @@ node_modules
 # Meteor stuff
 .meteor/local
 
+# npm stuff
+packages
+
 # access keys
 settings.json
 settings-production.json
