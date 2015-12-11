@@ -8,6 +8,7 @@ import { Router, Route, Link, IndexRoute } from 'react-router'
 import Home from 'main_Home/client/routes'
 import Settings from 'Settings/routes'
 import Other from 'Other/routes'
+import SelectPresentation from 'main_SelectPresentation/client/routes'
 import Presenter from 'main_Presenter/client/routes'
 
 // define root component
@@ -27,6 +28,7 @@ const rootRoute = {
     childRoutes: [
       Settings,
       Other,
+      SelectPresentation,
       Presenter
     ]
   }]
