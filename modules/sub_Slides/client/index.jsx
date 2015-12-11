@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import Presentations from '../globals/collections'
 import * as actionCreator from './actions'
+import Presentations from '../../main_SelectPresentation/globals/collections'
 
 export default class Slides extends Component {
   constructor() {
@@ -33,8 +34,9 @@ export default class Slides extends Component {
   }
 
   slideMaker () {
-    // let presentation = Presentations.get({_id: this.props.presentation}).fetch()
-    let svgs = ['<div>hello</div>','<div>world</div>']
+    let presentation = Presentations.findOne({gid: this.props.presentation})
+    console.log(presentation)
+    let svgs = presentation.svgs
     return {__html: svgs[this.props.index]}
   }
 
@@ -46,8 +48,8 @@ export default class Slides extends Component {
 // onkeypress={this.changeSlide(event)}
 function mapStateToProps(state) {
   return {
-    presentation: state.slides.get('presentation'),
-    index: state.slides.get('index')
+    presentation: state.previews.list.get('presentation'),
+    index: state.previews.slides.get('index')
   }
 }
 

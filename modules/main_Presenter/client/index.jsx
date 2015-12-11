@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
+import Slides from '../../sub_Slides/client/index'
 
 
 let Presenter = React.createClass ({
@@ -23,19 +24,20 @@ let Presenter = React.createClass ({
     return (
       < div className="container" >
         hello
+        < Slides />
       </ div >
     );
   }
 })
 
-// function mapStateToProps (state) {
-//   return {
-//     // TODO: research the right way to get state props
-//     // TODO: FIX PREVIEWS.PREVIEWS
-//     previews: state.previews.list
-//   }
-// }
-//
+function mapStateToProps (state) {
+  return {
+    // TODO: research the right way to get state props
+    // TODO: FIX PREVIEWS.PREVIEWS
+    previews: state.previews.list
+  }
+}
+
 // function mapDispatchToProps() {
 
 // }
