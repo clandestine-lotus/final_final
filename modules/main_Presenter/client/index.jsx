@@ -76,7 +76,7 @@ class Presenter extends Component {
   }
 
   render() {
-    store.dispatch(addPreviews());
+    // store.dispatch(addPreviews());
     return (
       <div className="container">
         <header>

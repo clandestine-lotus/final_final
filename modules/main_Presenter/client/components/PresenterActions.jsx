@@ -10,7 +10,7 @@ let store = createStoreWithMiddleware(rootReducer);
 
 const ADD_PREVIEWS = 'ADD_PREVIEWS';
 
-export function addPreviews(previews) {
+export function addPreviews() {
   return function(dispatch) {
     GoogleApi.get('drive/v2/files?q=mimeType="application/vnd.google-apps.presentation"', {}, function (err, result) {
       if (err) console.error(err);
@@ -23,9 +23,10 @@ export function addPreviews(previews) {
           gid: doc.id
         };
       });
-    dispatch({
-      type: ADD_PREVIEWS,
-      payload: previews
+      dispatch({
+        type: ADD_PREVIEWS,
+        payload: previews
+      });
     });
   }
 }
