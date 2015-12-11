@@ -1,4 +1,7 @@
-import { devTools, persistState } from 'redux-devtools'
+/*eslint-disable*/
+import { devTools, persistState } from 'redux-devtools' // ESLINT: unused var (devTools)
+/*eslint-enable*/
+
 import { compose, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 

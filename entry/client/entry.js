@@ -1,9 +1,10 @@
 // import Meteor Methods for optimistic updates
 // import 'TodoApp/todo-methods';
 import 'Other/test';
-
-import ReactDOM from 'react-dom';
-import React from 'react';
+/*eslint-disable*/
+import ReactDOM from 'react-dom'; // ESLINT: unused var
+import React from 'react'; // ESLINT: unused var
+/*eslint-enable*/
 
 import './root';
 
