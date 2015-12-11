@@ -1,7 +1,4 @@
-import Presentations from '../../globals/collections'
-
 const ADD_PREVIEWS = 'ADD_PREVIEWS';
-
 
 export function addPreviews (previews) {
   return {

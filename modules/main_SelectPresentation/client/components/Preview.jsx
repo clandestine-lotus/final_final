@@ -2,7 +2,8 @@
   This is the entry point. Export a react component here.
 */
 
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import selectPresentation from '../../globals/selectPresentation'
 
 export default class Preview extends Component {
   propTypes: {
@@ -15,26 +16,30 @@ export default class Preview extends Component {
   //   return {svgs: []}
   // }
 
-  presentation() {
+  selectPresentation() {
+    console.log('running');
+    let params = {
+      user: Meteor.user()._id,
+      link: this.props.data.link,
+      gid: this.props.data.gid
+    }
+    selectPresentation(params);
     // declare identifier variables in function scope
-    let user = Meteor.user()._id;
-    let link = this.props.data.link;
-    let gid = this.props.data.gid;
-    let react = this;
-    // opens a query and waits for a change to occur
-    Presentations.find({gid: gid.toString()}).observe({
-      added: function (newDoc) {
-        console.log('we have a change', newDoc);
-        react.setState({svgs: newDoc.svgs});
+    // let react = this;
+    // // opens a query and waits for a change to occur
+    // Presentations.find({gid: gid.toString()}).observe({
+    //   added: function (newDoc) {
+    //     console.log('we have a change', newDoc);
+    //     react.setState({svgs: newDoc.svgs});
 
-      }
-    });
-    // call method to create a presentation
-    Meteor.call('createPresentation', link, user, gid, function (err, result) {
-      if(err){
-        console.error(err);
-      };
-    })
+    //   }
+    // });
+    // // call method to create a presentation
+    // Meteor.call('createPresentation', link, user, gid, function (err, result) {
+    //   if(err){
+    //     console.error(err);
+    //   };
+    // })
   }
 
   makeSlides() {
@@ -45,14 +50,10 @@ export default class Preview extends Component {
 
   render() {
     return (
-      <li>
-        <div>
+        <div onClick={this.selectPresentation.bind(this)}>
           <img src={this.props.data.thumbnail}/>
-          <h1>{this.props.data.title}</h1>
+          <h1>presentation: {this.props.data.title}</h1>
         </div>
-        <div>
-        </div>
-      </li>
     )
   }
 }

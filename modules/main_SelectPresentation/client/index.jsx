@@ -24,7 +24,7 @@ let Presenter = React.createClass ({
       <div className="container">
         <header>
 
-          <h1>OMG PREVIEWS PLZ</h1>
+          <h1>OMG PREVIEWS YOYO</h1>
         </header>
         {this.props.previews.map((preview)=> {
           return <Preview key={preview.gid} data={preview} />
