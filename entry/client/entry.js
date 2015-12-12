@@ -4,12 +4,14 @@ import 'css/global.scss'
 // import Meteor Methods for optimistic updates
 import './../../methods/client.js'
 
-
 import 'main_SelectPresentation/client';
 import 'main_Presenter/client';
 import '_Template/client'
 import 'main_SelectPresentation/client'
 import 'main_Presenter/client'
+import 'main_Projector/client'
+
+// import 'TodoApp/todo-methods';
 
 /*eslint-disable*/
 import ReactDOM from 'react-dom'; // ESLINT: unused var

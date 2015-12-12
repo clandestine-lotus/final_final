@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 // import * as PresenterActions from './components/PresenterActions.jsx'
 
 // import Preview from './components/Preview'
-
 import { bindActionCreators, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from './reducers'
@@ -43,3 +42,6 @@ function mapStateToProps (state) {
 }
 
 export default connect(mapStateToProps, ProjectorActions)(Projector)
+    previews: state.previews.list
+  }
+}

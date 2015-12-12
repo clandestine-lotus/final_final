@@ -19,6 +19,6 @@ export default combineReducers({
   counter: counter,
   previews: SelectPresentation,
   Home: Home,
-  presenter: Presenter
+  presenter: Presenter,
   projector: Projector
 })
