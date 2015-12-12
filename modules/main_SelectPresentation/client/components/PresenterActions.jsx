@@ -24,7 +24,6 @@ export function getPreviews () {
           gid: doc.id
         };
       });
-      console.log(previews);
       dispatch(addPreviews(previews))
     })
   }

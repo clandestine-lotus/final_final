@@ -23,8 +23,6 @@ export default class Preview extends Component {
       if (err) {
         console.error('from preview ', err);
       }
-      console.log(react);
-      console.log(result);
       react.props.setPresentation(gid);
       // reRoute to the projector view! 
     })

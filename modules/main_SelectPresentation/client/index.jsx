@@ -43,8 +43,5 @@ function mapStateToProps (state) {
     previews: state.previews.list.get('previews')
   }
 }
-//
-// function mapDispatchToProps() {
 
-// }
 export default connect(mapStateToProps, PresenterActions)(Presenter)

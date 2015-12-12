@@ -3,7 +3,7 @@ import { routeReducer } from 'redux-simple-router'
 
 // presenter is unused for now
 /* eslint-disable */
-import Presenter from 'main_Presenter/client/reducers.jsx'
+import Presenter from 'main_Presenter/client/components/Reducers.jsx'
 /* eslint-enable */
 import SelectPresentation from 'main_SelectPresentation/client/reducers.jsx'
 import counter from 'Other/components/reducers'
@@ -14,4 +14,5 @@ export default combineReducers({
   routing: routeReducer,
   previews: SelectPresentation,
   Home: Home,
+  presenter: Presenter
 })
