@@ -1,20 +1,20 @@
 /*
   This is the entry point. Export a react component here.
 */
-
 import React, { Component } from 'react';
+import Slides from '../../sub_Slides/client/index'
 
 export default class Preview extends Component {
-  propTypes: {
+  // propTypes: {
     // require data proto --> contains all link info
-    data: React.PropTypes.object.isRequired
-  }
+    // data: React.PropTypes.object.isRequired
+  // }
 
   // set state of svgs to empty array
   // getInitialState() {
   //   return {svgs: []}
   // }
-
+ 
   presentation() {
     // declare identifier variables in function scope
     let user = Meteor.user()._id;
@@ -26,14 +26,13 @@ export default class Preview extends Component {
       added: function (newDoc) {
         console.log('we have a change', newDoc);
         react.setState({svgs: newDoc.svgs});
-
       }
     });
     // call method to create a presentation
     Meteor.call('createPresentation', link, user, gid, function (err, result) {
-      if(err){
+      if (err) {
         console.error(err);
-      };
+      }
     })
   }
 

@@ -1,6 +1,7 @@
 // import Meteor Methods for optimistic updates
 // import 'TodoApp/todo-methods';
 import '_Template/client';
+import 'main_SelectPresentation/client';
 import 'main_Presenter/client';
 
 /*eslint-disable*/
