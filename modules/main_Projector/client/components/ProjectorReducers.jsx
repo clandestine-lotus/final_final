@@ -1,21 +1,11 @@
-import {Map} from 'immutable'
+import { Map, List } from 'immutable'
 
-function setState(state, newState) {
-  return state.merge(newState);
-}
-
-const initial = Map({
-  index: 0,
-  presentation: undefined
-})
+const initial = Map({presentation: undefined})
 
 export default function counter(state = initial, action) {
-  let index = state.get('index')
   switch (action.type) {
-  case 'NEXT_SLIDE':
-    return state.set('index', index + 1)
-  case 'PREV_SLIDE':
-    return state.set('index', index - 1)
+  case 'SET_PRESENTATION':
+    return state.set('presentation', action.payload);
   default:
     return state;
   }

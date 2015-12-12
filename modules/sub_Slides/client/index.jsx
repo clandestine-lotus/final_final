@@ -23,5 +23,3 @@ export default class Slides extends Component {
     return <div onClick={this.changeSlide} dangerouslySetInnerHTML={this.slideMaker()}></div>
   }
 }
-
-
