@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
 
-import projector from './components/ProjectorReducers.jsx'
+import SetPresentation from './components/ProjectorReducers'
+import Slides from '../../sub_Slides/client/reducers'
 
 // add reducers here
 export default combineReducers({
-  list: projector,
+  setPresentation: SetPresentation,
+  slides: Slides
 })
