@@ -14,7 +14,7 @@ export default class Preview extends Component {
   // getInitialState() {
   //   return {svgs: []}
   // }
-
+ 
   presentation() {
     // declare identifier variables in function scope
     let user = Meteor.user()._id;
