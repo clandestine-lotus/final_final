@@ -7,6 +7,9 @@ import './../../methods/client.js'
 
 import 'main_SelectPresentation/client';
 import 'main_Presenter/client';
+import '_Template/client'
+import 'main_SelectPresentation/client'
+import 'main_Presenter/client'
 
 /*eslint-disable*/
 import ReactDOM from 'react-dom'; // ESLINT: unused var

@@ -9,7 +9,9 @@ import { counter } from './counter/'
 import Presenter from 'main_Presenter/client/components/Reducers.jsx'
 /* eslint-enable */
 import SelectPresentation from 'main_SelectPresentation/client/reducers.jsx'
+import Projector from 'main_Projector/client/reducers.jsx'
 import Home from 'main_Home/client/components/Reducers.jsx'
+import Projector from 'main_Projector/client/reducers'
 
 // add reducers here
 export default combineReducers({
@@ -18,4 +20,5 @@ export default combineReducers({
   previews: SelectPresentation,
   Home: Home,
   presenter: Presenter
+  projector: Projector
 })
