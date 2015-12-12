@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"No tests specified\" && exit 0",
     "lint": "eslint --ignore-pattern **/bundle-*.js --ext .js,.jsx --max-warnings 900 entry/** modules/**",
-    "preinstall": "npm i -g phantomjs pre-commit babel-core",
+    "preinstall": "npm i -g phantomjs babel-core eslint eslint-config-airbnb eslint-plugin-react eslint-plugin-meteor",
+    "postinstall": "cp ./pre-commit ./.git/hooks && chmod +x ./.git/hooks/pre-commit",
     "fix": "bash sassfix.sh"
   },
   "repository": {

@@ -3,56 +3,38 @@
 */
 
 import React, { Component } from 'react'
-import selectPresentation from '../../globals/selectPresentation'
 
 export default class Preview extends Component {
-  propTypes: {
-    // require data proto --> contains all link info
-    data: React.PropTypes.object.isRequired
+  constructor() {
+    super();
+    this.presentation = this.presentation.bind(this);
   }
 
-  // set state of svgs to empty array
-  // getInitialState() {
-  //   return {svgs: []}
-  // }
-
-  selectPresentation() {
-    console.log('running');
-    let params = {
-      user: Meteor.user()._id,
-      link: this.props.data.link,
-      gid: this.props.data.gid
-    }
-    selectPresentation(params);
+  presentation() {
+    this.props.setPresentation(5);
     // declare identifier variables in function scope
-    // let react = this;
-    // // opens a query and waits for a change to occur
-    // Presentations.find({gid: gid.toString()}).observe({
-    //   added: function (newDoc) {
-    //     console.log('we have a change', newDoc);
-    //     react.setState({svgs: newDoc.svgs});
-
-    //   }
-    // });
-    // // call method to create a presentation
-    // Meteor.call('createPresentation', link, user, gid, function (err, result) {
-    //   if(err){
-    //     console.error(err);
-    //   };
-    // })
-  }
-
-  makeSlides() {
-    if(this.state.svgs.length > 0){
-      return <Slides svgs={this.state.svgs} />
-    }
+    let user = Meteor.user()._id;
+    let link = this.props.data.link;
+    let gid = this.props.data.gid;
+    let react = this;
+    // opens a query and waits for a change to occur
+    // call method to create a presentation
+    Meteor.call('createPresentation', link, user, gid, function (err, result) {
+      if (err) {
+        console.error('from preview ', err);
+      }
+      console.log(react);
+      console.log(result);
+      react.props.setPresentation(gid);
+      // reRoute to the projector view! 
+    })
   }
 
   render() {
     return (
-        <div onClick={this.selectPresentation.bind(this)}>
+        <div onClick={this.presentation}>
           <img src={this.props.data.thumbnail}/>
-          <h1>presentation: {this.props.data.title}</h1>
+          <h1>{this.props.data.title}</h1>
         </div>
     )
   }

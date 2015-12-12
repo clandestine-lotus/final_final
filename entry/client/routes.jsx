@@ -1,6 +1,8 @@
 import React from 'react'
 // import ReactDOM from 'react-dom'
-import { Router, Route, Link, IndexRoute } from 'react-router'
+/*eslint-disable*/
+import { Router, Route, Link, IndexRoute } from 'react-router' // ESLINT: unused vars (all)
+/*eslint-enable*/
 
 /**
  *  Import module root routes here and add them to rootRoute below

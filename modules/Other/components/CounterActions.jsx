@@ -14,15 +14,13 @@ export function decrement() {
 }
 
 export function incrementIfOdd(counter) {
-
   return (dispatch, getState) => {
     const { counter } = getState();
-
     if (counter % 2 === 0) {
       return {};
     }
-
-    dispatch(increment());
+    return increment();
+    // dispatch(increment());
   };
 }
 
