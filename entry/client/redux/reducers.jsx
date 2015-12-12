@@ -12,6 +12,6 @@ import Home from 'main_Home/client/components/Reducers.jsx'
 // add reducers here
 export default combineReducers({
   routing: routeReducer,
-  previews: SelectPresentation
+  previews: SelectPresentation,
   Home: Home,
 })

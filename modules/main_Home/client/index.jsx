@@ -38,7 +38,7 @@ class Home extends Component {
         <Login />
 
         <br />
-        {this.props.Home.loggedIn ? <Link to = "/main_SelectPresentation"> Make a presentation </Link> : null}
+        {this.props.Home.loggedIn ? <Link to = "/selectpresentation"> Make a presentation </Link> : null}
 
         <form onSubmit={this.submitCode.bind(this)}>
           <input placeholder="Enter presentation code" />
