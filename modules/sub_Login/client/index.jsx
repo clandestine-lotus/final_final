@@ -1,3 +1,5 @@
+import { findDOMNode } from 'react-dom'
+
 /*
   This is the entry point. Export a react component here.
 */
@@ -7,7 +9,7 @@ export default class Login extends Component {
   componentDidMount() {
     // Use Meteor Blaze to render login buttons
     this.view = Blaze.render(Template.loginButtons,
-      React.findDOMNode(this.refs.container));
+      findDOMNode(this.refs.container));
   }
 
   componentWillUnmount() {
