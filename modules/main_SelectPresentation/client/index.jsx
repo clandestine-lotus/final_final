@@ -27,6 +27,7 @@ let Presenter = React.createClass({
 
           <h1>Select a Presentation</h1>
           < Link to = {'/present'} >Go to presentation< / Link >
+
         </header>
         {this.props.previews.map((preview)=> {
           return <Preview setPresentation={setPres} key={preview.gid} data={preview} />

@@ -20,9 +20,7 @@ export default class Slides extends Component {
   }
 
   render () {
-    return (
-    <div className="slide" dangerouslySetInnerHTML={this.slideMaker()}></div> 
-    )
+    return <div onClick={this.changeSlide} dangerouslySetInnerHTML={this.slideMaker()}></div>
   }
 }
 

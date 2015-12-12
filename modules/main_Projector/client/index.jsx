@@ -16,7 +16,7 @@ import Slides from '../../sub_Slides/client/index'
 let Projector = React.createClass({
   render: function () {
     return (
-      < div className="container" >
+      < div >
         < Slides />
       </ div >
     );
