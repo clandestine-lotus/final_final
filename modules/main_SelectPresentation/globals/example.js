@@ -16,9 +16,7 @@ Meteor.methods({
         user: id,
         gid: gid
       });
-      console.log('did we get to here?', err, svgs)
     })
-    console.log('inside teh method call')
     GoogleApi.post('drive/v2/files/' + gid + '/permissions', {data: {'type': 'anyone', 'role': 'reader'}}, function (err, result) {
       // pass in url to get an array of svgs
       getSVG.getSVGs(url, doIt);
