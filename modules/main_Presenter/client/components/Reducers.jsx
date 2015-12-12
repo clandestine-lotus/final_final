@@ -10,6 +10,8 @@ export default function counter(state = initial, action) {
     return state.updateIn(['presentation', 'index'], index => index + 1)
   case 'PREV_SLIDE':
     return state.updateIn(['presentation', 'index'], index => index - 1)
+  case 'SET_INDEX':
+    return state.setIn(['presentation', 'index'], action.payload)
   default:
     return state;
   }
