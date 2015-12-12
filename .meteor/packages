@@ -35,8 +35,10 @@ accounts-google
 
 
 #others
+
+
+percolate:google-api
 meteorhacks:npm
 
 
 npm-container
-percolate:google-api
