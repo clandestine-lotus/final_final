@@ -4,9 +4,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-// import * as PresenterActions from './components/PresenterActions.jsx'
-
-// import Preview from './components/Preview'
+import * as PresenterActions from './components/PresenterActions.jsx'
 
 import { bindActionCreators, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -17,8 +15,11 @@ let Presenter = React.createClass({
   render: function () {
     return (
       < div className="container" >
-        hello
-        < Slides />
+        < Slides 
+          gid={this.props.presentation}
+          presentation={this.props.presenter.get('presentation')} 
+          prevSlide={this.props.prevSlide} 
+          nextSlide={this.props.nextSlide}/>
       </ div >
     );
   }
@@ -26,10 +27,9 @@ let Presenter = React.createClass({
 
 function mapStateToProps (state) {
   return {
-    // TODO: research the right way to get state props
-    // TODO: FIX PREVIEWS.PREVIEWS
-    previews: state.previews.list
+    presenter: state.presenter,
+    presentation: state.previews.list.get('presentation')
   }
 }
 
-export default connect(mapStateToProps)(Presenter)
+export default connect(mapStateToProps, PresenterActions)(Presenter)
