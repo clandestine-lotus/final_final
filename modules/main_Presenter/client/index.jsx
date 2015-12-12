@@ -13,8 +13,7 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 import Slides from '../../sub_Slides/client/index'
 
-
-let Presenter = React.createClass ({
+let Presenter = React.createClass({
   render: function () {
     return (
       < div className="container" >

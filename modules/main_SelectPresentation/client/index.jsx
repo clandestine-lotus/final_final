@@ -8,13 +8,11 @@ import { Link } from 'react-router';
 import Preview from './components/Preview'
 import * as PresenterActions from './components/PresenterActions.jsx'
 
-
 import { bindActionCreators, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 
-
-let Presenter = React.createClass ({
+let Presenter = React.createClass({
   getInitialState: function (props) {
     this.props.getPreviews();
     console.log(this);

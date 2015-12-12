@@ -9,13 +9,13 @@ const initial = Map({
   presentation: undefined
 })
 
-export default function counter( state = initial, action) {
+export default function counter(state = initial, action) {
   let index = state.get('index')
   switch (action.type) {
   case 'NEXT_SLIDE':
-    return state.set('index', index+1)
+    return state.set('index', index + 1)
   case 'PREV_SLIDE':
-    return state.set('index', index-1)
+    return state.set('index', index - 1)
   default:
     return state;
   }

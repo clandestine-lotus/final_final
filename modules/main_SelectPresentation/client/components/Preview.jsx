@@ -20,9 +20,9 @@ export default class Preview extends Component {
     // opens a query and waits for a change to occur
     // call method to create a presentation
     Meteor.call('createPresentation', link, user, gid, function (err, result) {
-      if(err){
+      if (err) {
         console.error('from preview ', err);
-      };
+      }
       console.log(react);
       console.log(result);
       react.props.setPresentation(gid);
