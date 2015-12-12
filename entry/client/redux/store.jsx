@@ -21,7 +21,7 @@ if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
     persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
   )(createStore);
 } else {
-  finalCreateStore = createStore
+  finalCreateStore = applyMiddleware(thunk)(createStore)
 }
 
 const store = finalCreateStore(reducers)
