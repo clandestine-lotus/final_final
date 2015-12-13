@@ -32,8 +32,9 @@ var plugins = [];
   //   plugins.push(new webpack.optimize.CommonsChunkPlugin('common', 'common.web.js', Infinity));
   // }
 // } else {
-  cssLoader = 'style!css?module&localIdentName=[name]__[local]__[hash:base64:5]';
+cssLoader = 'style!css?module&localIdentName=[name]__[local]__[hash:base64:5]';
 // }
+sassLoader = cssLoader + '!sass';
 
 module.exports = {
   entry: './entry',
@@ -41,8 +42,8 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.jsx?$/, loader: 'babel', query: babelSettings, exclude: /node_modules/ },
+      { test: /\.scss$/, loader: sassLoader },
       { test: /\.css$/, loader: cssLoader },
-      { test: /\.scss$/, loader: cssLoader + '!sass' },
       { test: /\.(png|jpe?g)(\?.*)?$/, loader: 'url?limit=8182' },
       { test: /\.(svg|ttf|woff|eot)(\?.*)?$/, loader: 'file' }
     ]

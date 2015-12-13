@@ -1,6 +1,5 @@
 /*eslint-disable*/
 import React, { Component } from 'react'
-// import style from '../css/other.scss' // ESLINT: unused var
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as CounterActions from './CounterActions.jsx'
@@ -11,10 +10,6 @@ import Immutable from 'immutable'
 // @ReactMixin.decorate(ReactMeteorData)
 
 class Other extends Component {
-  getInitialState() {
-    console.log('GETTING INITIAL STATE?!!?')
-  }
-
   render() {
     // this gets injected by the connect() call
     const { counter, dispatch } = this.props;
