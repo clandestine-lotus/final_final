@@ -26,7 +26,7 @@ let Projector = React.createClass({
     console.log('in render ', this.props)
     return (
       < div >
-        < Slides presentation={this.props.params.gid} index={this.props.slide}/>
+        < Slides gid={this.props.params.gid} index={this.props.slide}/>
       </ div >
     );
   }

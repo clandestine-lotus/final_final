@@ -25,6 +25,7 @@ export default class Preview extends Component {
       react.props.setPresentation(gid);
       // reRoute to the projector view!
       // react.history.pushState(null, '/present');
+      console.log('open')
       window.open('/projector/' + gid);
     })
   }
