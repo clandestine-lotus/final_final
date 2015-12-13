@@ -16,16 +16,13 @@ export default class Slides extends Component {
     if(this.props.gid){
       let presentation = Presentations.findOne({gid: this.props.gid})
       let svgs = presentation.svgs
-      return {__html: svgs[this.props.presentation.get('index')]}
+      return {__html: svgs[this.props.index]}
     }
   }
 
   render () {
     return (
-    <div>
-    {this.props.gid ? <div className="slide" dangerouslySetInnerHTML={this.slideMaker()}></div> :
-      <Link to = "/selectpresentation" >Pick a Presentation</Link> }
-    <div><button onClick={this.props.prevSlide}>prev</button><button onClick={this.props.nextSlide}>next</button></div></div>
+    <div className="slide" dangerouslySetInnerHTML={this.slideMaker()}></div> 
     )
   }
 }
