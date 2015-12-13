@@ -2,24 +2,24 @@
 import React, { Component, PropTypes } from 'react';
 
 export default class Counter extends Component {
-  // const propTypes = {
-  //   increment: PropTypes.func.isRequired,
-  //   incrementIfOdd: PropTypes.func.isRequired,
-  //   decrement: PropTypes.func.isRequired,
-  //   counter: PropTypes.number.isRequired
-  // };
+  static propTypes = {
+    increment: PropTypes.func.isRequired,
+    incrementIfOdd: PropTypes.func.isRequired,
+    decrement: PropTypes.func.isRequired,
+    count: PropTypes.number.isRequired
+  };
 
   render() {
-    const { increment, incrementIfOdd, decrement, counter } = this.props;
+    const { increment, incrementIfOdd, decrement, count } = this.props;
     return (
       <p>
-        Clicked: {counter} times
+        Clicked: {count} times
         {' '}
         <button onClick={increment}>+</button>
         {' '}
         <button onClick={decrement}>-</button>
         {' '}
-        <button onClick={incrementIfOdd.bind(null, this.props.counter)}>Increment if odd</button>
+        <button onClick={incrementIfOdd}>Increment if odd</button>
       </p>
     );
   }

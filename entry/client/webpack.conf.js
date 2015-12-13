@@ -24,16 +24,17 @@ if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
 var cssLoader;
 var plugins = [];
 
-if (process.env.NODE_ENV === 'production') {
-  plugins.push(new ExtractTextPlugin('style.css', { allChunks: true }));
-  cssLoader = ExtractTextPlugin.extract('style', 'css?module&localIdentName=[hash:base64:5]');
+// if (process.env.NODE_ENV === 'production') {
+//   plugins.push(new ExtractTextPlugin('style.css', { allChunks: true }));
+//   cssLoader = ExtractTextPlugin.extract('style', 'css?module&localIdentName=[hash:base64:5]');
 
-  if (!Meteor.isCordova) {
-    plugins.push(new webpack.optimize.CommonsChunkPlugin('common', 'common.web.js'));
-  }
-} else {
-  cssLoader = 'style!css?module&localIdentName=[name]__[local]__[hash:base64:5]';
-}
+  // if (!Meteor.isCordova) {
+  //   plugins.push(new webpack.optimize.CommonsChunkPlugin('common', 'common.web.js', Infinity));
+  // }
+// } else {
+cssLoader = 'style!css?module&localIdentName=[name]__[local]__[hash:base64:5]';
+// }
+sassLoader = cssLoader + '!sass';
 
 module.exports = {
   entry: './entry',
@@ -41,8 +42,8 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.jsx?$/, loader: 'babel', query: babelSettings, exclude: /node_modules/ },
+      { test: /\.scss$/, loader: sassLoader },
       { test: /\.css$/, loader: cssLoader },
-      { test: /\.scss$/, loader: 'style!css!sass' },
       { test: /\.(png|jpe?g)(\?.*)?$/, loader: 'url?limit=8182' },
       { test: /\.(svg|ttf|woff|eot)(\?.*)?$/, loader: 'file' }
     ]

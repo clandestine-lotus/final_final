@@ -6,7 +6,7 @@ import { compose, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
 import DevTools from './DevTools.jsx'
-import reducers from './reducers.jsx'
+import reducers from 'dux/reducers.jsx'
 
 let finalCreateStore;
 // Implement store with redux devtools in dev environment only
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
     persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
   )(createStore);
 } else {
-  finalCreateStore = createStore
+  finalCreateStore = applyMiddleware(thunk)(createStore)
 }
 
 const store = finalCreateStore(reducers)

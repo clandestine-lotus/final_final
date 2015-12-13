@@ -1,6 +1,6 @@
 // import server files here
-import 'Other/test'
-import '_Template/server';
+import './../../methods/server.js'
+
 import 'main_SelectPresentation/server';
 import 'main_Presenter/server';
 

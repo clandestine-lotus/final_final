@@ -1,7 +1,6 @@
 /*eslint-disable*/
 // ESLINT: Unused parameter, console.logs
-Meteor.methods({
-  doSomething: function(obj) {
+export default function (obj) {
     if (this.isSimulation) {
       console.log('client');
     }
@@ -11,4 +10,3 @@ Meteor.methods({
     console.log('This is a test meteor method called from the client.');
     return 'some string';
   }
-});

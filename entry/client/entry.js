@@ -1,6 +1,10 @@
+// import global styles
+import 'css/global.scss'
+
 // import Meteor Methods for optimistic updates
-// import 'TodoApp/todo-methods';
-import '_Template/client';
+import './../../methods/client.js'
+
+
 import 'main_SelectPresentation/client';
 import 'main_Presenter/client';
 

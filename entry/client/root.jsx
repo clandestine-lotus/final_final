@@ -38,6 +38,13 @@ class Root extends React.Component {
   }
 }
 
-// render to '#main' in <body> from main.html
-ReactDOM.render(<Root store={store} />, document.getElementById('main')
-)
+// run listeners that dispatch actions here
+import 'dux/client.jsx'
+
+Meteor.startup(function () {
+  let rootElement = document.createElement('div')
+  rootElement.id = 'app'
+  document.body.appendChild(rootElement)
+
+  ReactDOM.render(<Root store={store} />, rootElement)
+})
