@@ -11,22 +11,23 @@ import { connect } from 'react-redux'
 import { bindActionCreators, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from './reducers'
+import * as ProjectorActions from './components/ProjectorActions.jsx'
 import Slides from '../../sub_Slides/client/index'
 
 let Projector = React.createClass({
   getInitialState: function () {
     // this.props.setPresentation(this.props.params.gid);
-    console.log('from get initial ', this.props.params.gid);
+    console.log('from get initial ', this.props);
     // this.props.setPresentation(this.props.params.gid);
     return {}
   },
 
   render: function () {
     const gid = this.props.params.gid
-    console.log('in render ', this.props.params.gid)
+    console.log('in render ', this.props)
     return (
       < div >
-        < Slides presentation={this.props.params.gid} index={0}/>
+        < Slides presentation={this.props.params.gid} index={this.props.slide}/>
       </ div >
     );
   }
@@ -36,8 +37,9 @@ function mapStateToProps (state) {
   return {
     // TODO: research the right way to get state props
     // TODO: FIX PREVIEWS.PREVIEWS
-    setPresentation: state.projector.setPresentation.get('presentation')
+    setPresentation: state.projector.setPresentation.get('presentation'),
+    slide: state.projector.setPresentation.get('slide')
   }
 }
 
-export default connect(mapStateToProps)(Projector)
+export default connect(mapStateToProps, ProjectorActions)(Projector)
