@@ -1,7 +1,7 @@
 import Presentations from '../../../main_SelectPresentation/globals/collections'
 
 const SET_PRESENTATION = 'SET_PRESENTATION';
-const SET_SLIDE = 'SET_SLIDE';
+const SET_PAGE = 'SET_PAGE';
 
 export function setPresentation(id) {
   return {
@@ -10,9 +10,9 @@ export function setPresentation(id) {
   }
 }
 
-export function setSlide(index) {
+export function setPage(page) {
   return {
-    type: SET_SLIDE,
-    payload: index
+    type: SET_PAGE,
+    payload: page
   }
 }

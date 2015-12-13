@@ -26,7 +26,7 @@ let Projector = React.createClass({
     console.log('in render ', this.props)
     return (
       < div >
-        < Slides gid={this.props.params.gid} index={this.props.slide}/>
+        < Slides gid={this.props.params.gid} page={this.props.page}/>
       </ div >
     );
   }
@@ -37,7 +37,7 @@ function mapStateToProps (state) {
     // TODO: research the right way to get state props
     // TODO: FIX PREVIEWS.PREVIEWS
     setPresentation: state.projector.setPresentation.get('presentation'),
-    slide: state.projector.setPresentation.get('slide')
+    page: state.projector.setPresentation.get('page')
   }
 }
 
