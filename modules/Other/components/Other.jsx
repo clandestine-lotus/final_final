@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as CounterActions from './CounterActions.jsx'
+import * as CounterActions from 'dux/counter/'
 import Counter from './Counter.jsx'
 import Immutable from 'immutable'
 // import ReactMixin from 'react-mixin';
@@ -12,16 +12,16 @@ import Immutable from 'immutable'
 class Other extends Component {
   render() {
     // this gets injected by the connect() call
-    const { counter, dispatch } = this.props;
+    const { count, dispatch } = this.props;
     return (
-      <Counter counter={counter} {...bindActionCreators(CounterActions, dispatch)} />
+      <Counter count={count} {...bindActionCreators(CounterActions, dispatch)} />
     );
   }
 }
 
 function select(state) {
   return {
-    counter: state.counter
+    count: state.counter
   }
 }
 

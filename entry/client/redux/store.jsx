@@ -6,7 +6,7 @@ import { compose, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
 import DevTools from './DevTools.jsx'
-import reducers from './reducers.jsx'
+import reducers from 'dux/reducers.jsx'
 
 let finalCreateStore;
 // Implement store with redux devtools in dev environment only

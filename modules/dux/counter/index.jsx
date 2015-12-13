@@ -1,6 +1,7 @@
 const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
 const DECREMENT_COUNTER = 'DECREMENT_COUNTER';
 
+// actions
 export function increment() {
   return {
     type: INCREMENT_COUNTER
@@ -30,4 +31,16 @@ export function incrementAsync() {
       dispatch(increment());
     }, 1000);
   };
+}
+
+// reducers
+export  function counter(state = 0, action) {
+  switch (action.type) {
+  case INCREMENT_COUNTER:
+    return state + 1;
+  case DECREMENT_COUNTER:
+    return state - 1;
+  default:
+    return state;
+  }
 }
