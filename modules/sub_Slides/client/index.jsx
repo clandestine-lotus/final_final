@@ -2,9 +2,8 @@
   This is the entry point. Export a react component here.
 */
 import React, { Component } from 'react'
-import { Link } from 'react-router'
 // import Presentations from '../globals/collections'
-import Presentations from '../../main_SelectPresentation/globals/collections'
+import Presentations from 'db/Presentations.js'
 
 export default class Slides extends Component {
   constructor() {
