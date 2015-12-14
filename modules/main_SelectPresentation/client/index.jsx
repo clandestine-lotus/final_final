@@ -25,7 +25,7 @@ let Presenter = React.createClass({
       <div className="container">
         <header>
 
-          <h1>OMG PREVIEWS YOYO</h1>
+          <h1>Select a Presentation</h1>
           < Link to = {'/present'} >Go to presentation< / Link >
         </header>
         {this.props.previews.map((preview)=> {

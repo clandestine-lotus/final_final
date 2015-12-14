@@ -1,5 +1,5 @@
 import React from 'react';
-import Presentations from '../../../main_SelectPresentation/globals/collections'
+import Presentations from 'main_SelectPresentation/globals/collections'
 
 
 let Thumbnail = React.createClass({
@@ -8,7 +8,7 @@ let Thumbnail = React.createClass({
   },
 
   changeSlide () {
-    this.props.setIndex(this.props.index)
+    Meteor.call('changeIndex', this.props.gid, this.props.index);
   },
 
   render() {
