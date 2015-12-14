@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
+import { Pace } from 'sub_Pace/client/index'
 import Login from 'sub_Login/client/index'
 import * as homeActions from './components/HomeActions'
 import Presentations from 'db/Presentations'
@@ -46,6 +47,8 @@ class Home extends Component {
 
         {this.props.Home.get('presentationCode') ? <Link to = "/audience"> Join a presentation </Link> : null}
         {this.props.Home.get('invalidCode') ? 'Please Enter Valid Code' : null}
+
+        <Pace />
       </div>
     );
   }
