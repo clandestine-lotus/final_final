@@ -44,6 +44,3 @@ function mapStateToProps (state) {
 }
 
 export default connect(mapStateToProps, ProjectorActions)(Projector)
-    previews: state.previews.list
-  }
-}
