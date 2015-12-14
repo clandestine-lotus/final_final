@@ -1,4 +1,4 @@
-import Presentations from '../../../main_SelectPresentation/globals/collections'
+import Presentations from '../../../db/Presentations'
 
 export default function pageChanged(gid) {
   var query = Presentations.find({gid: gid})

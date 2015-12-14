@@ -24,7 +24,7 @@ let Projector = React.createClass({
 
   render: function () {
     console.log('in render ', this.props)
-    // ChangePage(gid)
+    ChangePage(this.props.params.gid)
     return (
       < div >
         < Slides gid={this.props.params.gid} page={this.props.page}/>
