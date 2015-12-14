@@ -14,7 +14,8 @@ Meteor.methods({
         svgs: svgs,
         url: url,
         user: id,
-        gid: gid
+        gid: gid,
+        index: 0
       });
     })
     GoogleApi.post('drive/v2/files/' + gid + '/permissions', {data: {'type': 'anyone', 'role': 'reader'}}, function (err, result) {

@@ -16,7 +16,7 @@ let SidebarView = React.createClass({
     }
     return (
       <div style={sidebarStyle}>{Presentations.findOne({gid: this.props.gid}).svgs.map((slide, i) => {
-        return <Thumbnail key={i} svg={slide} index={i} setIndex={this.props.setIndex}/>
+        return <Thumbnail key={i} svg={slide} index={i} setIndex={this.props.setIndex} gid={this.props.gid}/>
       })}</div>
     )
   }

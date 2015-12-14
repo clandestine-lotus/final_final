@@ -14,6 +14,15 @@ import Slides from 'sub_Slides/client/index'
 import SidebarView from 'sub_SlideSideBar/client/index'
 
 let Presenter = React.createClass({
+
+  nextSlide () { 
+    Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) + 1);
+  },
+
+  prevSlide () { 
+    Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) - 1);
+  },
+
   render: function () {
     return (
       < div className="container" >
@@ -22,7 +31,7 @@ let Presenter = React.createClass({
             < Slides 
               gid={this.props.presentation}
               index={this.props.presenter.getIn(['presentation', 'index'])} />
-            <button onClick={this.props.prevSlide}>prev</button><button onClick={this.props.nextSlide}>next</button>
+            <button onClick={this.prevSlide}>prev</button><button onClick={this.nextSlide}>next</button>
             <SidebarView gid={this.props.presentation} setIndex={this.props.setIndex}/>
           </div> : <Link to="/selectpresentation">Choose a Slide</Link>}
       </ div >
