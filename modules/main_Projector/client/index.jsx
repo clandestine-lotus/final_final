@@ -12,6 +12,7 @@ import thunk from 'redux-thunk'
 import rootReducer from './reducers'
 import * as ProjectorActions from './components/ProjectorActions.jsx'
 import Slides from '../../sub_Slides/client/index'
+import ChangePage from './components/ChangePage'
 
 let Projector = React.createClass({
   getInitialState: function () {
@@ -24,6 +25,7 @@ let Projector = React.createClass({
   render: function () {
     const gid = this.props.params.gid
     console.log('in render ', this.props)
+    ChangePage(gid)
     return (
       < div >
         < Slides gid={this.props.params.gid} page={this.props.page}/>
