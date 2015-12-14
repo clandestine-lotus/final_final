@@ -12,6 +12,7 @@ export default class Slides extends Component {
   }
 
   slideMaker () {
+    console.log('in slidemaker', this.props)
     if(this.props.gid){
       let presentation = Presentations.findOne({gid: this.props.gid})
       let svgs = presentation.svgs
