@@ -3,7 +3,7 @@
 */
 import React, { Component } from 'react'
 // import Presentations from '../globals/collections'
-import Presentations from 'main_SelectPresentation/globals/collections'
+import Presentations from 'db/Presentations.js'
 
 export default class Slides extends Component {
   constructor() {

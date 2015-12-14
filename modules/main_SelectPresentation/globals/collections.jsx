@@ -1,3 +1,3 @@
-const Presentations = new Mongo.Collection('presentations')
+// const Presentations = new Mongo.Collection('presentations')
 
-export default Presentations
+// export default Presentations

@@ -3,7 +3,7 @@
 */
 
 import React from 'react';
-import Presentations from '../../main_SelectPresentation/globals/collections'
+import Presentations from 'db/Presentations.js'
 import Thumbnail from './components/thumbnail'
 
 let SidebarView = React.createClass({

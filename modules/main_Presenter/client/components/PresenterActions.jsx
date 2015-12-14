@@ -1,4 +1,4 @@
-import Presentations from 'main_SelectPresentation/globals/collections'
+import Presentations from 'db/Presentations.js'
 
 const ADD_PREVIEWS = 'ADD_PREVIEWS';
 const SET_INDEX = 'SET_INDEX';
@@ -20,6 +20,8 @@ export function setIndex (index) {
 
 Tracker.autorun(()=>{
   let presentationID = store.getState().previews.list.get('presentation')
-  let pres = Presentations.findOne({gid: presentationID});
-  store.dispatch(setIndex(pres.index))
+  if (presentationID){
+    let pres = Presentations.findOne({gid: presentationID});
+    store.dispatch(setIndex(pres.index))
+  } 
 })
