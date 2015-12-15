@@ -1,6 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Threads from 'db/Threads.js'
+import { expand } from 'dux/chat'
+import Posts from './posts.jsx'
+
 
 // Tracker.autorun(()=>
 //   // {presentationId: }
@@ -16,25 +19,40 @@ import Threads from 'db/Threads.js'
 let Post = React.createClass({
   
   render(){
+    const { dispatch, expandId, thread } = this.props
     return (
         <li>
           <span className="thread">
-            <strong>{this.props.thread.name}</strong>: {this.props.thread.text} 
+            <strong>{thread.name}</strong>: {thread.text} 
           </span>
-          <div><button className="reply" onClick={this.expand}>Expand</button>    </div>
+          <div>
+          { this.props.isReply ? 
+            '' : 
+            <button className="reply" onClick={ () => dispatch(expand(thread._id, expandId)) } >Expand</button> }
+          </div>
+          { expandId === thread._id ?
+            <ul>
+              <Posts isReply threadId={expandId}/>
+            </ul>
+            : ''}
         </li>
-        
+
         )
   }
 })
 
 
-// function selectState() {
-//   // select presentationId
+function selectState(state) {
+  return {
+    // select presentationId
+    expandId: state.chat.id
+  }
+}
+
+// function selectReducers(dispatch){
+//   return {
+//     dispatchExpand: id => dispatch(require('dux/chat').expand(id))
+//   }
 // }
 
-// function selectReducers(){
-
-// }
-
-export default connect()(Post)
+export default connect(selectState)(Post)

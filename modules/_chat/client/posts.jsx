@@ -1,7 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Threads from 'db/Threads.js'
+
+// Mongo collections
+import Threads from 'db/Threads'
+import Replies from 'db/Replies'
+
 import './thread.scss'
+
+// child directives
 import Post from './post.jsx'
 
 // Tracker.autorun(()=>
@@ -15,14 +21,26 @@ import Post from './post.jsx'
 //   return { type: ADD_THREAD, text}
 // }
 
+/**
+ *   if this is a reply and not top-level,
+ *   expect props of: isReply true, threadId
+ */
 
-let Chat = React.createClass({
+let Posts = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
-    return {
-      // select by presentationId
-      threads: Threads.find({}, {sort: {votes: -1}}).fetch()
+    let dbList;
+    if (this.props.isReply){
+      dbList = {
+        dbList: Replies.find({thread: this.props.threadId}, {sort: {votes: -1}}).fetch()
+      }
+    } else {
+      dbList = {
+        // select by presentationId
+        dbList: Threads.find({}, {sort: {votes: -1}}).fetch()
+      }
     }
+    return dbList
   },
 
   handleSubmit(event){
@@ -33,17 +51,21 @@ let Chat = React.createClass({
       createdAt: new Date(),
       ownerId: Meteor.userId(),
       name: Meteor.user().profile.name,
-      votes: 0,
-      replies: []
+      votes: 0
       // add presentationID
     }
-    Threads.insert(post)
+    if (this.props.isReply) {
+      post.thread = this.props.threadId
+      Replies.insert(post)
+    } else {
+      Threads.insert(post)
+    }
     input.value = ''
   },
 
   renderThreads(){
-    return this.data.threads.map((thread) => {
-      return <Post key={thread._id} thread={thread} />
+    return this.data.dbList.map((thread) => {
+      return <Post isReply={this.props.isReply} key={thread._id} thread={thread} />
     })
   },
 
@@ -79,4 +101,4 @@ let Chat = React.createClass({
 
 // }
 
-export default connect()(Chat)
+export default connect()(Posts)
