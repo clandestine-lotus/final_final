@@ -18,6 +18,6 @@ export default class Code extends Component {
   }
 
   render () {
-    return <div>{this.codeGetter()}</div>
+    return <div>Access code: {this.codeGetter()}</div>
   }
 }
