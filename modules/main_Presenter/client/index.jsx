@@ -13,6 +13,8 @@ import rootReducer from './reducers';
 import Slides from 'sub_Slides/client/index'
 import SidebarView from 'sub_SlideSideBar/client/index'
 import Code from 'sub_SharingCode/client/index'
+import AudienceList from 'sub_AudienceList/client/index'
+
 
 let Presenter = React.createClass({
   nextSlide () { 

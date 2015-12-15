@@ -22,7 +22,7 @@ class Home extends Component {
     event.preventDefault();
     let code = event.target[0].value;
     let submitCode = this.props.submitCode;
-
+    console.log('what does google give', Meteor.user().services.google)
     // TODO: add code validation
     const validCode = true;
     if (!validCode) {
