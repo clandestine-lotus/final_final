@@ -44,7 +44,7 @@ class Home extends Component {
           <input placeholder="Enter presentation code" />
         </form>
 
-        {this.props.Home.presentationCode ? <Link to = "/audience2"> Join a presentation </Link> : null}
+        {this.props.Home.presentationCode ? <Link to = "/audience"> Join a presentation </Link> : null}
       </div>
     );
   }
