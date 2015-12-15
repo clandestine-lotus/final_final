@@ -16,7 +16,7 @@ export default class Slides extends Component {
     if(this.props.gid){
       let presentation = Presentations.findOne({gid: this.props.gid})
       let svgs = presentation.svgs
-      return {__html: svgs[this.props.page]}
+      return {__html: svgs[this.props.index]}
     }
   }
 

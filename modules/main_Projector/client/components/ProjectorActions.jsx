@@ -1,7 +1,7 @@
 import Presentations from '../../../main_SelectPresentation/globals/collections'
 
 const SET_PRESENTATION = 'SET_PRESENTATION';
-const SET_PAGE = 'SET_PAGE';
+const SET_INDEX = 'SET_INDEX';
 
 export function setPresentation(id) {
   return {
@@ -10,9 +10,38 @@ export function setPresentation(id) {
   }
 }
 
-export function setPage(page) {
+export function setIndex(index) {
   return {
-    type: SET_PAGE,
-    payload: page
+    type: SET_INDEX,
+    payload: index
   }
 }
+
+Tracker.autorun(()=>{
+  let presentationID = store.getState().previews.list.get('presentation')
+  if (presentationID){
+    let pres = Presentations.findOne({gid: presentationID});
+    store.dispatch(setIndex(pres.index))
+  } 
+})
+
+// import Presentations from 'db/Presentations.js'
+
+// const ADD_PREVIEWS = 'ADD_PREVIEWS';
+// const SET_INDEX = 'SET_INDEX';
+
+// export function addPreviews (previews) {
+//   return {
+//     type: ADD_PREVIEWS,
+//     payload: previews
+//   }
+// }
+
+// export function setIndex (index) { 
+//   return {
+//     type: SET_INDEX,
+//     payload: index
+//   }
+// }
+
+

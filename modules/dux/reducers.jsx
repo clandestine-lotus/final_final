@@ -10,7 +10,7 @@ import Presenter from 'main_Presenter/client/components/Reducers.jsx'
 /* eslint-enable */
 import SelectPresentation from 'main_SelectPresentation/client/reducers.jsx'
 import Home from 'main_Home/client/components/Reducers.jsx'
-import Projector from 'main_Projector/client/reducers'
+import Projector from 'main_Projector/client/components/ProjectorReducers'
 
 // add reducers here
 export default combineReducers({
