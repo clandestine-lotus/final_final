@@ -1,7 +1,6 @@
 /*
   This is the entry point. Export a react component here.
 */
-
 import React, { Component } from 'react'
 
 export default class Preview extends Component {
@@ -23,9 +22,6 @@ export default class Preview extends Component {
         console.error('from preview ', err);
       }
       react.props.setPresentation(gid);
-      // reRoute to the projector view!
-      // react.history.pushState(null, '/present');
-      console.log('open')
       window.open('/projector/' + gid);
     })
   }
