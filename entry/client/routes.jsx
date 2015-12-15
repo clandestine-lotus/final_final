@@ -12,6 +12,7 @@ import Settings from 'Settings/routes'
 import Other from 'Other/routes'
 import SelectPresentation from 'main_SelectPresentation/client/routes'
 import Presenter from 'main_Presenter/client/routes'
+import Projector from 'main_Projector/client/routes'
 
 // define root component
 const App = React.createClass({
@@ -31,7 +32,8 @@ const rootRoute = {
       Settings,
       Other,
       SelectPresentation,
-      Presenter
+      Presenter,
+      Projector
     ]
   }]
 }

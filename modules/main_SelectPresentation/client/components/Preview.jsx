@@ -1,7 +1,6 @@
 /*
   This is the entry point. Export a react component here.
 */
-
 import React, { Component } from 'react'
 
 export default class Preview extends Component {
@@ -11,7 +10,6 @@ export default class Preview extends Component {
   }
 
   presentation() {
-    this.props.setPresentation(5);
     // declare identifier variables in function scope
     let user = Meteor.user()._id;
     let link = this.props.data.link;
@@ -24,7 +22,7 @@ export default class Preview extends Component {
         console.error('from preview ', err);
       }
       react.props.setPresentation(gid);
-      // reRoute to the projector view! 
+      window.open('/projector/' + gid);
     })
   }
 
