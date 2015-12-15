@@ -12,6 +12,7 @@ import Home from 'main_Home/client/components/Reducers.jsx'
 import Projector from 'main_Projector/client/components/ProjectorReducers'
 import Audience from 'dux/audience'
 import Chat from 'dux/chat'
+import Pace from 'sub_Pace/client/components/paceReduxInteractions'
 
 // Slide data storage
 import Deck from 'dux/deck'
@@ -32,4 +33,5 @@ export default combineReducers({
   presenter: Presenter,
   projector: Projector,
   audience: Audience,
+  pace: Pace,
 })
