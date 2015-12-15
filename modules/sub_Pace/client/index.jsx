@@ -1,33 +1,81 @@
 /*
-  Speedometer is a slider which represents how the audience feels about the pace of the presentation.
-
-  Expects "speed" (num between 0 and 1) as a prop.
+  Pace is an audience module which records and reports how an audience member feels about the pace of the lecture
 */
+import React from 'react'
+import { connect } from 'react-redux'
 
-import React from 'react';
+import * as paceActions from './components/PaceReduxInteractions'
 
-export const Pace = React.createClass({
-  propTypes: {
+// TODO: fix this to find the right presentation id when the time comes.
+const TODO_PRESENTATION_ID = 1
 
+const Pace = React.createClass({
+
+  // addUser() {
+  componentDidMount() {
+    this.updateUserCount(1)
   },
 
-  onChange: function (e) {
-    console.log(e.target.value);
+  // removeUser() {
+  componentWillUnmount() {
+    this.updateUserCount(-1)
+    this.newPace(0)
+  },
 
+  updateUserCount(delta) {
+    Meteor.call('updateUserCount', TODO_PRESENTATION_ID, delta, function(err, numChanged, status) {
+      if (err) {
+        console.error('Error updating pace:', err)
+      } else {
+        console.log('updateUserCount', err, numChanged, status)
+      }
+    })
+  },
+
+  updatePace(newPace) {
+    const oldPace = this.props.pace.get('currentPace')
+    let delta = newPace - oldPace
+
+    Meteor.call('updatePace', TODO_PRESENTATION_ID, delta, function(err, numChanged, status) {
+      if (err) {
+        console.error('Error updating pace:', err)
+      } else {
+        console.log('updatePace', err, numChanged, status)
+      }
+    })
+  },
+
+  clickHandler(e) {
+    const newPace = e.target.value
+
+    this.updatePace(newPace)
+
+    this.props.votePace(newPace)
   },
 
   render() {
+    const selected = {
+      color: 'dodgerblue'
+    }
     return (
       <div>
-        <input type="range" id="myRange" defaultValue="90" onChange={this.onChange}/>
+        <button onClick={this.addUser}>Add user</button>
+        <button onClick={this.removeUser}>Remove user</button><br />
+
+        <button style={ this.props.pace.get('currentPace') == -1 ? selected : null } onClick={this.clickHandler} value={-1}>Way too fast</button>
+        <button style={ this.props.pace.get('currentPace') == -0.5 ? selected : null } onClick={this.clickHandler} value={-0.5}>Little too fast</button>
+        <button style={ this.props.pace.get('currentPace') == 0 ? selected : null } onClick={this.clickHandler} value={0}>Just right</button>
+        <button style={ this.props.pace.get('currentPace') == 0.5 ? selected : null } onClick={this.clickHandler} value={0.5}>Little too slow</button>
+        <button style={ this.props.pace.get('currentPace') == 1 ? selected : null } onClick={this.clickHandler} value={1}>Way too slow</button>
       </div>
     )
   }
 })
-        // <ReactSlider
-        //   defaultValue= {50}
-        //   orientation= "horizontal"
-        //   minDistance= {10}
-        //   onChange= {this.onChange} />
-          // value= {this.state.value}
 
+function mapStateToProps(state) {
+  return {
+    pace: state.pace,
+  }
+}
+
+export default connect(mapStateToProps, paceActions)(Pace)

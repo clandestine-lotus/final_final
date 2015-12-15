@@ -26,6 +26,5 @@
   "bugs": {
     "url": "https://github.com/clandestine-lotus/presentation/issues"
   },
-  "homepage": "https://github.com/clandestine-lotus/presentation#readme",
-  "pre-commit": "lint, test"
+  "homepage": "https://github.com/clandestine-lotus/presentation#readme"
 }
