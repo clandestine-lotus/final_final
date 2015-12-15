@@ -17,13 +17,13 @@ export function setIndex(index) {
   }
 }
 
-Tracker.autorun(()=>{
-  let presentationID = store.getState().previews.list.get('presentation')
-  if (presentationID){
-    let pres = Presentations.findOne({gid: presentationID});
-    store.dispatch(setIndex(pres.index))
-  } 
-})
+// Tracker.autorun(()=>{
+//   let presentationID = store.getState().projector.list.get('presentation')
+//   if (presentationID){
+//     let pres = Presentations.findOne({gid: presentationID});
+//     store.dispatch(setIndex(pres.index))
+//   } 
+// })
 
 // import Presentations from 'db/Presentations.js'
 

@@ -5,6 +5,7 @@ export default function pageChanged(gid) {
   var handle = query.observeChanges({
     changed: function (id, changed) {
       console.log('changed ', store.getState())
+      Meteor.call('changeIndex', this.props.presentation, changed.index);
     }
   });
 }
