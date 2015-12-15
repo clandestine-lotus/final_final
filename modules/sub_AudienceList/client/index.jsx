@@ -9,6 +9,7 @@ export default class AudienceList extends Component{
   render() {
     return (
       <div>
+        Audience Members
         {this.props.audience.map((user) =>{
           return <AudienceCard user={user} />
         })}
