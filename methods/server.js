@@ -10,3 +10,4 @@ Meteor.methods({
   changeIndex,
   createSharingCode
 })
+

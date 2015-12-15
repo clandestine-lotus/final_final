@@ -4,3 +4,4 @@ import doSomething from './method1'
 Meteor.methods({
   doSomething, 
 })
+
