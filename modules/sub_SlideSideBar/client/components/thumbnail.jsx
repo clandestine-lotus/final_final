@@ -1,5 +1,5 @@
 import React from 'react';
-import Presentations from 'main_SelectPresentation/globals/collections'
+import Presentations from 'db/Presentations'
 
 
 let Thumbnail = React.createClass({
