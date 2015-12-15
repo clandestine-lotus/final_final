@@ -11,15 +11,16 @@ import Slides from 'sub_Slides/client/index'
 import SidebarView from 'sub_SlideSideBar/client/index'
 import Code from 'sub_SharingCode/client/index'
 
-import AudienceActions from './components/AudienceActions'
+import * as AudienceActions from './components/AudienceActions'
 
-let Presenter = React.createClass({
-  nextSlide () { 
-    Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) + 1);
+let Audience = React.createClass({
+
+  prevSlide() {
+    this.props.setIndex(this.props.index - 1)
   },
 
-  prevSlide () { 
-    Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) - 1);
+  nextSlide() {
+    this.props.setIndex(this.props.index + 1)
   },
 
   render: function () {
@@ -30,15 +31,11 @@ let Presenter = React.createClass({
             Current Slide
             < Slides 
               gid={this.props.presentation}
-              index={this.props.presenter.getIn(['presentation', 'index'])} />
+              index={this.props.index} />
             Next Slide
-            < Slides 
-              gid={this.props.presentation}
-              index={this.props.presenter.getIn(['presentation', 'index']) + 1} />
             <button onClick={this.prevSlide}>prev</button><button onClick={this.nextSlide}>next</button>
             < Code gid={this.props.presentation} />
-            <SidebarView gid={this.props.presentation} setIndex={this.props.setIndex}/>
-          < /div > : <Link to="/selectpresentation">Choose a Slide</Link>}
+          < /div > : <Link to="/">Pick an active presentation</Link>}
       </ div >
     );
   }
@@ -46,9 +43,9 @@ let Presenter = React.createClass({
 
 function mapStateToProps (state) {
   return {
-    presenter: state.presenter,
-    presentation: state.previews.list.get('presentation')
+    index: state.audience.getIn(['presentation', 'index']),
+    presentation: state.Home.get('presentationCode')
   }
 }
 
-export default connect(mapStateToProps, AudienceActions)(Presenter)
+export default connect(mapStateToProps, AudienceActions)(Audience)

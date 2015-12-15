@@ -1,11 +1,15 @@
-export default function HomeReducers(state = {}, action) {
+import {Map, List} from 'immutable'
+
+const initial = Map({loggedIn: false, presentationCode: null})
+
+export default function HomeReducers(state = initial, action) {
   switch (action.type) {
   case 'SUBMIT_CODE':
-    return Object.assign({}, state, {presentationCode: action.payload});
+    return state.set('presentationCode', action.payload);
   case 'LOGIN':
-    return Object.assign({}, state, {loggedIn: true});
+    return state.set('loggedIn', true);
   case 'LOGOUT':
-    return Object.assign({}, state, {loggedIn: false});
+    return state.set('loggedIn', false);
   default:
     return state;
   }
