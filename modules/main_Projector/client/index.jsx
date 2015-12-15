@@ -8,6 +8,7 @@ import { bindActionCreators, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import * as ProjectorActions from './components/ProjectorActions.jsx'
 import Slides from 'sub_Slides/client/index'
+import Code from 'sub_SharingCode/client/index'
 import Presentations from 'db/Presentations'
 
 let Projector = React.createClass({
@@ -27,6 +28,7 @@ let Projector = React.createClass({
     return (
       < div >
         < Slides gid={this.props.params.gid} index={this.props.projector.getIn(['presentation', 'index'])}/>
+        < Code gid={this.props.params.gid} />
       </ div >
     );
   }
