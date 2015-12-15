@@ -11,7 +11,6 @@ export default class Preview extends Component {
   }
 
   presentation() {
-    this.props.setPresentation(5);
     // declare identifier variables in function scope
     let user = Meteor.user()._id;
     let link = this.props.data.link;
@@ -24,7 +23,10 @@ export default class Preview extends Component {
         console.error('from preview ', err);
       }
       react.props.setPresentation(gid);
-      // reRoute to the projector view! 
+      // reRoute to the projector view!
+      // react.history.pushState(null, '/present');
+      console.log('open')
+      window.open('/projector/' + gid);
     })
   }
 

@@ -1,8 +1,10 @@
 // import server files here
 import './../../methods/server.js'
 
-import 'main_SelectPresentation/server';
-import 'main_Presenter/server';
+import '_Template/server'
+import 'main_SelectPresentation/server'
+import 'main_Presenter/server'
+import 'main_Projector/server'
 
 // Do server-rendering only in proudction mode
 if (process.env.NODE_ENV === 'production') {
