@@ -10,10 +10,12 @@ export function setIndex (index) {
 }
 
 
-// Tracker.autorun(()=>{
-//   let presentationID = store.getState().previews.list.get('presentation')
-//   if (presentationID){
-//     let pres = Presentations.findOne({gid: presentationID});
-//     store.dispatch(setIndex(pres.index))
-//   } 
-// })
+Tracker.autorun(()=>{
+  let presentationID = store.getState().Home.get('presentationCode')
+  if (presentationID){
+    let pres = Presentations.findOne({gid: presentationID});
+    if(store.getState().audience.getIn(['presentation', 'index']) === pres.index - 1) {
+      store.dispatch(setIndex(pres.index))
+    }
+  } 
+})

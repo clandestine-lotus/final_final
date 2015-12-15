@@ -28,11 +28,9 @@ let Audience = React.createClass({
       < div className="container" >
         {this.props.presentation ? 
           <div className="presenterSlide">
-            Current Slide
             < Slides 
               gid={this.props.presentation}
               index={this.props.index} />
-            Next Slide
             <button onClick={this.prevSlide}>prev</button><button onClick={this.nextSlide}>next</button>
             < Code gid={this.props.presentation} />
           < /div > : <Link to="/">Pick an active presentation</Link>}
