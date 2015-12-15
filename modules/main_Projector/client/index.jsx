@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 
 import { bindActionCreators, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import rootReducer from './reducers'
 import * as ProjectorActions from './components/ProjectorActions.jsx'
 import Slides from 'sub_Slides/client/index'
 import Presentations from 'db/Presentations'
