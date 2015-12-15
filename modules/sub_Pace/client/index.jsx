@@ -19,7 +19,7 @@ const Pace = React.createClass({
   // removeUser() {
   componentWillUnmount() {
     this.updateUserCount(-1)
-    this.newPace(0)
+    this.updatePace(0)
   },
 
   updateUserCount(delta) {
