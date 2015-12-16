@@ -18,7 +18,7 @@ let Posts = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
     // if this a reply, get all the replies with 'threadId' as a prop
-    let thread = {threadId: this.props.threadId || null}
+    let thread = {presentationId: this.props.presentationId, threadId: this.props.threadId || null}
     return {postsList: PostsDB.find(thread, {sort: {votes: -1}}).fetch() }
   },
 
@@ -28,7 +28,7 @@ let Posts = React.createClass({
     let post = {
       // TODO! 
       // add presentationID
-      presentationId: 0,
+      presentationId: this.props.presentationId,
       text: input.value,
       createdAt: new Date(),
       ownerId: Meteor.userId(),
