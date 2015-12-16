@@ -19,6 +19,22 @@ import Presentations from 'db/Presentations'
 let Presenter = React.createClass({
   mixins: [ReactMeteorData],
 
+  componentWillMount() {
+    let user = Meteor.user()._id;
+    let link = this.props.data.link;
+    let gid = this.props.data.gid;
+
+    Meteor.call('createPresentation', link, user, gid, function (err, result) {
+      if (err) {
+        console.error('from preview ', err);
+      } else {
+        console.log('success!', this.props.params.gid);
+        // react.props.setPresentation(gid);
+        // window.open('/projector/' + gid);
+      }
+    })
+  },
+
   componentDidMount() {
     window.addEventListener('beforeunload', ()=>{
       Presentations.update(
@@ -31,7 +47,7 @@ let Presenter = React.createClass({
     });
   },
 
-  componentWillUnmount () { 
+  componentWillUnmount() {
     Presentations.update(
       {_id: this.data.presentationId},
       {$unset: {code: ''}},
@@ -41,43 +57,43 @@ let Presenter = React.createClass({
     );
   },
 
-  getMeteorData () {
+  getMeteorData() {
     var presentation = Presentations.findOne({gid: this.props.presentation});
     return {
       presentationId: presentation._id
     }
   },
 
-  nextSlide () { 
+  nextSlide() {
     Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) + 1);
   },
 
-  prevSlide () { 
+  prevSlide() {
     Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) - 1);
   },
 
-  changeSlide (index, gid) {
+  changeSlide(index, gid) {
     Meteor.call('changeIndex', gid, index);
   },
 
-  render: function () {
+  render() {
     return (
-      < div className="container" >
-        {this.props.presentation ? 
+      <div className="container">
+        {this.props.presentation ?
           <div className="presenterSlide">
             Current Slide
-            < Slides
+            <Slides
               gid={this.props.presentation}
               index={this.props.presenter.getIn(['presentation', 'index'])} />
             Next Slide
-            < Slides
+            <Slides
               gid={this.props.presentation}
               index={this.props.presenter.getIn(['presentation', 'index']) + 1} />
             <button onClick={this.prevSlide}>prev</button><button onClick={this.nextSlide}>next</button>
-            < Code gid={this.props.presentation} />
+            <Code gid={this.props.presentation} />
             <SidebarView gid={this.props.presentation} setIndex={this.changeSlide}/>
-          < /div > : <Link to="/selectpresentation">Choose a Slide</Link>}
-      </ div >
+          </div> : <Link to="/selectpresentation">Choose a Slide</Link>}
+      </div>
     );
   }
 })

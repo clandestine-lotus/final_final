@@ -4,7 +4,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import * as paceActions from './components/PaceReduxInteractions'
+import * as paceActions from './components/PaceReductions'
 
 // TODO: fix this to find the right presentation id when the time comes.
 const TODO_PRESENTATION_ID = 1

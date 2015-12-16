@@ -8,11 +8,12 @@ import { Link } from 'react-router'
 import Preview from './components/Preview'
 import * as PresenterActions from './components/PresenterActions.jsx'
 
+import {GridList, GridTile} from 'material-ui'
+
 // import { bindActionCreators, createStore, applyMiddleware } from 'redux'
 // import thunk from 'redux-thunk'
 // import rootReducer from './reducers'
 
-const {Slider} = mui
 
 let Presenter = React.createClass({
   getInitialState: function (props) {
@@ -21,16 +22,51 @@ let Presenter = React.createClass({
     return {};
   },
 
+  compnentWillMount() {
+    console.log(mui);
+
+    // const {Slider} = mui
+  },
+
   render: function () {
     let setPres = this.props.setPresentation
+    const s2 = {
+      backgroundColor: 'papayawhip',
+    }
+    const s1 = {
+      backgroundColor: 'firebrick',
+    }
+    const tileStyle = {
+      height: '150px',
+      color: 'white',
+    }
 
     return (
       <div className="container">
-      <Slider />
+        <h1>Select a Presentation</h1>
+        <div className="row" style={tileStyle}>
+            <GridList
+              className="four columns"
+              cols={1}
+            >
+              {
+                this.props.previews.map(preview => <Link to={'/present/' + preview.gid}><GridTile
+                  title={preview.title}
+                  style={tileStyle}
+                  setPresentation={setPres}
+                  data={preview}
+                  className=""
+                  ><img src={preview.thumbnail} /></GridTile></Link>
+                )
+              }
+            </GridList>
+
+          <div className="eight columns" style={s1}>y
+          </div>
+        </div>
         <header>
 
-          <h1>Select a Presentation</h1>
-          < Link to = {'/present'} >Go to presentation< / Link >
+          <Link to = {'/present'}>Go to presentation</Link>
 
         </header>
         {this.props.previews.map((preview)=> {
