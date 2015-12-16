@@ -1,8 +1,16 @@
-export default function () {
+import Presentations from 'db/Presentations'
+
+export default function (gid) {
   Meteor.onConnection(function (connection) {
     console.log(connection);
     connection.onClose(function () {
-      console.log('left')
+      Presentations.update(
+        {gid: gid},
+        {$set: {code: null}},
+        function () {
+          console.log('dine')
+        }
+      )
     })
   })
 }
