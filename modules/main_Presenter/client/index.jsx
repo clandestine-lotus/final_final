@@ -25,22 +25,26 @@ let Presenter = React.createClass({
     Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) - 1);
   },
 
+  changeSlide (index, gid) {
+    Meteor.call('changeIndex', gid, index);
+  },
+
   render: function () {
     return (
       < div className="container" >
         {this.props.presentation ? 
           <div className="presenterSlide">
             Current Slide
-            < Slides 
+            < Slides
               gid={this.props.presentation}
               index={this.props.presenter.getIn(['presentation', 'index'])} />
             Next Slide
-            < Slides 
+            < Slides
               gid={this.props.presentation}
               index={this.props.presenter.getIn(['presentation', 'index']) + 1} />
             <button onClick={this.prevSlide}>prev</button><button onClick={this.nextSlide}>next</button>
             < Code gid={this.props.presentation} />
-            <SidebarView gid={this.props.presentation} setIndex={this.props.setIndex}/>
+            <SidebarView gid={this.props.presentation} setIndex={this.changeSlide}/>
           < /div > : <Link to="/selectpresentation">Choose a Slide</Link>}
       </ div >
     );
