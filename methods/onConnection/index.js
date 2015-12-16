@@ -1,14 +1,11 @@
-import Presentations from 'db/Presentations'
+import Codes from 'db/Codes'
 
 export default function (gid) {
   Meteor.onConnection(function (connection) {
     console.log(connection);
     connection.onClose(function () {
-      console.log('closing');
-      Presentations.update(
-        {gid: gid},
-        {$unset: {code: ""}}
-      )
+      console.log('closing', gid);
+      Codes.remove({gid: gid});
     })
   })
 }

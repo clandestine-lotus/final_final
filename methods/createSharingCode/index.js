@@ -1,3 +1,5 @@
+import Codes from 'db/Codes'
+
 const randomString = Meteor.npmRequire('random-string')
 
 // keep object with already used strings to avoid dublicates
@@ -9,16 +11,15 @@ var getRandomString = function (length) {
   return randomString({
     length: length,
     numeric: true,
-    letters: true
+    letters: false
   });
 }
 
 export default function (length) {
-  var result;
-  while (!result) {
-    result = getRandomString(length);
-    result = !usedStrings[result] ? result : undefined;
+  var existingCodes = [null];
+  while (existingCodes.length) {
+    var code = getRandomString(length);
+    existingCodes = Codes.find({code: code}).fetch();
   }
-  usedStrings[result] = true;
-  return result;
+  return code;
 }
