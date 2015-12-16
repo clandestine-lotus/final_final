@@ -8,7 +8,7 @@ let Thumbnail = React.createClass({
   },
 
   changeSlide () {
-    Meteor.call('changeIndex', this.props.gid, this.props.index);
+    this.props.setIndex(this.props.index, this.props.gid)
   },
 
   render() {

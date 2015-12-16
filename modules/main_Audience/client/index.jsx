@@ -33,6 +33,7 @@ let Audience = React.createClass({
               index={this.props.index} />
             <button onClick={this.prevSlide}>prev</button><button onClick={this.nextSlide}>next</button>
             < Code gid={this.props.presentation} />
+            <SidebarView gid={this.props.presentation} setIndex={this.props.setIndex}/>
           < /div > : <Link to="/">Pick an active presentation</Link>}
       </ div >
     );
