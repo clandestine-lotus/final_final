@@ -1,16 +1,18 @@
 /*
   This is the entry point. Export a react component here.
 */
-import React, { Component } from 'react'
+import React/*, { Component }*/ from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router';
+import { Link } from 'react-router'
 
 import Preview from './components/Preview'
 import * as PresenterActions from './components/PresenterActions.jsx'
 
-import { bindActionCreators, createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from './reducers';
+// import { bindActionCreators, createStore, applyMiddleware } from 'redux'
+// import thunk from 'redux-thunk'
+// import rootReducer from './reducers'
+
+const {Slider} = mui
 
 let Presenter = React.createClass({
   getInitialState: function (props) {
@@ -21,8 +23,10 @@ let Presenter = React.createClass({
 
   render: function () {
     let setPres = this.props.setPresentation
+
     return (
       <div className="container">
+      <Slider />
         <header>
 
           <h1>Select a Presentation</h1>
