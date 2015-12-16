@@ -19,7 +19,7 @@ import Connection from '../globals/index'
 
 let Presenter = React.createClass({
   getInitialState: function () {
-    Meteor.call('onConnection', function () {
+    Meteor.call('onConnection', this.props.presentation, function () {
       console.log('running onconnection')
     })
     return null
