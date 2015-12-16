@@ -12,7 +12,7 @@ form {
   position: relative;
 }
 
-.newTask input {
+.chat input {
   box-sizing: border-box;
   padding: 10px 0;
   background: transparent;
@@ -22,7 +22,7 @@ form {
   font-size: 1em;
 }
 
-.newTask input:focus{
+.chat input:focus{
   outline: 0;
 }
 
@@ -83,7 +83,7 @@ header .hideCompleted {
     clear: both;
   }
 
-  .newTask input {
+  .chat input {
     padding-bottom: 5px;
   }
 }

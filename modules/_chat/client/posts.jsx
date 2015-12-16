@@ -1,25 +1,13 @@
 import React from 'react'
-import { connect } from 'react-redux'
 
 // Mongo collections
-import Threads from 'db/Threads'
-import Replies from 'db/Replies'
+import PostsDB from 'db/Posts'
 
-import './thread.scss'
+import './chat.scss'
 
 // child directives
 import Post from './post.jsx'
 
-// Tracker.autorun(()=>
-//   // {presentationId: }
-//   Threads.findOne({}, )
-//   )
-// const ADD_THREAD = 'ADD_THREAD'
-// const ADD_REPLY = 'ADD_REPLY'
-
-// export function updateChat (obj) {
-//   return { type: ADD_THREAD, text}
-// }
 
 /**
  *   if this is a reply and not top-level,
@@ -29,76 +17,65 @@ import Post from './post.jsx'
 let Posts = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
-    let dbList;
-    if (this.props.isReply){
-      dbList = {
-        dbList: Replies.find({thread: this.props.threadId}, {sort: {votes: -1}}).fetch()
-      }
-    } else {
-      dbList = {
-        // select by presentationId
-        dbList: Threads.find({}, {sort: {votes: -1}}).fetch()
-      }
-    }
-    return dbList
+    // if this a reply, get all the replies with 'threadId' as a prop
+    let thread = {threadId: this.props.threadId || null}
+    return {postsList: PostsDB.find(thread, {sort: {votes: -1}}).fetch() }
   },
 
   handleSubmit(event){
     event.preventDefault();
     let input = this.refs.threadInput;
     let post = {
+      // TODO! 
+      // add presentationID
+      presentationId: 0,
       text: input.value,
       createdAt: new Date(),
       ownerId: Meteor.userId(),
       name: Meteor.user().profile.name,
-      votes: 0
-      // add presentationID
+      votes: 0,
+      supporters: [],
+      threadId: null,
     }
     if (this.props.isReply) {
-      post.thread = this.props.threadId
-      Replies.insert(post)
-    } else {
-      Threads.insert(post)
+      // add the threadID as a prop for replies to a question thread
+      post.threadId = this.props.threadId
     }
+    PostsDB.insert(post)
+    
     input.value = ''
   },
 
-  renderThreads(){
-    return this.data.dbList.map((thread) => {
-      return <Post isReply={this.props.isReply} key={thread._id} thread={thread} />
+  renderPosts(){
+    return this.data.postsList.map((post) => {
+      return <Post isReply={this.props.isReply} key={post._id} post={post} />
     })
   },
 
   render() {
     let form = null;
+    const { isReply } = this.props;
+    
+    // set the text input
     if (Meteor.userId()){
-      form = (<form className="newThread" onSubmit={this.handleSubmit} >
-      <input type="text" ref="threadInput" placeholder="Add a question!"/>        
+      const placehldr = isReply ? 'Reply to this question' : 'Ask a question!'
+      form = (<form className="newThread chat" onSubmit={this.handleSubmit} >
+      <input type="text" ref="threadInput" placeholder={ placehldr }/>        
       </form>)
     } else {
       form = 'Log in to ask Questions'
     }
+
     return (
       <div>
-        <div>
-        { form }
-        </div>
-        <div>
-          <ul>
-          {this.renderThreads()}
-          </ul>
-        </div>
+        <ul>
+        { isReply ? '' : <li> { form } </li> }
+        {this.renderPosts()}
+        { isReply ? <li> { form } </li> : '' }
+        </ul>
       </div>
       )
   }
 })
 
-// function selectState() {
-//   // select presentationId
-// }
-
-// function selectReducers(){
-
-// }
-
-export default connect()(Posts)
+export default Posts

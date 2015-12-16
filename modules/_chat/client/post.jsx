@@ -1,36 +1,35 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Threads from 'db/Threads.js'
 import { expand } from 'dux/chat'
 import Posts from './posts.jsx'
 
-
-// Tracker.autorun(()=>
-//   // {presentationId: }
-//   Threads.findOne({}, )
-//   )
-// const ADD_THREAD = 'ADD_THREAD'
-// const ADD_REPLY = 'ADD_REPLY'
-
-// export function updateChat (obj) {
-//   return { type: ADD_THREAD, text}
-// }
-
 let Post = React.createClass({
-  
+  hasVoted: false,
+  upvote(){
+    Meteor.call('votes', this.props.post._id, 1)
+    this.hasVoted = true
+  },
+
   render(){
-    const { dispatch, expandId, thread } = this.props
+    let voteBtn;
+    const { dispatch, expandId, post } = this.props
+    if (post.supporters.indexOf(Meteor.userId()) !== -1){
+      voteBtn = ''
+    } else {
+      voteBtn = <button className="upvote" onClick={ this.upvote }> +1 </button> 
+    }
     return (
         <li>
-          <span className="thread">
-            <strong>{thread.name}</strong>: {thread.text} 
+          <span className="post">
+            +{post.votes} <strong>{post.name}</strong>: {post.text} 
           </span>
           <div>
           { this.props.isReply ? 
             '' : 
-            <button className="reply" onClick={ () => dispatch(expand(thread._id, expandId)) } >Expand</button> }
+            <button className="reply" onClick={ () => dispatch(expand(post._id, expandId)) } >Expand</button> }
+            { voteBtn }
           </div>
-          { expandId === thread._id ?
+          { expandId === post._id ?
             <ul>
               <Posts isReply threadId={expandId}/>
             </ul>
