@@ -2,7 +2,7 @@
   This is the entry point. Export a react component here.
 */
 import React, { Component } from 'react'
-import Presentations from 'db/Presentations'
+import Codes from 'db/Codes'
 
 export default class Code extends Component {
   constructor () {
@@ -12,7 +12,7 @@ export default class Code extends Component {
 
   codeGetter () {
     if (this.props.gid) {
-      let presentation = Presentations.findOne({gid: this.props.gid})
+      let presentation = Codes.findOne({gid: this.props.gid})
       return presentation.code;
     }
   }
