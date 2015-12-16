@@ -5,6 +5,7 @@ import { Link } from 'react-router'
 
 import Login from 'sub_Login/client/index'
 import * as homeActions from './components/HomeActions'
+import Presentations from 'db/Presentations'
 
 class Home extends Component {
   componentWillMount() {
@@ -21,15 +22,14 @@ class Home extends Component {
   submitCode(event) {
     event.preventDefault();
     let code = event.target[0].value;
-    let submitCode = this.props.submitCode;
-
     // TODO: add code validation
-    const validCode = true;
-    if (!validCode) {
-      return false;
+    let pres = Presentations.findOne({code: code})
+    if (pres) {
+      this.props.codeValidation(false);
+      this.props.submitCode(pres.gid);
+    } else {
+      this.props.codeValidation(true);
     }
-
-    submitCode(code);
   }
 
   render() {
@@ -38,13 +38,14 @@ class Home extends Component {
         <Login />
 
         <br />
-        {this.props.Home.loggedIn ? <Link to = "/selectpresentation"> Make a presentation </Link> : null}
+        {this.props.Home.get('loggedIn') ? <Link to = "/selectpresentation"> Make a presentation </Link> : null}
 
         <form onSubmit={this.submitCode.bind(this)}>
-          <input placeholder="Enter presentation code" />
+          <input placeholder="Enter presentation code" maxLength="2" />
         </form>
 
-        {this.props.Home.presentationCode ? <Link to = "/audience"> Join a presentation </Link> : null}
+        {this.props.Home.get('presentationCode') ? <Link to = "/audience"> Join a presentation </Link> : null}
+        {this.props.Home.get('invalidCode') ? 'Please Enter Valid Code' : null}
       </div>
     );
   }
