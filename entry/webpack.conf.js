@@ -15,8 +15,8 @@ module.exports = {
     'react-addons-pure-render-mixin': 'React.addons.PureRenderMixin',
     'react-addons-update': 'React.addons.update',
     'react-addons-linked-state-mixin': 'React.addons.LinkedStateMixin',
-    'react-addons-test-utils': 'React.addons.TestUtils'
-    // 'percolate:google-api': 'GoogleApi'
+    'react-addons-test-utils': 'React.addons.TestUtils',
+    'material-ui': 'mui'
   },
   devServer: {
     // You can change this to your server IP address to access it remotely

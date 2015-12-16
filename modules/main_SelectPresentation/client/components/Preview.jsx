@@ -22,7 +22,7 @@ export default class Preview extends Component {
         console.error('from preview ', err);
       }
       react.props.setPresentation(gid);
-      window.open('/projector/' + gid);
+      // window.open('/projector/' + gid);
     })
   }
 
