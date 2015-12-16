@@ -25,7 +25,10 @@ class Home extends Component {
     // TODO: add code validation
     let pres = Presentations.findOne({code: code})
     if (pres) {
+      this.props.codeValidation(false);
       this.props.submitCode(pres.gid);
+    } else {
+      this.props.codeValidation(true);
     }
   }
 
@@ -42,7 +45,7 @@ class Home extends Component {
         </form>
 
         {this.props.Home.get('presentationCode') ? <Link to = "/audience"> Join a presentation </Link> : null}
-        {this.flag ? 'Please Enter Valid Code' : null}
+        {this.props.Home.get('invalidCode') ? 'Please Enter Valid Code' : null}
       </div>
     );
   }
