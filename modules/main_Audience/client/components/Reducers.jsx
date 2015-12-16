@@ -5,16 +5,19 @@ const initial = Map({
     index: 0
   }),
   viewer: Map({
-    id: null
+    id: null,
+    index: 0
   })
 })
 
 export default function counter(state = initial, action) {
   switch (action.type) {
   case 'SET_INDEX':
-    return state.setIn(['presentation', 'index'], action.payload);
+    return state.setIn(['viewer', 'index'], action.payload);
   case 'SET_VIEWER':
     return state.setIn(['viewer', 'id'], action.payload);
+  case 'SET_END': 
+    return state.setIn(['presentation', 'index'], action.payload);
   default:
     return state;
   }
