@@ -41,7 +41,7 @@ class Home extends Component {
         {this.props.Home.get('loggedIn') ? <Link to = "/selectpresentation"> Make a presentation </Link> : null}
 
         <form onSubmit={this.submitCode.bind(this)}>
-          <input placeholder="Enter presentation code" maxLength="2" />
+          <input placeholder="Enter presentation code" />
         </form>
 
         {this.props.Home.get('presentationCode') ? <Link to = "/audience"> Join a presentation </Link> : null}
