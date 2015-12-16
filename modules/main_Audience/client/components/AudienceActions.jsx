@@ -1,11 +1,19 @@
 import Presentations from 'db/Presentations.js'
 
 const SET_INDEX = 'SET_INDEX';
+const SET_VIEWER = 'SET_VIEWER'
 
 export function setIndex (index) { 
   return {
     type: SET_INDEX,
     payload: index
+  }
+}
+
+export function setViewer (id) {
+  return { 
+    type: SET_VIEWER,
+    payload: id
   }
 }
 

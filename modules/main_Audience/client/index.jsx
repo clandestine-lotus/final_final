@@ -10,10 +10,22 @@ import thunk from 'redux-thunk';
 import Slides from 'sub_Slides/client/index'
 import SidebarView from 'sub_SlideSideBar/client/index'
 import Code from 'sub_SharingCode/client/index'
+import Audience from 'db/Audience'
 
 import * as AudienceActions from './components/AudienceActions'
 
-let Audience = React.createClass({
+let AudienceView = React.createClass({
+  componentWillMount() {
+    if (this.props.presentation){
+      let profile = {
+        presentation: this.props.presentation,
+        name: Meteor.user() ? Meteor.user().name : 'Anonymous'
+      };
+      Meteor.call('addToAudience', profile, ()=> {
+
+      });
+    }
+  },
 
   prevSlide() {
     this.props.setIndex(this.props.index - 1)
@@ -47,4 +59,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, AudienceActions)(Audience)
+export default connect(mapStateToProps, AudienceActions)(AudienceView)
