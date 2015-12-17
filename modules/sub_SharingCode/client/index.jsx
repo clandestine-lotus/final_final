@@ -3,6 +3,7 @@
 */
 import React, { Component } from 'react'
 import Codes from 'db/Codes'
+import Presentations from 'db/Presentations'
 
 export default class Code extends Component {
   constructor () {
@@ -12,7 +13,7 @@ export default class Code extends Component {
 
   codeGetter () {
     if (this.props.gid) {
-      let presentation = Codes.findOne({gid: this.props.gid})
+      let presentation = Presentations.findOne({gid: this.props.gid})
       return presentation.code;
     }
   }
