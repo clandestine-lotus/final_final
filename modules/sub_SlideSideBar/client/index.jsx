@@ -8,6 +8,16 @@ import Thumbnail from './components/thumbnail'
 
 let SidebarView = React.createClass({
 
+  createThumbnails () {
+    let pres = Presentations.findOne({gid: this.props.gid})
+    let end = this.props.end + 1 ? this.props.end + 1 : pres.svgs.length
+    let mapped = []
+    for(var i = 0; i < end; i++){
+      mapped.push(<Thumbnail key={i} svg={pres.svgs[i]} index={i} setIndex={this.props.setIndex} gid={this.props.gid}/>)
+    }
+    return mapped;
+  },
+
   render() {
     const sidebarStyle = {
       width: '10%',
@@ -15,9 +25,7 @@ let SidebarView = React.createClass({
       overflowY: 'scroll'
     }
     return (
-      <div style={sidebarStyle}>{Presentations.findOne({gid: this.props.gid}).svgs.map((slide, i) => {
-        return <Thumbnail key={i} svg={slide} index={i} setIndex={this.props.setIndex} gid={this.props.gid}/>
-      })}</div>
+      <div style={sidebarStyle}>{this.createThumbnails()}</div>
     )
   }
 })

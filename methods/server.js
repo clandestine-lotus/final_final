@@ -5,11 +5,12 @@ import createPresentation from './createPresentation'
 import createSharingCode from './createSharingCode'
 import votes from './votes'
 
+
 // add to combined Meteor.methods, which will have the var name.
 Meteor.methods({
   createPresentation, 
   changeIndex,
   createSharingCode,
-  votes: votes
+  votes,
 })
 

@@ -2,5 +2,6 @@
 
 const mongoCollections = {
   Presentations: require('./Presentations.js'),
-  Posts: require('./Posts.js')
+  Posts: require('./Posts.js'), 
+  Audience: require('./Audience.js')
 }
