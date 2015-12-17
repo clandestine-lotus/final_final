@@ -54,7 +54,7 @@ let Presenter = React.createClass({
                   title={preview.title}
                   style={tileStyle}
                   setPresentation={setPres}
-                  data={preview}
+
                   className=""
                   ><img src={preview.thumbnail} /></GridTile></Link>
                 )
