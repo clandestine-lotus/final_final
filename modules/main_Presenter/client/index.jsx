@@ -15,9 +15,11 @@ import SidebarView from 'sub_SlideSideBar/client/index'
 import Code from 'sub_SharingCode/client/index'
 import AudienceList from 'sub_AudienceList/client/index'
 
+import Presentation from 'db/Presentations'
 
 let Presenter = React.createClass({
-  componentWillMount() {
+  componentDidMount() {
+    let presentation = Presentation.findOne({gid: this.props.params.gid}).fetch()
     let user = Meteor.user()._id;
     let link = this.props.data.link;
     let gid = this.props.data.gid;
