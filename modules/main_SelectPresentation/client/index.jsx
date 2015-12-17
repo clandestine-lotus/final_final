@@ -18,7 +18,7 @@ import {GridList, GridTile} from 'material-ui'
 let Presenter = React.createClass({
   componentWillMount: function (props) {
     this.props.getPreviews();
-    console.log(this);
+    // console.log(this);
     // return {};
   },
 
@@ -27,9 +27,12 @@ let Presenter = React.createClass({
 
   //   // const {Slider} = mui
   // },
+  select(e) {
+    console.log(e.target)
+  },
 
   render: function () {
-    let setPres = this.props.setPresentation
+    let select = this.props.setPresentation
     const s2 = {
       backgroundColor: 'papayawhip',
     }
@@ -45,33 +48,24 @@ let Presenter = React.createClass({
       <div className="container">
         <h1>Select a Presentation</h1>
         <div className="row" style={tileStyle}>
-            <GridList
-              className="four columns"
-              cols={1}
-            >
-              {
-                this.props.previews.map(preview => <Link to={'/present/' + preview.gid}><GridTile
-                  title={preview.title}
-                  style={tileStyle}
-                  setPresentation={setPres}
-
-                  className=""
-                  ><img src={preview.thumbnail} /></GridTile></Link>
-                )
-              }
-            </GridList>
+          <GridList className="four columns"
+            cols={1} >
+            {
+              this.props.previews.map(preview =>
+                <Link to={'/present/' + preview.gid}>
+                  <GridTile
+                    title={preview.title}
+                    style={tileStyle}
+                    children={<img src={preview.thumbnail} />}
+                    onClick={select.bind(null, preview.gid)} />
+                </Link>
+              )
+            }
+          </GridList>
 
           <div className="eight columns" style={s1}>y
           </div>
         </div>
-        <header>
-
-          <Link to = {'/present'}>Go to presentation</Link>
-
-        </header>
-        {this.props.previews.map((preview)=> {
-          return <Preview setPresentation={setPres} key={preview.gid} data={preview} />
-        })}
       </div>
     );
   }
