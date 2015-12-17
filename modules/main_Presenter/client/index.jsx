@@ -20,7 +20,7 @@ let Presenter = React.createClass({
   mixins: [ReactMeteorData],
 
   componentDidMount() {
-    console.log(this.data.presentationId);
+    console.log(this.data.presentation);
     window.addEventListener('beforeunload', ()=>{
       var gid = this.props.presentation;
       // Presentations.remove(
@@ -53,7 +53,7 @@ let Presenter = React.createClass({
   getMeteorData () {
     var presentation = Presentations.findOne({gid: this.props.params.gid});
     return {
-      presentationId: presentation._id
+      presentation: presentation
     }
   },
 
