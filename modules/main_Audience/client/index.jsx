@@ -45,7 +45,9 @@ let AudienceView = React.createClass({
         let pres = Presentations.findOne({gid: this.props.presentation});
         let audience = Audience.find({presentation: this.props.presentation}).fetch();
         this.props.setAudience(audience);
-        this.props.setEnd(pres.index);
+        if(pres.index > this.props.end) {
+          this.props.setEnd(pres.index);
+        }
         if(this.props.index === pres.index - 1) {
           this.props.setIndex(pres.index)
         }
