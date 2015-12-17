@@ -17,12 +17,10 @@ import AudienceList from 'sub_AudienceList/client/index'
 import Presentations from 'db/Presentations'
 
 let Presenter = React.createClass({
+  mixins: [ReactMeteorData],
+
   componentDidMount() {
-    this.data.presentationId = Presentations.findOne(
-      {gid: this.props.presentation},
-      {fields: {_id: 1}}
-    );
-    console.log(this.state.presentationId);
+    console.log(this.data.presentationId);
     window.addEventListener('beforeunload', ()=>{
       var gid = this.props.presentation;
       // Presentations.remove(
@@ -50,6 +48,13 @@ let Presenter = React.createClass({
         if (err) console.log(err);
       }
     );
+  },
+
+  getMeteorData () {
+    var presentation = Presentations.findOne({gid: this.props.params.gid});
+    return {
+      presentationId: presentation._id
+    }
   },
 
   nextSlide () { 
