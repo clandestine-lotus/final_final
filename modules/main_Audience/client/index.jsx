@@ -12,9 +12,10 @@ import SidebarView from 'sub_SlideSideBar/client/index'
 import Code from 'sub_SharingCode/client/index'
 import Chat from 'sub_chat/client/posts'
 import Audience from 'db/Audience'
+import Presentations from 'db/Presentations'
 import AudienceList from 'sub_AudienceList/client/index'
 
-import * as AudienceActions from './components/AudienceActions'
+import * as AudienceActions from 'dux/audience/index'
 
 let AudienceView = React.createClass({
   componentDidMount() {
@@ -37,8 +38,18 @@ let AudienceView = React.createClass({
         if(err) {
           console.error(err);
         }
-        console.log(result)
       })
+    })
+    Tracker.autorun(()=>{
+      if (this.props.presentation){
+        let pres = Presentations.findOne({gid: this.props.presentation});
+        let audience = Audience.find({presentation: this.props.presentation}).fetch();
+        this.props.setAudience(audience);
+        this.props.setEnd(pres.index);
+        if(this.props.index === pres.index - 1) {
+          this.props.setIndex(pres.index)
+        }
+      } 
     })
   },
 
@@ -47,7 +58,6 @@ let AudienceView = React.createClass({
       if(err) {
         console.error(err)
       }
-      console.log(result);
     })
   },
 

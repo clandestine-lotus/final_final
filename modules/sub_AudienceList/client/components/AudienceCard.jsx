@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import image from '../default.png'
+import image from '../public/default.png'
 export default class AudienceCard extends Component{
   
   render() {
