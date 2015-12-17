@@ -5,6 +5,7 @@ import createPresentation from './createPresentation'
 import createSharingCode from './createSharingCode'
 import votes from './votes'
 import onConnection from './onConnection'
+import onPresenterLeave from './onPresenterLeave'
 
 
 // add to combined Meteor.methods, which will have the var name.
@@ -13,5 +14,6 @@ Meteor.methods({
   changeIndex,
   createSharingCode,
   votes,
-  onConnection
+  onConnection,
+  onPresenterLeave
 })

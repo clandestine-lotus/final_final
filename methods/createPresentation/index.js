@@ -23,13 +23,13 @@ export default function (url, id, gid, cb) {
       });
     });
     // update or insert a presentation in database
-    setTimeout(function () {
-      console.log('cleanup ', gid);
-      Presentations.update(
-        {gid: gid},
-        {$unset: {code: ''}}
-      );
-    }, 1000);
+    // setTimeout(function () {
+    //   console.log('cleanup ', gid);
+    //   Presentations.update(
+    //     {gid: gid},
+    //     {$unset: {code: ''}}
+    //   );
+    // }, 1000);
   });
   // let cleanup = Meteor.bindEnvironment((gid) => {
   //   console.log('cleanup', gid);
