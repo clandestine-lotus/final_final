@@ -1,7 +1,7 @@
 /*
   This is the entry point. Export a react component here.
 */
-import React/*, { Component }*/ from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
@@ -16,17 +16,17 @@ import {GridList, GridTile} from 'material-ui'
 
 
 let Presenter = React.createClass({
-  getInitialState: function (props) {
+  componentWillMount: function (props) {
     this.props.getPreviews();
     console.log(this);
-    return {};
+    // return {};
   },
 
-  compnentWillMount() {
-    console.log(mui);
+  // compnentWillMount() {
+  //   console.log(mui);
 
-    // const {Slider} = mui
-  },
+  //   // const {Slider} = mui
+  // },
 
   render: function () {
     let setPres = this.props.setPresentation
