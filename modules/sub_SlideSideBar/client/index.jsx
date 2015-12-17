@@ -12,7 +12,6 @@ let SidebarView = React.createClass({
     let pres = Presentations.findOne({gid: this.props.gid})
     let end = this.props.end + 1 ? this.props.end + 1 : pres.svgs.length
     let mapped = []
-    console.log(end, 'what is the end', this.props.end)
     for(var i = 0; i < end; i++){
       mapped.push(<Thumbnail key={i} svg={pres.svgs[i]} index={i} setIndex={this.props.setIndex} gid={this.props.gid}/>)
     }

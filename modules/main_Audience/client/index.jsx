@@ -12,26 +12,43 @@ import SidebarView from 'sub_SlideSideBar/client/index'
 import Code from 'sub_SharingCode/client/index'
 import Chat from 'sub_chat/client/posts'
 import Audience from 'db/Audience'
+import AudienceList from 'sub_AudienceList/client/index'
 
 import * as AudienceActions from './components/AudienceActions'
 
 let AudienceView = React.createClass({
-  componentWillMount() {
-    // let setViewer = this.props.setViewer;
-    // if (this.props.presentation && !!!this.props.viewer.get('id')){
-    //   let profile = {
-    //     presentation: this.props.presentation,
-    //     name: Meteor.user() ? Meteor.user().profile.name : 'Anonymous'
-    //   }
-    //   Audience.insert(profile, (err, id)=>{
-    //     if(err){
-    //       console.log('there seems to be an error in this?')
-    //       console.error(err);
-    //     }
-    //     // setViewer(id)
-    //     console.log(id, 'no error?');
-    //   });
-    // }
+  componentDidMount() {
+    let setViewer = this.props.setViewer;
+    if (this.props.presentation){
+      let profile = {
+        presentation: this.props.presentation,
+        name: Meteor.user() ? Meteor.user().profile.name : 'Anonymous',
+        thumbnail: Meteor.user() ? Meteor.user().services.google.picture : null
+      }
+      Audience.insert(profile, (err, id)=>{
+        if(err){
+          console.error(err);
+        }
+        setViewer(id);
+      });
+    }
+    window.addEventListener('beforeunload', ()=>{
+      Audience.remove({_id: this.props.viewer.get('id')}, (err, result)=>{
+        if(err) {
+          console.error(err);
+        }
+        console.log(result)
+      })
+    })
+  },
+
+  componentWillUnmount () { 
+    Audience.remove({_id: this.props.viewer.get('id')}, (err, result)=> {
+      if(err) {
+        console.error(err)
+      }
+      console.log(result);
+    })
   },
 
   prevSlide() {
@@ -57,6 +74,7 @@ let AudienceView = React.createClass({
             <button onClick={this.prevSlide}>prev</button><button onClick={this.nextSlide}>next</button>
             < Code gid={this.props.presentation} />
             <SidebarView gid={this.props.presentation} setIndex={this.props.setIndex} end={this.props.end}/>
+            <AudienceList audience={this.props.audience.toArray()} />
             <Chat presentationId={this.props.presentation} />
           < /div > : <Link to = "/" >Pick an active presentation</Link>}
       </ div >
@@ -66,6 +84,7 @@ let AudienceView = React.createClass({
 
 function mapStateToProps (state) {
   return {
+    audience: state.audience.getIn(['presentation', 'audience']),
     index: state.audience.getIn(['viewer', 'index']),
     end: state.audience.getIn(['presentation', 'index']),
     presentation: state.Home.get('presentationCode'),
