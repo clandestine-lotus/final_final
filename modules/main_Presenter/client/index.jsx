@@ -19,8 +19,10 @@ import Presentation from 'db/Presentations'
 
 let Presenter = React.createClass({
   componentDidMount() {
-    let presentation = Presentation.findOne({gid: this.props.params.gid}).fetch()
+    console.log(this.props);
+    let presentation = Presentation.findOne({gid: this.props.params.gid})
     let user = Meteor.user()._id;
+
     let link = this.props.data.link;
     let gid = this.props.data.gid;
 
@@ -73,7 +75,7 @@ let Presenter = React.createClass({
 function mapStateToProps (state) {
   return {
     presenter: state.presenter,
-    presentation: state.previews.getIn(['list', 'presentation'])
+    presentation: state.previews.get('presentation')
   }
 }
 
