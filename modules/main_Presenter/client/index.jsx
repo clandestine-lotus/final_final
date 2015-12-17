@@ -101,7 +101,7 @@ let Presenter = React.createClass({
 function mapStateToProps (state) {
   return {
     presenter: state.presenter,
-    presentation: state.previews.list.get('presentation')
+    presentation: state.previews.getIn(['list', 'presentation'])
   }
 }
 

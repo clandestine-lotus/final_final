@@ -24,7 +24,7 @@ class Home extends Component {
   submitCode(event) {
     event.preventDefault();
     let code = event.target[0].value;
-    // TODO: add code validation
+    // Validate code
     let pres = Presentations.findOne({code: code})
     if (pres) {
       this.props.codeValidation(false);
@@ -63,7 +63,6 @@ class Home extends Component {
       transform: 'translate(-50%, -25%)',
       textAlign: 'center',
       color: 'white',
-      // backgroundColor: 'rgba(255, 255, 255, 0.7)',
     }
 
     const create = {
@@ -115,14 +114,10 @@ class Home extends Component {
     );
   }
 }
-        /*<Speedometer speed={parseFloat(store.getState().pace.get('currentPace'))} />
-
-          <Pace />*/
 
 function mapStateToProps(state) {
   return {
     Home: state.Home,
-    State: state,
   }
 }
 

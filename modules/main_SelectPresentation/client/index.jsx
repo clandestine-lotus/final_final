@@ -79,9 +79,7 @@ let Presenter = React.createClass({
 
 function mapStateToProps (state) {
   return {
-    // TODO: research the right way to get state props
-    // TODO: FIX PREVIEWS.PREVIEWS
-    previews: state.previews.list.get('previews')
+    previews: state.previews.get('list')
   }
 }
 
