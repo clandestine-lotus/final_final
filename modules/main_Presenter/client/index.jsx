@@ -18,35 +18,37 @@ import Presentations from 'db/Presentations'
 
 let Presenter = React.createClass({
   componentDidMount() {
-    var self = this;
-    let setViewer = this.props.setViewer;
+    this.data.presentationId = Presentations.findOne(
+      {gid: this.props.presentation},
+      {fields: {_id: 1}}
+    );
+    console.log(this.state.presentationId);
     window.addEventListener('beforeunload', ()=>{
-      console.log('leaving page');
+      var gid = this.props.presentation;
+      // Presentations.remove(
+      //   {gid: gid},
+      //   (err, result) => {
+      //     if (err) console.log(err);
+      //   }
+      // );
       Presentations.update(
-        {gid: self.props.presentation},
-        {$unset: {code: ''}}
+        {gid: gid},
+        {$unset: {code: ''}},
+        (err, result) => {
+          if (err) console.log(err);
+        }
       );
-    // this.track = Tracker.autorun(()=>{
-    //   if (this.props.presentation){
-    //     let pres = Presentations.findOne({gid: this.props.presentation});
-    //     let audience = Audience.find({presentation: this.props.presentation}).fetch();
-    //     this.props.setAudience(audience);
-    //     if(pres.index > this.props.end) {
-    //       this.props.setEnd(pres.index);
-    //     }
-    //     if(this.props.index === pres.index - 1) {
-    //       this.props.setIndex(pres.index)
-    //     }
-    //   } 
-    // })
     });
   },
 
   componentWillUnmount () { 
-    console.log('leaving page');
+    var gid = this.props.presentation;
     Presentations.update(
-      {gid: self.props.presentation},
-      {$unset: {code: ''}}
+      {gid: gid},
+      {$unset: {code: ''}},
+      (err, result) => {
+        if (err) console.log(err);
+      }
     );
   },
 
