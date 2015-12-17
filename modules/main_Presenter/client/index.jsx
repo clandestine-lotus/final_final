@@ -14,9 +14,17 @@ import Slides from 'sub_Slides/client/index'
 import SidebarView from 'sub_SlideSideBar/client/index'
 import Code from 'sub_SharingCode/client/index'
 import AudienceList from 'sub_AudienceList/client/index'
+import Connection from '../globals/index'
 
 
 let Presenter = React.createClass({
+  componentWillMount () {
+    console.log('component mounting');
+    Meteor.call('onConnection', this.props.presentation, function () {
+      console.log('running onconnection')
+    })
+  },
+
   nextSlide () { 
     Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) + 1);
   },
