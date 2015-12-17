@@ -1,4 +1,5 @@
 import Codes from 'db/Codes'
+import Presentations from 'db/Presentations'
 
 const randomString = Meteor.npmRequire('random-string')
 
@@ -16,10 +17,10 @@ var getRandomString = function (length) {
 }
 
 export default function (length) {
-  var existingCodes = [null];
-  while (existingCodes.length) {
+  var existingCodes = [];
+  do {
     var code = getRandomString(length);
-    existingCodes = Codes.find({code: code}).fetch();
-  }
+    existingCodes = Presentations.find({code: code}).fetch();
+  } while (existingCodes.length);
   return code;
 }
