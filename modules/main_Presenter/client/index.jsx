@@ -14,18 +14,39 @@ import Slides from 'sub_Slides/client/index'
 import SidebarView from 'sub_SlideSideBar/client/index'
 import Code from 'sub_SharingCode/client/index'
 import AudienceList from 'sub_AudienceList/client/index'
+import Presentations from 'db/Presentations'
 
 let Presenter = React.createClass({
-  componentWillMount () {
-    console.log('component mounting');
-    window.addEventListener('unload', function (event) {
-      Meteor.call('onPresenterLeave', this.props.presentation, function () {
-        console.log('on leave callback');
-      });
-    });
-    // Meteor.call('onConnection', this.props.presentation, function () {
-    //   console.log('running onconnection')
+  componentDidMount() {
+    var self = this;
+    let setViewer = this.props.setViewer;
+    window.addEventListener('beforeunload', ()=>{
+      console.log('leaving page');
+      Presentations.update(
+        {gid: self.props.presentation},
+        {$unset: {code: ''}}
+      );
+    // this.track = Tracker.autorun(()=>{
+    //   if (this.props.presentation){
+    //     let pres = Presentations.findOne({gid: this.props.presentation});
+    //     let audience = Audience.find({presentation: this.props.presentation}).fetch();
+    //     this.props.setAudience(audience);
+    //     if(pres.index > this.props.end) {
+    //       this.props.setEnd(pres.index);
+    //     }
+    //     if(this.props.index === pres.index - 1) {
+    //       this.props.setIndex(pres.index)
+    //     }
+    //   } 
     // })
+  },
+
+  componentWillUnmount () { 
+    console.log('leaving page');
+    Presentations.update(
+      {gid: self.props.presentation},
+      {$unset: {code: ''}}
+    );
   },
 
   nextSlide () { 
