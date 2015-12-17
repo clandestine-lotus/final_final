@@ -40,7 +40,7 @@ let AudienceView = React.createClass({
         }
       })
     })
-    Tracker.autorun(()=>{
+    this.track = Tracker.autorun(()=>{
       if (this.props.presentation){
         let pres = Presentations.findOne({gid: this.props.presentation});
         let audience = Audience.find({presentation: this.props.presentation}).fetch();
@@ -59,6 +59,7 @@ let AudienceView = React.createClass({
         console.error(err)
       }
     })
+    this.track.stop();
   },
 
   prevSlide() {
