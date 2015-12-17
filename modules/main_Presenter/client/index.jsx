@@ -39,6 +39,7 @@ let Presenter = React.createClass({
     //     }
     //   } 
     // })
+    });
   },
 
   componentWillUnmount () { 
