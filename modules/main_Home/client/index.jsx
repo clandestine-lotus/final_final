@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import Pace from 'sub_Pace/client/index'
-import { Speedometer } from 'sub_Speedometer/client/index'
 import Login from 'sub_Login/client/index'
 import * as homeActions from './components/HomeActions'
 import Presentations from 'db/Presentations'
@@ -47,7 +45,7 @@ class Home extends Component {
     const title = {
       color: 'white',
       fontSize: '4rem',
-      fontWeight: '100',
+      fontWeight: '300',
       textDecoration: 'none',
     }
 
@@ -73,11 +71,14 @@ class Home extends Component {
       width: '30rem',
     }
 
-    const join = Object.assign(create, {
+    const join = Object.assign({}, create, {
       textAlign: 'center',
       fontSize: '3rem',
-      color: 'black',
+      color: '#00bcd4',
+      margin: '0',
     })
+
+    let selectLink = <Link to="/selectpresentation" />
 
     return (
       <div className="hero" style={hero}>
@@ -90,20 +91,21 @@ class Home extends Component {
         <div>
           <div className="row u-full-width">
             <div className="column" style={createOrJoin}>
-              {/*this.props.Home.get('loggedIn') ? <Link to = "/selectpresentation"> Make a presentation </Link> : null*/}
-              <Link to="/selectpresentation">
-                <RaisedButton disabled={!Meteor.userId()} style={create}>
-                  <span style={{fontSize: '3rem'}}>{Meteor.userId() ? 'Create' : 'Login to create'}</span>
-                </RaisedButton>
-              </Link>
+              <RaisedButton
+                containerElement={<Link to="/selectpresentation" />}
+                disabled={!this.props.Home.get('loggedIn')}
+                label={this.props.Home.get('loggedIn') ? 'Create!' : 'Login to create'}
+                labelStyle={this.props.Home.get('loggedIn') ? {color: '#00bcd4', fontSize: '3rem'} : {fontSize: '2.5rem'}}
+                linkButton
+                style={create} />
 
               <div style={{fontSize: '3rem', margin: '1rem'}}>- or -</div>
 
-              <form onSubmit={this.submitCode.bind(this)}>
+              <form onSubmit={this.submitCode.bind(this)} style={{margin: '0'}}>
                 <input placeholder="Enter Code" maxLength={4} style={join} />
               </form>
 
-              {this.props.Home.get('presentationCode') ? <Link to = "/audience"> Join a presentation </Link> : null}
+              {this.props.Home.get('presentationCode') ? <Link to = "/audience">Join!</Link> : null}
               {this.props.Home.get('invalidCode') ? 'Please Enter Valid Code' : null}
             </div>
           </div>
