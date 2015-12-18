@@ -5,33 +5,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import Preview from './components/Preview'
 import * as PresenterActions from './components/PresenterActions.jsx'
 
 import {GridList, GridTile} from 'material-ui'
 
-// import { bindActionCreators, createStore, applyMiddleware } from 'redux'
-// import thunk from 'redux-thunk'
-// import rootReducer from './reducers'
-
-
 let Presenter = React.createClass({
-  componentWillMount: function (props) {
+  componentWillMount() {
     this.props.getPreviews();
-    // console.log(this);
-    // return {};
   },
 
-  // compnentWillMount() {
-  //   console.log(mui);
-
-  //   // const {Slider} = mui
-  // },
-  select(e) {
-    console.log(e.target)
-  },
-
-  render: function () {
+  render() {
     let select = this.props.setPresentation
     const s2 = {
       backgroundColor: 'papayawhip',
@@ -52,7 +35,7 @@ let Presenter = React.createClass({
             cols={1} >
             {
               this.props.previews.map(preview =>
-                <Link to={'/present/' + preview.gid}>
+                <Link to={'/present'}>
                   <GridTile
                     title={preview.title}
                     style={tileStyle}

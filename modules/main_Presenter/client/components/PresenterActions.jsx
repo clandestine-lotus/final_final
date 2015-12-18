@@ -33,10 +33,10 @@ export function setCode (code) {
   }
 }
 
-Tracker.autorun(()=>{
-  let presentationID = store.getState().previews.getIn(['list', 'presentation'])
-  if (presentationID){
-    let pres = Presentations.findOne({gid: presentationID});
-    store.dispatch(setIndex(pres.index))
-  }
-})
+// Tracker.autorun(()=>{
+//   let presentationID = store.getState().previews.getIn(['list', 'presentation'])
+//   if (presentationID){
+//     let pres = Presentations.findOne({gid: presentationID});
+//     store.dispatch(setIndex(pres.index))
+//   }
+// })

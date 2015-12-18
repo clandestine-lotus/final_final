@@ -1,15 +1,12 @@
 /*
   This is the entry point. Export a react component here.
 */
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
 import * as PresenterActions from './components/PresenterActions.jsx'
 
-import { bindActionCreators, createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from './reducers';
 import Slides from 'sub_Slides/client/index'
 import SidebarView from 'sub_SlideSideBar/client/index'
 import Code from 'sub_SharingCode/client/index'
@@ -37,6 +34,13 @@ let Presenter = React.createClass({
   },
 
   componentDidMount() {
+    const context = this
+    Presentation.find({gid: this.props.presentation}).observe({
+      changed: function (id, doc) {
+        context.props.setIndex(doc.index);
+      }
+    })
+
     window.addEventListener('beforeunload', ()=>{
       Presentations.update(
         {_id: this.data.presentationId},
