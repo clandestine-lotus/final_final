@@ -5,5 +5,6 @@ const mongoCollections = {
   Posts: require('./Posts.js'), 
   Audience: require('./Audience.js'),
   Shows: require('./Shows.js'),
-  Decks: require('./Decks.js')
+  Decks: require('./Decks.js'),
+  Codes: require('./Codes.js'),
 }
