@@ -85,7 +85,7 @@
     "dot-notation": [2, { // http://eslint.org/docs/rules/dot-notation
       "allowKeywords": true
     }],
-    "eqeqeq": 2, // http://eslint.org/docs/rules/eqeqeq
+    "eqeqeq": 1, // http://eslint.org/docs/rules/eqeqeq
     "guard-for-in": 2, // http://eslint.org/docs/rules/guard-for-in
     "no-caller": 2, // http://eslint.org/docs/rules/no-caller
     "no-else-return": 1, // http://eslint.org/docs/rules/no-else-return
@@ -171,7 +171,7 @@
     "space-before-function-paren": [0, "never"], // http://eslint.org/docs/rules/space-before-function-paren
     "space-infix-ops": 2, // http://eslint.org/docs/rules/space-infix-ops
     "space-return-throw-case": 2, // http://eslint.org/docs/rules/space-return-throw-case
-    "spaced-comment": 1, // http://eslint.org/docs/rules/spaced-comment
+    "spaced-comment": 0, // http://eslint.org/docs/rules/spaced-comment
     "no-multi-spaces": 1, // http://eslint.org/docs/rules/no-multi-spaces
 
     /*

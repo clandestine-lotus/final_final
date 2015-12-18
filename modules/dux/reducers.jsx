@@ -14,6 +14,11 @@ import Projector from 'main_Projector/client/components/ProjectorReducers'
 import Audience from 'dux/audience'
 import Chat from 'dux/chat'
 
+// Slide data storage
+import Deck from 'dux/deck'
+// Slide index and metadata storage
+import Show from 'dux/show'
+
 // add reducers here
 export default combineReducers({
   routing: routeReducer,
@@ -23,5 +28,7 @@ export default combineReducers({
   presenter: Presenter,
   projector: Projector,
   audience: Audience,
-  chat: Chat
+  chat: Chat,
+  show: Show,
+  deck: Deck,
 })
