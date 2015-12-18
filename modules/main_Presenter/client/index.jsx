@@ -17,12 +17,20 @@ import AudienceList from 'sub_AudienceList/client/index'
 import Presentations from 'db/Presentations'
 
 let Presenter = React.createClass({
+  // getInitialState: function () {
+  //   var query = Presentations.findOne({gid: this.props.params.gid});
+  //   console.log('getinit ', query);
+  //   // this.props.setId(query._id);
+  //   return {}
+  // },
+
   mixins: [ReactMeteorData],
 
   componentDidMount() {
-    console.log(this.data.presentation);
+    console.log('prez ', this.data.presentationId);
+    // console.log('id ', this.props.presenter.get('id'));
     window.addEventListener('beforeunload', ()=>{
-      var gid = this.props.presentation;
+      var id = this.data.presentationId;
       // Presentations.remove(
       //   {gid: gid},
       //   (err, result) => {
@@ -30,7 +38,7 @@ let Presenter = React.createClass({
       //   }
       // );
       Presentations.update(
-        {gid: gid},
+        {_id: this.data.presentationId},
         {$unset: {code: ''}},
         (err, result) => {
           if (err) console.log(err);
@@ -42,7 +50,7 @@ let Presenter = React.createClass({
   componentWillUnmount () { 
     var gid = this.props.presentation;
     Presentations.update(
-      {gid: gid},
+      {_id: this.data.presentationId},
       {$unset: {code: ''}},
       (err, result) => {
         if (err) console.log(err);
@@ -51,9 +59,12 @@ let Presenter = React.createClass({
   },
 
   getMeteorData () {
-    var presentation = Presentations.findOne({gid: this.props.params.gid});
+    var gid = this.props.presentation;
+    console.log(gid);
+    var presentation = Presentations.findOne({gid: gid});
+    console.log('get meteor', presentation)
     return {
-      presentation: presentation
+      presentationId: presentation._id
     }
   },
 
@@ -70,6 +81,7 @@ let Presenter = React.createClass({
   },
 
   render: function () {
+    console.log('in render ', this.data.presentationId);
     return (
       < div className="container" >
         {this.props.presentation ? 
@@ -94,7 +106,8 @@ let Presenter = React.createClass({
 function mapStateToProps (state) {
   return {
     presenter: state.presenter,
-    presentation: state.previews.list.get('presentation')
+    presentation: state.previews.list.get('presentation'),
+    id: state.previews.list.get('id')
   }
 }
 
