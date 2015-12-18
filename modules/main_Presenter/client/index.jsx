@@ -5,7 +5,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import * as PresenterActions from './components/PresenterActions.jsx'
+import * as PresenterActions from './components/PresenterActions'
 
 import Slides from 'sub_Slides/client/index'
 import SidebarView from 'sub_SlideSideBar/client/index'
@@ -36,8 +36,8 @@ let Presenter = React.createClass({
   componentDidMount() {
     const context = this
     Presentation.find({gid: this.props.presentation}).observe({
-      changed: function (id, doc) {
-        context.props.setIndex(doc.index);
+      changed: (id, doc) => {
+        context.props.setIndex(doc.index)
       }
     })
 
@@ -70,21 +70,22 @@ let Presenter = React.createClass({
   },
 
   nextSlide() {
-    Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) + 1);
+    Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) + 1)
   },
 
   prevSlide() {
-    Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) - 1);
+    Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) - 1)
   },
 
   changeSlide(index, gid) {
-    Meteor.call('changeIndex', gid, index);
+    Meteor.call('changeIndex', gid, index)
   },
 
   render() {
     return (
       <div className="container">
-        {this.props.presentation ?
+        {
+          this.props.presentation ?
           <div className="presenterSlide">
             Current Slide
             <Slides
@@ -99,9 +100,11 @@ let Presenter = React.createClass({
             <button onClick={this.prevSlide}>prev</button><button onClick={this.nextSlide}>next</button>
             <Code gid={this.props.presentation} />
             <SidebarView gid={this.props.presentation} setIndex={this.changeSlide}/>
-          </div> : <Link to="/select">Choose a Slide</Link>}
+          </div> :
+          <Link to="/select">Choose a Slide</Link>
+        }
       </div>
-    );
+    )
   }
 })
 
