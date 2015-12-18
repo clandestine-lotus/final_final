@@ -15,24 +15,17 @@ let Presenter = React.createClass({
   },
 
   render() {
-    let select = this.props.setPresentation
-    const s2 = {
-      backgroundColor: 'papayawhip',
-    }
-    const s1 = {
-      backgroundColor: 'firebrick',
-    }
     const tileStyle = {
-      height: '150px',
+      height: '15rem',
       color: 'white',
     }
 
     return (
       <div className="container">
-        <h1>Select a Presentation</h1>
         <div className="row" style={tileStyle}>
-          <GridList className="four columns"
-            cols={1} >
+          <GridList className="twelve columns"
+            cols={2}
+          >
             {
               this.props.previews.map(preview =>
                 <Link to={'/present'}>
@@ -40,14 +33,12 @@ let Presenter = React.createClass({
                     title={preview.title}
                     style={tileStyle}
                     children={<img src={preview.thumbnail} />}
-                    onClick={select.bind(null, preview.gid)} />
+                    onClick={this.props.setPresentation.bind(null, preview.gid)}
+                  />
                 </Link>
               )
             }
           </GridList>
-
-          <div className="eight columns" style={s1}>y
-          </div>
         </div>
       </div>
     );
