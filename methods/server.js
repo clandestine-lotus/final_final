@@ -11,6 +11,5 @@ Meteor.methods({
   createPresentation, 
   changeIndex,
   createSharingCode,
-  votes,
+  votes
 })
-

@@ -14,9 +14,40 @@ import Slides from 'sub_Slides/client/index'
 import SidebarView from 'sub_SlideSideBar/client/index'
 import Code from 'sub_SharingCode/client/index'
 import AudienceList from 'sub_AudienceList/client/index'
-
+import Presentations from 'db/Presentations'
 
 let Presenter = React.createClass({
+  mixins: [ReactMeteorData],
+
+  componentDidMount() {
+    window.addEventListener('beforeunload', ()=>{
+      Presentations.update(
+        {_id: this.data.presentationId},
+        {$unset: {code: ''}},
+        (err, result) => {
+          if (err) console.log(err);
+        }
+      );
+    });
+  },
+
+  componentWillUnmount () { 
+    Presentations.update(
+      {_id: this.data.presentationId},
+      {$unset: {code: ''}},
+      (err, result) => {
+        if (err) console.log(err);
+      }
+    );
+  },
+
+  getMeteorData () {
+    var presentation = Presentations.findOne({gid: this.props.presentation});
+    return {
+      presentationId: presentation._id
+    }
+  },
+
   nextSlide () { 
     Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) + 1);
   },
