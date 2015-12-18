@@ -18,6 +18,8 @@ import Chat from 'dux/chat'
 import Deck from 'dux/deck'
 // Slide index and metadata storage
 import Show from 'dux/show'
+// picker that gets data from google api
+import deckPicker from 'dux/deckPicker'
 
 // add reducers here
 export default combineReducers({
@@ -31,4 +33,5 @@ export default combineReducers({
   chat: Chat,
   show: Show,
   deck: Deck,
+  deckPicker: deckPicker,
 })

@@ -2,7 +2,7 @@ const getSVG = Meteor.npmRequire('google-slides-downloader')
 import Decks from 'db/Decks'
 
 // method for creating a new deck in database with svg elements
-export default function (url, id, gid, cb) {
+export default function (url, gid) {
   let doc = {
     url: url,
     ownerId: this.userId(),

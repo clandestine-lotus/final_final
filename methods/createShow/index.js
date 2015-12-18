@@ -3,7 +3,7 @@ import Shows from 'db/Shows'
 import Codes from 'db/Codes'
 
 // method for creating a new deck in database with svg elements
-export default function (deckId) {
+export default function (gid) {
   // generate a new, code, overwrites any old ones
   // may cause conflicts if there are a hundred simultanous shows
   const code = Random.hexString(3)
@@ -11,7 +11,7 @@ export default function (deckId) {
     ownerId: this.userId(),
     presenterIndex: 0,
     maxIndex: 0,
-    deckId: deckId,
+    gid: gid,
     createdAt: new Date(),
     // code: code,
   }
@@ -24,7 +24,7 @@ export default function (deckId) {
   })
   
   // add code to the codes db
-  Codes.upsert({code: code}, {deckId: deckId, showId: _id}) 
+  Codes.upsert({code: code}, {gid: gid, showId: _id}) 
 
   return showId
 

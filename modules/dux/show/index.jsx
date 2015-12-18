@@ -26,7 +26,7 @@ const setPresenter = function (index) {
 }
 
 // setMax internal function for the tracker to change
-const setMax =  function (index) {
+const setMax = function (index) {
   return {
     type: SET_MAX,
     payload: index,
