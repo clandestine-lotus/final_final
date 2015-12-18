@@ -10,7 +10,6 @@ export default function (url, id, gid, cb) {
       console.error('from bind env ', err)
     }
     Meteor.call('createSharingCode', 4, function (err, res) {
-      console.log('code ', res);
       Presentations.upsert({gid: gid}, {$set:
         {
           svgs: svgs,
@@ -22,22 +21,8 @@ export default function (url, id, gid, cb) {
         }
       });
     });
-    // update or insert a presentation in database
-    // setTimeout(function () {
-    //   console.log('cleanup ', gid);
-    //   Presentations.update(
-    //     {gid: gid},
-    //     {$unset: {code: ''}}
-    //   );
-    // }, 1000);
   });
-  // let cleanup = Meteor.bindEnvironment((gid) => {
-  //   console.log('cleanup', gid);
-  //   Presentations.update(
-  //     {gid: gid},
-  //     {$unset: {code: ''}}
-  //   );
-  // });
+
   GoogleApi.post('drive/v2/files/' + gid + '/permissions', {data: {'type': 'anyone', 'role': 'reader'}}, function (err, result) {
     // pass in url to get an array of svgs
     getSVG.getSVGs(url, doIt);

@@ -42,8 +42,7 @@ let Presenter = React.createClass({
   },
 
   getMeteorData () {
-    var gid = this.props.presentation;
-    var presentation = Presentations.findOne({gid: gid});
+    var presentation = Presentations.findOne({gid: this.props.presentation});
     return {
       presentationId: presentation._id
     }
@@ -86,8 +85,7 @@ let Presenter = React.createClass({
 function mapStateToProps (state) {
   return {
     presenter: state.presenter,
-    presentation: state.previews.list.get('presentation'),
-    id: state.previews.list.get('id')
+    presentation: state.previews.list.get('presentation')
   }
 }
 
