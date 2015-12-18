@@ -111,7 +111,7 @@ let Home = React.createClass({
               />
               <div style={{fontSize: '3rem', margin: '1rem'}}>- or -</div>
 
-              <form onSubmit={this.submitCode.bind(this)} style={{margin: '0'}}>
+              <form onSubmit={this.submitCode} style={{margin: '0'}}>
                 <input placeholder="Enter Code" maxLength={4} style={join} />
               </form>
 

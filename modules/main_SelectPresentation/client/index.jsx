@@ -7,11 +7,16 @@ import { Link } from 'react-router'
 
 import * as PresenterActions from './components/PresenterActions.jsx'
 
-import {GridList, GridTile} from 'material-ui'
+import {GridList, GridTile, CircularProgress} from 'material-ui'
 
 let Presenter = React.createClass({
   componentWillMount() {
     this.props.getPreviews();
+  },
+
+  componentDidUpdate() {
+    // Fixes dialog's padding-top not being set correctly
+    window.dispatchEvent(new Event('resize'))
   },
 
   render() {
@@ -23,22 +28,29 @@ let Presenter = React.createClass({
     return (
       <div className="container">
         <div className="row" style={tileStyle}>
-          <GridList className="twelve columns"
-            cols={2}
-          >
-            {
-              this.props.previews.map(preview =>
-                <Link to={'/present'}>
-                  <GridTile
-                    title={preview.title}
-                    style={tileStyle}
-                    children={<img src={preview.thumbnail} />}
-                    onClick={this.props.setPresentation.bind(null, preview.gid)}
-                  />
-                </Link>
-              )
+          {
+            this.props.previews.size ?
+              <GridList className="twelve columns"
+                padding={8}
+                cols={2}
+              >
+                {
+                  this.props.previews.map(preview =>
+                    <Link
+                      to={'/present'}
+                      key={preview.gid}
+                    ><GridTile
+                      title={preview.title}
+                      style={tileStyle}
+                      children={<img src={preview.thumbnail} />}
+                      onClick={this.props.setPresentation.bind(null, preview.gid)}
+                    /></Link>
+                  )
+                }
+              </GridList> :
+              <CircularProgress mode="indeterminate" size={1.5} />
             }
-          </GridList>
+          }
         </div>
       </div>
     );

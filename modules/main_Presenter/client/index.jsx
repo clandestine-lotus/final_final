@@ -89,15 +89,17 @@ let Presenter = React.createClass({
             Current Slide
             <Slides
               gid={this.props.presentation}
-              index={this.props.presenter.getIn(['presentation', 'index'])} />
+              index={this.props.presenter.getIn(['presentation', 'index'])}
+            />
             Next Slide
             <Slides
               gid={this.props.presentation}
-              index={this.props.presenter.getIn(['presentation', 'index']) + 1} />
+              index={this.props.presenter.getIn(['presentation', 'index']) + 1}
+            />
             <button onClick={this.prevSlide}>prev</button><button onClick={this.nextSlide}>next</button>
             <Code gid={this.props.presentation} />
             <SidebarView gid={this.props.presentation} setIndex={this.changeSlide}/>
-          </div> : <Link to="/selectpresentation">Choose a Slide</Link>}
+          </div> : <Link to="/select">Choose a Slide</Link>}
       </div>
     );
   }
