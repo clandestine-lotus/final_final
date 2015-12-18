@@ -1,6 +1,5 @@
 const getSVG = Meteor.npmRequire('google-slides-downloader')
 import Presentations from 'db/Presentations'
-import Codes from 'db/Codes'
 
   // method for creating a new presentation in database with svg elements
 export default function (url, id, gid, cb) {

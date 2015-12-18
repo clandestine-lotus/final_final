@@ -1,4 +1,3 @@
-import Codes from 'db/Codes'
 import Presentations from 'db/Presentations'
 
 const randomString = Meteor.npmRequire('random-string')

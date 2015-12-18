@@ -4,7 +4,6 @@ const ADD_PREVIEWS = 'ADD_PREVIEWS';
 const SET_INDEX = 'SET_INDEX';
 const SET_CODE = 'SET_CODE';
 const SET_VIEWER = 'SET_VIEWER';
-const SET_ID = 'SET_ID';
 
 export function addPreviews (previews) {
   return {
