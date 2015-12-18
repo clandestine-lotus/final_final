@@ -8,7 +8,7 @@ import { routeReducer } from 'redux-simple-router'
 import Presenter from 'main_Presenter/client/components/Reducers.jsx'
 /* eslint-enable */
 import SelectPresentation from 'main_SelectPresentation/client/components/PresenterReducers'
-import Home from 'main_Home/client/components/Reducers'
+import Home from 'main_Home/client/components/HomeReductions'
 import Projector from 'main_Projector/client/components/ProjectorReducers'
 import Audience from 'dux/audience'
 import Chat from 'dux/chat'
@@ -29,7 +29,7 @@ export default combineReducers({
   deck: Deck,
   routing: routeReducer,
   // previews: SelectPresentation,
-  Home: Home,
+  home: Home,
   presenter: Presenter,
   projector: Projector,
   audience: Audience,
