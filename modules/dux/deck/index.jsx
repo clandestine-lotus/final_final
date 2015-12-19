@@ -1,5 +1,5 @@
 // import {Map, List} from 'immutable'
-import Decks from 'db/decks'
+import Decks from 'db/Decks'
 import { numSlides } from 'dux/show'
 
 const SET_DECK = 'SET_DECK'
@@ -14,11 +14,12 @@ export function getPresentation (id) {
   return Tracker.autorun(function (computation) {
     // id can be gid or document id! 
     let deck = Decks.findOne({$or: [{_id: id}, {gid: id}]})
-    if(deck){
+    if (deck){
+      const {dispatch} = require('../store.js')
       // set the ownerId, showId
-      dispatch(setDeck(deck.data))
+      dispatch(setDeck(deck.svgs))
       // set the number of slides in the deck
-      dispatch(numSlides(deck.data.length))
+      dispatch(numSlides(deck.svgs.length))
       // kill the autorun
       computation.stop()
     } else {
@@ -55,7 +56,7 @@ export function setDeck (array) {
 export default function reducer(state = [], action) {
   switch (action.type) {
   case 'SET_DECK':
-    return [...action.payload]
+    return Object.assign([], action.payload)
   default:
     return state;
   }

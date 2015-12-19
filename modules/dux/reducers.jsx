@@ -2,7 +2,6 @@ import { combineReducers } from 'redux'
 import { routeReducer } from 'redux-simple-router'
 
 // import reducers to add them to the store
-import { counter } from './counter/'
 
 // presenter is unused for now
 /* eslint-disable */
@@ -23,15 +22,14 @@ import deckPicker from 'dux/deckPicker'
 
 // add reducers here
 export default combineReducers({
+  deckPicker: deckPicker,
+  chat: Chat,
+  show: Show,
+  deck: Deck,
   routing: routeReducer,
-  counter: counter,
-  previews: SelectPresentation,
+  // previews: SelectPresentation,
   Home: Home,
   presenter: Presenter,
   projector: Projector,
   audience: Audience,
-  chat: Chat,
-  show: Show,
-  deck: Deck,
-  deckPicker: deckPicker,
 })

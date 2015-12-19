@@ -15,6 +15,10 @@ import Presenter from 'main_Presenter/client/routes'
 import Projector from 'main_Projector/client/routes'
 import Audience from 'main_Audience/client/routes'
 
+//testing
+import DeckPicker from 'sub_DeckPicker/routes'
+import PresenterControl from 'main_PresenterControl/routes'
+
 // define root component
 const App = React.createClass({
   render() {
@@ -35,7 +39,9 @@ const rootRoute = {
       SelectPresentation,
       Presenter,
       Projector,
-      Audience
+      Audience,
+      DeckPicker,
+      PresenterControl,
     ]
   }]
 }

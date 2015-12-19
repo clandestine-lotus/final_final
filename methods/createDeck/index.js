@@ -3,19 +3,20 @@ import Decks from 'db/Decks'
 
 // method for creating a new deck in database with svg elements
 export default function (url, gid) {
+  const userId = this.userId
   let doc = {
     url: url,
-    ownerId: this.userId(),
+    ownerId: userId,
     gid: gid,
     createdAt: new Date(),
   }
-  let doIt = Meteor.bindEnvironment((err, svgs)=>{
+  let doIt = Meteor.bindEnvironment((err, svgs) => {
     if (err) {
       throw new Meteor.Error('from bind env ', err)
     } else {
       // doc to add
       doc.svgs = svgs
-      doc.numSlides = svg.length
+      doc.numSlides = svgs.length
       Decks.upsert({gid: gid}, {$set: doc})
     }
   })

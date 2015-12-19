@@ -38,6 +38,7 @@ class Home extends Component {
         <Login />
 
         <br />
+        <Link to="/deckpicker"> test </Link>
         {this.props.Home.get('loggedIn') ? <Link to = "/selectpresentation"> Make a presentation </Link> : null}
 
         <form onSubmit={this.submitCode.bind(this)}>

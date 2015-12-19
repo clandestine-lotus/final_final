@@ -5,12 +5,23 @@ import DecksDB from 'db/Decks'
 import { getPreviews } from 'dux/deckPicker'
 
 let Deck = React.createClass({
+  createShow: function (gid) {
+    Meteor.call('createShow', gid, function (err, showId) {
+      if(err){
+        console.log('cannot create show');
+        console.log(err);
+      } else {
+        console.log('created!');
+      }
+    })
+  },
   render: function () {
-    const {isReady, deck} = this.this.props
+    const {isReady, deck} = this.props
     return (
-      <div onClick>
-        <img src={deck.thumbnail} />
+      <div onClick={() => Meteor.call('createDeck', deck.link, deck.gid)}>
         <h2>{deck.title}</h2>
+        <img src={deck.thumbnail} />
+        { isReady ? <button onClick={() => this.createShow(deck.gid)}>Start a show</button> : <div>Not lodaded</div>}
       </div>
       )
   }
@@ -24,20 +35,33 @@ let Decks = React.createClass({
   },
 
   getMeteorData(){
-    // if this a reply, get all the replies with 'threadId' as a prop
-    let thread = {presentationId: this.props.presentationId, threadId: this.props.threadId || null}
     return {DecksList: DecksDB.find({ownerId: Meteor.userId()}, {fields: {gid: 1}}).fetch() }
   },
 
 
   renderDecks(){
-    return this.props.previews((deck) => {
-      return <Deck isReady={DecksList.gid.indexOf(deck.gid) !== -1} deck={deck} />
+
+    let isReady = gid => {
+      if (this.data.DecksList.length) {
+        // return arr of gids
+        let gidArr = this.data.DecksList.map(function (obj) {
+          return obj.gid
+        })
+        
+        // check if gidArr is in the localDB
+        return gidArr.indexOf(gid) !== -1
+      } else {
+        // not in the db for sure
+        return false
+      }
+    }
+    return this.props.previews.map((deck) => {
+      return <Deck key={deck.gid} isReady={isReady(deck.gid)} deck={deck} />
     })
   },
 
   render: function () {
-    const { previews } = this.props
+    // const { previews } = this.props
     return (
       <div>
         <header><h1>Select a Deck</h1></header>

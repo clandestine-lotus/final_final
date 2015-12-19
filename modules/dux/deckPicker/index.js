@@ -1,3 +1,4 @@
+// import { Map, List } from 'immutable'
 const ADD_PREVIEWS = 'ADD_PREVIEWS'
 
 // internal action to add previews
@@ -27,13 +28,10 @@ export function getPreviews () {
   }
 }
 
-const initial = Map({previews: List(), presentation: undefined})
-
-
-export default function reducers (state = initial, action) {
+export default function reducers (state = [], action) {
   switch (action.type) {
   case 'ADD_PREVIEWS':
-    return state.set('previews', List(action.payload));
+    return action.payload;
   default:
     return state;
   }

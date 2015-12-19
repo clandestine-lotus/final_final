@@ -8,7 +8,7 @@ export default function (gid) {
   // may cause conflicts if there are a hundred simultanous shows
   const code = Random.hexString(3)
   let doc = {
-    ownerId: this.userId(),
+    ownerId: this.userId,
     presenterIndex: 0,
     maxIndex: 0,
     gid: gid,
@@ -24,7 +24,7 @@ export default function (gid) {
   })
   
   // add code to the codes db
-  Codes.upsert({code: code}, {gid: gid, showId: _id}) 
+  Codes.upsert({_id: code}, {ownerId: this.userId, _id: code, gid: gid, showId: showId, createdAt: new Date()}) 
 
   return showId
 

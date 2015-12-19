@@ -1,5 +1,3 @@
-import PresentationsDB from 'db/Presentations'
-import { dispatch } from 'dux/store'
 import Shows from 'db/shows'
 
 //////////////////
@@ -10,6 +8,7 @@ const SET_PRESENTER_INDEX = 'SET_PRESENTER_INDEX'
 const SET_MAX = 'SET_MAX'
 const NUM_SLIDES = 'NUM_SLIDES'
 const SET_CURRENT_SLIDE = 'SET_CURRENT_SLIDE'
+const SET_IDS = 'SET_IDS'
 
 
 ////////////////////////
@@ -25,8 +24,7 @@ const setPresenter = function (index) {
   }
 }
 
-// setMax internal function for the tracker to change
-const setMax = function (index) {
+const newMax = function (index) {
   return {
     type: SET_MAX,
     payload: index,
@@ -41,6 +39,19 @@ const setSlide = function(index) {
   }
 }
 
+// setMax internal function for the tracker to change
+const setMax = function (index) {
+  return function (dispatch, getState) {
+    const { show } = getState()
+    console.log(show);
+    if (show.currentIndex === show.maxIndex){
+      // change currnent slide if it's at the last one...
+      dispatch(setSlide(index))      
+    }
+    dispatch(newMax(index))
+  }
+}
+
 ///////////////////////
 // TRACKER FUNCTIONS //
 ///////////////////////
@@ -51,9 +62,13 @@ const setSlide = function(index) {
 export function trackPresenter (id) {
   return Tracker.autorun(function (computation) {
     let show = Shows.findOne({_id: id})
-    if (show.maxIndex > 0){
+    if (show){
+      const {dispatch} = require('../store.js')
       dispatch(setPresenter(show.presenterIndex))
       dispatch(setMax(show.maxIndex))
+      if (show.ownerId === Meteor.userId()){
+        dispatch(setSlide(show.presenterIndex))
+      }
     }
   })
 }
@@ -92,14 +107,15 @@ export function setIndex(index, operator) {
     // owner is unaffected by maxIndex
     if (Meteor.userId() === show.ownerId){
       // sends the index to update the presenterIndex and maxIndex
-      Meteor.call('ownerShowUpdate', index, shows.showId, function (err, result) {
+      Meteor.call('ownerShowUpdate', index, show.showId, function (err, result) {
         if(err){
           console.log('update failed')
         } else {
+          // console.log(result);
           //result should have {maxIndex, persenterIndex}
-          dispatch(setMax(result.maxIndex))
-          dispatch(setPresenter(result.presenterIndex))
-          dispatch(setSlide(result.presenterIndex))          
+          // if (result.maxIndex) dispatch(setMax(result.maxIndex))
+          // dispatch(setPresenter(result.presenterIndex))
+          // dispatch(setSlide(result.presenterIndex))          
         }
       })
 
@@ -125,6 +141,18 @@ export function numSlides (num) {
   }
 }
 
+// takes in a code document returned from mongo
+export function setIds (obj) {
+  return {
+    type: SET_IDS,
+    payload: {
+      gid: obj.gid,
+      showId: obj.showId,
+      ownerId: obj.ownerId,
+    }
+  }
+}
+
 // set the initial state
 const initialState = {
   currentIndex: 0,
@@ -133,22 +161,25 @@ const initialState = {
   presenterIndex: 0,
   ownerId: null,
   showId: null,
+  gid: null,
 }
 
 //////////////
 // REDUCERS //
 //////////////
 
-export function reducers(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
   case NUM_SLIDES:
-    return {...state, numSlides: action.payload}
+    return Object.assign({}, state, {numSlides: action.payload})
   case SET_MAX:
-    return {...state, maxIndex: action.payload}  
+    return Object.assign({}, state, {maxIndex: action.payload})  
   case SET_CURRENT_SLIDE:
-    return {...state, currentIndex: action.payload}
+    return Object.assign({}, state, {currentIndex: action.payload})
   case SET_PRESENTER_INDEX:
-    return {...state, presenterIndex: action.payload}
+    return Object.assign({}, state, {presenterIndex: action.payload})
+  case SET_IDS:
+    return Object.assign({}, state, action.payload)
   default:
     return state;
   }

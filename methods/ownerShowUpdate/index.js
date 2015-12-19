@@ -17,10 +17,11 @@ export default function (index, id) {
     throw new Meteor.Error('Not the owner changing the persenterIndex!')
   }
   Shows.update({_id: id}, {$set: setObj}, function (err, count) {
-    console.log(err || ('Changed: ' + count));
     if (err){
       throw new Meteor.Error('Update Failed')
     } else {
+      console.log(err || ('Changed: ' + count));
+      console.log(setObj);
       return setObj
     }
   })    
