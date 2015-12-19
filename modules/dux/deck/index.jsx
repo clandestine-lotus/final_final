@@ -29,6 +29,7 @@ export function getPresentation (id) {
 }
 
 // TODO: get presentation data with a method
+// NOT IN USE
 export function getDeck (gid) {
   return (dispatch) => {
     // should return array

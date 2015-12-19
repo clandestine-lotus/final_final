@@ -1,1 +1,1 @@
-export default require('./client/index.jsx')
+export default require('./client/presenterControl.jsx')

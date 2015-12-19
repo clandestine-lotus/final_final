@@ -3,29 +3,8 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import DecksDB from 'db/Decks'
 import { getPreviews } from 'dux/deckPicker'
+import Deck from './deck'
 
-let Deck = React.createClass({
-  createShow: function (gid) {
-    Meteor.call('createShow', gid, function (err, showId) {
-      if(err){
-        console.log('cannot create show');
-        console.log(err);
-      } else {
-        console.log('created!');
-      }
-    })
-  },
-  render: function () {
-    const {isReady, deck} = this.props
-    return (
-      <div onClick={() => Meteor.call('createDeck', deck.link, deck.gid)}>
-        <h2>{deck.title}</h2>
-        <img src={deck.thumbnail} />
-        { isReady ? <button onClick={() => this.createShow(deck.gid)}>Start a show</button> : <div>Not lodaded</div>}
-      </div>
-      )
-  }
-})
 
 let Decks = React.createClass({
   mixins: [ReactMeteorData],
@@ -35,6 +14,7 @@ let Decks = React.createClass({
   },
 
   getMeteorData(){
+    // change to cursor.map
     return {DecksList: DecksDB.find({ownerId: Meteor.userId()}, {fields: {gid: 1}}).fetch() }
   },
 

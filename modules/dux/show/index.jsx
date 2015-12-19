@@ -24,6 +24,7 @@ const setPresenter = function (index) {
   }
 }
 
+// setMax calls this helper dispatch function
 const newMax = function (index) {
   return {
     type: SET_MAX,
@@ -43,9 +44,9 @@ const setSlide = function(index) {
 const setMax = function (index) {
   return function (dispatch, getState) {
     const { show } = getState()
-    console.log(show);
+
     if (show.currentIndex === show.maxIndex){
-      // change currnent slide if it's at the last one...
+      // change currnent slide if it's at the max one...
       dispatch(setSlide(index))      
     }
     dispatch(newMax(index))
@@ -66,6 +67,8 @@ export function trackPresenter (id) {
       const {dispatch} = require('../store.js')
       dispatch(setPresenter(show.presenterIndex))
       dispatch(setMax(show.maxIndex))
+      // set the current slide to presenterIndex if owner is logged in
+      // if persenter has to reload, position will not be lost
       if (show.ownerId === Meteor.userId()){
         dispatch(setSlide(show.presenterIndex))
       }
@@ -111,20 +114,16 @@ export function setIndex(index, operator) {
         if(err){
           console.log('update failed')
         } else {
-          // console.log(result);
-          //result should have {maxIndex, persenterIndex}
-          // if (result.maxIndex) dispatch(setMax(result.maxIndex))
-          // dispatch(setPresenter(result.presenterIndex))
-          // dispatch(setSlide(result.presenterIndex))          
+          // used to dispatch store action here, use tracker instead (not optimisic)   
         }
       })
 
     // if not an owner... check if index ahead of owner
     } else if (index > show.maxIndex){
       console.log('cannot be ahead of presenter: ', index, ' from ', show.maxIndex, ' slides')
-      return '';
+      return ;
       
-    // if not ahead, change index
+    // if ok, change store index without touching db
     } else {
       // increment currentIndex using set
       dispatch(setSlide(index))
@@ -153,7 +152,7 @@ export function setIds (obj) {
   }
 }
 
-// set the initial state
+
 const initialState = {
   currentIndex: 0,
   maxIndex: 0,

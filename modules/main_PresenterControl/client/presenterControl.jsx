@@ -4,24 +4,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+// import actions
 import * as actionCreators from 'dux/show'
+// import trackers
 import {trackPresenter} from 'dux/show'
 import {getPresentation} from 'dux/deck'
-// import { Link } from 'react-router'
 
+// import sub components
 import Slide from 'sub_Slide'
 import Chat from 'sub_chat'
 
+// import db
 import CodeDB from 'db/Codes'
 
-// import rootReducer from './reducers';
-// import Slides from 'sub_Slides/client/index'
-// import SidebarView from 'sub_SlideSideBar/client/index'
-// import Code from 'sub_SharingCode/client/index'
-// import AudienceList from 'sub_AudienceList/client/index'
-// import Presentations from 'db/Presentations'
-
-//showId in this.props.params.showId
+//showId is in this.props.params.showId
 
 let PresenterControl = React.createClass({
 
@@ -31,16 +27,15 @@ let PresenterControl = React.createClass({
   componentWillReceiveProps() {
     const Codes = CodeDB.findOne(this.props.params.code)
     // console.log(Codes);
+    // set ID data in store.show
     this.props.setIds(Codes)
+    // start tracker for presenter
     this.trackPresenter = trackPresenter(Codes.showId)
+    // start tracker that hydrates the store once
     this.trackGetDeck = getPresentation(Codes.gid)
-    
-
   },
 
-  componentWillUnmount () { 
-    
-  },
+  componentWillUnmount () {  },
 
   render: function () {
     const {increment, decrement, setIndex} = this.props

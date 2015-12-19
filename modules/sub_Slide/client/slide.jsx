@@ -14,36 +14,32 @@ let Slide = React.createClass({
   },
 
   render: function () {
-    if (this.props.deck.length < 1 || this.props.showId.length < 5){
-      return <div> Loading... </div>
-    }
-    // use passed in index if present
-    let { currentIndex, slideIndex, maxIndex } = this.props
     let slideDiv
-
-    if (slideIndex == undefined){
-      // if the view is at the latest slide...
-      // currently unused
-      if (Meteor.userId() === this.props.ownerId){
-        slideIndex = this.props.presenterIndex
-      } else {
-        slideIndex = currentIndex
-      }
-    }
-
-    // prevent going beyond first slide
-    if (slideIndex < 0) { slideIndex = 0 }
-
-    // check if past last slide
-    if (slideIndex >= this.props.numSlides) {
-      slideDiv = <div>The presentation is over</div>
+    
+    // return a placeholder if store has not been hydrated
+    if (this.props.deck.length < 1 || this.props.showId.length < 5){
+      slideDiv = <div> Loading... </div>
     } else {
-      slideDiv = <div dangerouslySetInnerHTML={this.makeSlides(slideIndex)} />
+      
+      let { currentIndex, slideIndex, maxIndex } = this.props
+      
+      // use passed in index if present
+      if (slideIndex == undefined){ slideIndex = currentIndex }
+      
+  
+      // prevent going beyond first slide (already checked in action)
+      if (slideIndex < 0) { slideIndex = 0 }
+  
+      // check if past last slide (already checked in action)
+      if (slideIndex >= this.props.numSlides) {
+        slideDiv = <div>The presentation is over</div>
+      } else {
+        slideDiv = <div dangerouslySetInnerHTML={this.makeSlides(slideIndex)} />
+      }
     }
 
     return <div>{ slideDiv }</div>
   }
-
 })
 
 function selectState (state) {
