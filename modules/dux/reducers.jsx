@@ -28,7 +28,7 @@ export default combineReducers({
   show: Show,
   deck: Deck,
   routing: routeReducer,
-  // previews: SelectPresentation,
+  previews: SelectPresentation,
   home: Home,
   presenter: Presenter,
   projector: Projector,
