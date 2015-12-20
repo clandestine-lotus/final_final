@@ -13,13 +13,13 @@ export function addPreviews (previews) {
 }
 
 export function setViewer (id) {
-  return { 
+  return {
     type: SET_VIEWER,
     payload: id
   }
 }
 
-export function setIndex (index) { 
+export function setIndex (index) {
   return {
     type: SET_INDEX,
     payload: index
@@ -33,10 +33,10 @@ export function setCode (code) {
   }
 }
 
-Tracker.autorun(()=>{
-  let presentationID = store.getState().previews.list.get('presentation')
-  if (presentationID){
-    let pres = Presentations.findOne({gid: presentationID});
-    store.dispatch(setIndex(pres.index))
-  } 
-})
+// Tracker.autorun(()=>{
+//   let presentationID = store.getState().previews.getIn(['list', 'presentation'])
+//   if (presentationID){
+//     let pres = Presentations.findOne({gid: presentationID});
+//     store.dispatch(setIndex(pres.index))
+//   }
+// })

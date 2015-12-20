@@ -26,10 +26,10 @@ let Projector = React.createClass({
   render: function () {
     console.log('in render ', this.props.projector.get('presentation'))
     return (
-      < div >
-        < Slides gid={this.props.params.gid} index={this.props.projector.getIn(['presentation', 'index'])}/>
-        < Code gid={this.props.params.gid} />
-      </ div >
+      <div>
+        <Slides gid={this.props.params.gid} index={this.props.projector.getIn(['presentation', 'index'])}/>
+        <Code gid={this.props.params.gid}/>
+      </div>
     );
   }
 })

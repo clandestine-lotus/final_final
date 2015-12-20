@@ -1,6 +1,6 @@
 // import server files here
 
-import './../../methods/server.js'
+import '../../methods/server.js'
 import 'db/server.js'
 
 
