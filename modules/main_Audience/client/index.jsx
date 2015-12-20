@@ -4,35 +4,49 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { bindActionCreators, createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import {bindActionCreators } from 'redux'
 
-import Slides from 'sub_Slides/client/index'
-import SidebarView from 'sub_SlideSideBar/client/index'
-import Code from 'sub_SharingCode/client/index'
-import Chat from 'sub_chat/client/posts'
+import store from 'dux/store'
+import {trackPresenter} from 'dux/show'
+import {getPresentation} from 'dux/deck'
+
+// import SidebarView from 'sub_SlideSideBar/client/index'
+import Code from 'db/Codes'
 import Audience from 'db/Audience'
-import Presentations from 'db/Presentations'
+
+
+import Slide from 'sub_Slide'
+import Chat from 'sub_chat/client/posts'
 import AudienceList from 'sub_AudienceList/client/index'
 
-import * as AudienceActions from 'dux/audience/index'
+import * as Actions from 'dux/show'
+import * as AudAct from 'dux/audience'
 
 let AudienceView = React.createClass({
   componentDidMount() {
-    let setViewer = this.props.setViewer;
-    if (this.props.presentation){
-      let profile = {
-        presentation: this.props.presentation,
-        name: Meteor.user() ? Meteor.user().profile.name : 'Anonymous',
-        thumbnail: Meteor.user() ? Meteor.user().services.google.picture : null
-      }
-      Audience.insert(profile, (err, id)=>{
-        if(err){
-          console.error(err);
-        }
-        setViewer(id);
-      });
+    let setViewer = this.props.setViewer
+    const Codes = Code.findOne(this.props.params.code)
+    console.log(Codes, 'we get?')
+    let profile = {
+      presentation: Codes.showId,
+      name: Meteor.user() ? Meteor.user().profile.name : 'Anonymous',
+      thumbnail: Meteor.user() ? Meteor.user().services.google.picture : null
     }
+
+    Audience.insert(profile, (err, id)=>{
+      if(err){
+        console.error(err);
+      }
+      setViewer(id);
+    });
+
+    this.track = Tracker.autorun(()=>{
+      const {dispatch} = require('dux/store.js')
+      let audience = Audience.find({presentation: Codes.showId}).fetch();
+      console.log('are we tracking?', audience, Codes)
+      this.props.setAudience(audience);
+    })
+
     window.addEventListener('beforeunload', ()=>{
       Audience.remove({_id: this.props.viewer.get('id')}, (err, result)=>{
         if(err) {
@@ -40,19 +54,17 @@ let AudienceView = React.createClass({
         }
       })
     })
-    this.track = Tracker.autorun(()=>{
-      if (this.props.presentation){
-        let pres = Presentations.findOne({gid: this.props.presentation});
-        let audience = Audience.find({presentation: this.props.presentation}).fetch();
-        this.props.setAudience(audience);
-        if(pres.index > this.props.end) {
-          this.props.setEnd(pres.index);
-        }
-        if(this.props.index === pres.index - 1) {
-          this.props.setIndex(pres.index)
-        }
-      } 
-    })
+    
+  },
+
+  componentWillReceiveProps (){
+    const store = store
+
+    const Codes = Code.findOne(this.props.params.code)
+    this.props.setIds(Codes)
+    this.trackPresenter = trackPresenter(Codes.showId)
+    this.trackGetDeck = getPresentation(Codes.gid)
+
   },
 
   componentWillUnmount () { 
@@ -64,32 +76,17 @@ let AudienceView = React.createClass({
     this.track.stop();
   },
 
-  prevSlide() {
-    if(this.props.index > 0) {
-      this.props.setIndex(this.props.index - 1)
-    }
-  },
+  render () {
+    const {increment, decrement, setIndex} = this.props
 
-  nextSlide() {
-    if(this.props.index < this.props.end){
-      this.props.setIndex(this.props.index + 1)
-    }
-  },
-
-  render: function () {
     return (
       < div className="container" >
-        {this.props.presentation ? 
           <div className="presenterSlide">
-            < Slides 
-              gid={this.props.presentation}
-              index={this.props.index} />
-            <button onClick={this.prevSlide}>prev</button><button onClick={this.nextSlide}>next</button>
-            < Code gid={this.props.presentation} />
-            <SidebarView gid={this.props.presentation} setIndex={this.props.setIndex} end={this.props.end}/>
-            <AudienceList audience={this.props.audience.toArray()} />
-            <Chat presentationId={this.props.presentation} />
-          < /div > : <Link to = "/" >Pick an active presentation</Link>}
+            < Slide />
+            <button onClick={decrement}>prev</button><button onClick={increment}>next</button>
+            <Chat presentationId={this.props.params.showId} />
+          < /div >
+          <AudienceList audience={this.props.audience.toArray()} />
       </ div >
     );
   }
@@ -105,4 +102,10 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, AudienceActions)(AudienceView)
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(Object.assign({}, Actions, AudAct), dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AudienceView)
+            // <SidebarView gid={this.props.presentation} setIndex={this.props.setIndex} end={this.props.end}/>
+            // <Code gid={this.props.presentation} />
