@@ -8,7 +8,7 @@ import Deck from './deck'
 
 let Decks = React.createClass({
   mixins: [ReactMeteorData],
-  
+
   componentDidMount: function () {
     this.props.getPreviews();
   },
@@ -27,7 +27,7 @@ let Decks = React.createClass({
         let gidArr = this.data.DecksList.map(function (obj) {
           return obj.gid
         })
-        
+
         // check if gidArr is in the localDB
         return gidArr.indexOf(gid) !== -1
       } else {

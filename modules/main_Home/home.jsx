@@ -3,12 +3,15 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import Login from 'sub_Login/client/index'
-import * as homeActions from './components/HomeReductions'
+import Login from 'sub_Login/client'
+import * as homeActions from 'dux/HomeReductions'
+// Use getMeteorData() instead
 import Presentations from 'db/Presentations'
-import Select from 'main_SelectPresentation/client/index'
+import Select from 'main_Select/select'
 
 import { RaisedButton, AppBar, Dialog } from 'material-ui'
+// TODO: Use theming to pick colors
+import { Colors } from 'material-ui/styles'
 
 let Home = React.createClass({
   componentWillMount() {
@@ -20,7 +23,13 @@ let Home = React.createClass({
         this.props.logout();
       }
     });
+
   },
+
+  // Get the presentation data for shortcode validation
+  // getMeteorData() {
+
+  // },
 
   submitCode(event) {
     event.preventDefault();
@@ -37,9 +46,10 @@ let Home = React.createClass({
   },
 
   render() {
+    let primaryColor = Colors.cyan500;
+
     let hero = {
-      // TODO: make height responsive
-      height: window.innerHeight,
+      height: '100vh',
       backgroundImage: 'url("http://www.yafta.org/wp-content/uploads/2015/08/yafta_public-speaking_05-3600x2400.jpg")',
       backgroundSize: 'cover',
     }
@@ -55,6 +65,13 @@ let Home = React.createClass({
       position: 'fixed',
       top: '0',
       left: '0',
+    }
+
+    const dialogTitle = {
+      backgroundColor: primaryColor,
+      color: 'white',
+      padding: '1rem 2rem',
+      fontWeight: '300',
     }
 
     const createOrJoin = {
@@ -75,7 +92,7 @@ let Home = React.createClass({
     const join = Object.assign({}, create, {
       textAlign: 'center',
       fontSize: '3rem',
-      color: '#00bcd4',
+      color: primaryColor,
       margin: '0',
     })
 
@@ -88,9 +105,10 @@ let Home = React.createClass({
         style={nav}
       />
 
+
         <div>
           <Dialog
-            title="Select a Presentation"
+            title={<h3 style={dialogTitle}>Select a Presentation</h3>}
             actions={[{ text: 'Cancel' }]}
             autoDetectWindowHeight
             autoScrollBodyContent
@@ -104,7 +122,7 @@ let Home = React.createClass({
               <RaisedButton
                 disabled={!this.props.home.get('loggedIn')}
                 label={this.props.home.get('loggedIn') ? 'Create!' : 'Login to create'}
-                labelStyle={this.props.home.get('loggedIn') ? {color: '#00bcd4', fontSize: '3rem'} : {fontSize: '2.5rem'}}
+                labelStyle={this.props.home.get('loggedIn') ? {color: primaryColor, fontSize: '3rem'} : {fontSize: '2.5rem'}}
                 style={create}
                 onClick={this.props.openSelect.bind(null, true)}
                 onTouchTap={this.props.openSelect.bind(null, true)}
@@ -115,6 +133,7 @@ let Home = React.createClass({
                 <input placeholder="Enter Code" maxLength={4} style={join} />
               </form>
 
+              {/*TODO: Simplify this double tertiary*/}
               {this.props.home.get('presentationCode') ? <Link to = "/audience">Join!</Link> : null}
               {this.props.home.get('invalidCode') ? 'Please Enter Valid Code' : null}
             </div>
