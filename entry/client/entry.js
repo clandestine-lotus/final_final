@@ -1,6 +1,4 @@
 // import global styles
-// import 'css/skeleton.scss'
-// import 'css/normalize.scss'
 import 'css/global.scss'
 
 // import Meteor Methods for optimistic updates

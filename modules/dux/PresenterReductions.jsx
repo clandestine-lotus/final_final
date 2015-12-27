@@ -1,11 +1,12 @@
 /*
 ==============================
-    Constant definitions
+    Types
 ==============================
  */
 
-const ADD_PREVIEWS = 'ADD_PREVIEWS';
-const SET_PRESENTATION = 'SET_PRESENTATION';
+const ADD_PREVIEWS = 'ADD_PREVIEWS'
+const SET_PRESENTATION = 'SET_PRESENTATION'
+
 
 /*
 ==============================
@@ -23,7 +24,7 @@ export function addPreviews (previews) {
 export function getPreviews () {
   return (dispatch, getState) => {
     GoogleApi.get('drive/v2/files?q=mimeType="application/vnd.google-apps.presentation"', {}, function (err, result) {
-      if (err) console.error(err);
+      if (err) console.error(err)
       // Map an array of preview objects with specific properties
       var previews = result.items.map((doc) => {
         return {
@@ -31,8 +32,8 @@ export function getPreviews () {
           title: doc.title,
           thumbnail: doc.thumbnailLink,
           gid: doc.id
-        };
-      });
+        }
+      })
       dispatch(addPreviews(previews))
     })
   }
@@ -54,15 +55,18 @@ export function setPresentation(id) {
 
 import { Map, List } from 'immutable'
 
-const initial = Map({previews: List(), presentation: undefined})
+const initial = Map({
+  list: List(),
+  presentation: undefined,
+})
 
-export default function counter(state = initial, action) {
+export default (state = initial, action) => {
   switch (action.type) {
-  case 'ADD_PREVIEWS':
-    return state.set('previews', List(action.payload));
-  case 'SET_PRESENTATION':
-    return state.set('presentation', action.payload);
+  case ADD_PREVIEWS:
+    return state.set('list', List(action.payload))
+  case SET_PRESENTATION:
+    return state.set('presentation', action.payload)
   default:
-    return state;
+    return state
   }
 }

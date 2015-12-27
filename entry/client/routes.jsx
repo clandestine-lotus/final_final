@@ -7,10 +7,10 @@ import { Router, Route, Link, IndexRoute } from 'react-router' // ESLINT: unused
 /**
  *  Import module root routes here and add them to rootRoute below
  */
-import Home from 'main_Home/client/routes'
+import Home from 'main_Home/routes'
 import Settings from 'Settings/routes'
 import Other from 'Other/routes'
-import SelectPresentation from 'main_SelectPresentation/client/routes'
+import Select from 'main_Select/routes'
 import Presenter from 'main_Presenter/client/routes'
 import Projector from 'main_Projector/client/routes'
 import Audience from 'main_Audience/client/routes'
@@ -38,7 +38,7 @@ const rootRoute = {
     childRoutes: [
       Settings,
       Other,
-      SelectPresentation,
+      Select,
       Presenter,
       Projector,
       Audience,

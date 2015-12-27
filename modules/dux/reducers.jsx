@@ -5,10 +5,10 @@ import { routeReducer } from 'redux-simple-router'
 
 // presenter is unused for now
 /* eslint-disable */
-import Presenter from 'main_Presenter/client/components/Reducers.jsx'
+import Presenter from 'main_Presenter/client/components/Reducers'
 /* eslint-enable */
-import SelectPresentation from 'main_SelectPresentation/client/components/PresenterReducers'
-import Home from 'main_Home/client/components/HomeReductions'
+import SelectPresentation from 'dux/PresenterReductions'
+import Home from 'dux/HomeReductions'
 import Projector from 'main_Projector/client/components/ProjectorReducers'
 import Audience from 'dux/audience'
 import Chat from 'dux/chat'

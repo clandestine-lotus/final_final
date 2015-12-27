@@ -1,6 +1,6 @@
 /*
 ==============================
-    Actions
+    Types
 ==============================
  */
 
@@ -9,6 +9,13 @@ const LOGIN = 'LOGIN'
 const LOGOUT = 'LOGOUT'
 const CODE_VALIDATION = 'CODE_VALIDATION'
 const CONTROL_SELECT = 'CONTROL_SELECT'
+
+
+/*
+==============================
+    Actions
+==============================
+ */
 
 export function submitCode(code) {
   return {
@@ -46,7 +53,7 @@ export function openSelect(isOpen) {
 
 /*
 ==============================
-    Reducers
+    Reducer
 ==============================
  */
 
