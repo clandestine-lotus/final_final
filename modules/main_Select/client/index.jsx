@@ -5,7 +5,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import * as PresenterActions from 'dux/PresenterReductions'
+import * as PresenterActions from 'dux/SelectReductions'
 
 import { GridList, GridTile, CircularProgress } from 'material-ui'
 // TODO: Use theming to pick colors
@@ -22,6 +22,24 @@ let Presenter = React.createClass({
     window.dispatchEvent(new Event('resize'))
   },
 
+  selectPresentation(data) {
+    let user = Meteor.userId()
+    let link = data.link
+    let gid = data.gid
+
+    // TODO: Get rid of setPresentation action????
+    // this.props.setPresentation(id)
+    Meteor.call('createPresentation', link, user, gid, function (err, result) {
+      if (err) {
+        console.error('from preview ', err)
+      } else {
+        console.log('success!', gid)
+        // react.props.setPresentation(gid)
+        // window.open('/projector/' + gid)
+      }
+    })
+  },
+
   render() {
     const tile = {
       height: '15rem',
@@ -31,7 +49,7 @@ let Presenter = React.createClass({
       position: 'absolute',
       left: '50%',
       top: '50%',
-      transform: 'translate(-50%, -100%)',
+      transform: 'translate(-50%, -50%)',
     }
 
     if (this.props.previews.size) {
@@ -48,7 +66,7 @@ let Presenter = React.createClass({
               ><GridTile
                 title={preview.title}
                 children={<img src={preview.thumbnail}/>}
-                onClick={this.props.setPresentation.bind(null, preview.gid)}
+                onClick={this.selectPresentation.bind(null, preview)}
                 style={tile}
               /></Link>
             )
@@ -56,7 +74,7 @@ let Presenter = React.createClass({
         </GridList>
       )
     } else {
-      return <CircularProgress mode="indeterminate" size={1.5} style={progress} />
+      return <CircularProgress mode="indeterminate" size={1} style={progress} />
     }
   }
 })

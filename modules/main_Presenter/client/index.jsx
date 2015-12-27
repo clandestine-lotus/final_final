@@ -17,7 +17,7 @@ let Presenter = React.createClass({
   mixins: [ReactMeteorData],
 
   componentWillMount() {
-    let user = Meteor.user()._id;
+    let user = Meteor.userId()
 
     let link = this.props.data.link;
     let gid = this.props.data.gid;
@@ -41,7 +41,7 @@ let Presenter = React.createClass({
       }
     })
 
-    window.addEventListener('beforeunload', ()=>{
+    window.addEventListener('beforeunload', () => {
       Presentations.update(
         {_id: this.data.presentationId},
         {$unset: {code: ''}},
@@ -63,6 +63,8 @@ let Presenter = React.createClass({
   },
 
   getMeteorData() {
+    console.log(this.props);
+
     var presentation = Presentations.findOne({gid: this.props.presentation});
     return {
       presentationId: presentation._id
