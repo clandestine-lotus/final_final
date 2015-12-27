@@ -1,17 +1,17 @@
 import React from 'react'
+import {connect} from 'react-redux'
+
+import * as actionCreators from 'dux/show'
 
 let Thumbnail = React.createClass({
   setThumb () {
     return { __html: this.props.svg}
   },
 
-  changeSlide () {
-    return this.props.setIndex(this.props.index)()
-  },
-
   render() {
+    const {setIndex} = this.props
     return (
-      <div className="thumbnail" onClick={this.changeSlide} dangerouslySetInnerHTML={this.setThumb()}></div>
+      <div className="thumbnail" onClick={() => setIndex(this.props.index)} dangerouslySetInnerHTML={this.setThumb()}></div>
     );
   }
 })
