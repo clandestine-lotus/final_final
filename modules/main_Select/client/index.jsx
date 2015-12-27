@@ -28,7 +28,7 @@ let Presenter = React.createClass({
     let gid = data.gid
 
     // TODO: Get rid of setPresentation action????
-    // this.props.setPresentation(id)
+    this.props.setPresentation(data.gid)
     Meteor.call('createPresentation', link, user, gid, function (err, result) {
       if (err) {
         console.error('from preview ', err)

@@ -1,9 +1,10 @@
 import Presentations from 'db/Presentations.js'
 
-const ADD_PREVIEWS = 'ADD_PREVIEWS';
-const SET_INDEX = 'SET_INDEX';
-const SET_CODE = 'SET_CODE';
-const SET_VIEWER = 'SET_VIEWER';
+const ADD_PREVIEWS = 'ADD_PREVIEWS'
+const SET_INDEX = 'SET_INDEX'
+const SET_CODE = 'SET_CODE'
+const SET_VIEWER = 'SET_VIEWER'
+const READY = 'READY'
 
 export function addPreviews (previews) {
   return {
@@ -33,10 +34,17 @@ export function setCode (code) {
   }
 }
 
+export function presentationReady() {
+  return {
+    type: READY,
+    payload: true
+  }
+}
+
 // Tracker.autorun(()=>{
 //   let presentationID = store.getState().previews.getIn(['list', 'presentation'])
 //   if (presentationID){
-//     let pres = Presentations.findOne({gid: presentationID});
+//     let pres = Presentations.findOne({gid: presentationID})
 //     store.dispatch(setIndex(pres.index))
 //   }
 // })
