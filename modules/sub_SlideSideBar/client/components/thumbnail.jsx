@@ -1,6 +1,4 @@
-import React from 'react';
-import Presentations from 'db/Presentations'
-
+import React from 'react'
 
 let Thumbnail = React.createClass({
   setThumb () {
@@ -8,7 +6,7 @@ let Thumbnail = React.createClass({
   },
 
   changeSlide () {
-    this.props.setIndex(this.props.index, this.props.gid)
+    return this.props.setIndex(this.props.index)()
   },
 
   render() {
@@ -19,4 +17,9 @@ let Thumbnail = React.createClass({
 })
 
 
-export default Thumbnail
+function selectState (state) {
+  return {}
+}
+
+
+export default connect(selectState, actionCreators)(Thumbnail)

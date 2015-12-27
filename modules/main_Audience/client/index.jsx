@@ -17,6 +17,7 @@ import Code from 'db/Codes'
 import Slide from 'sub_Slide'
 import Chat from 'sub_chat/client/posts'
 import AudienceList from 'sub_AudienceList/client/index'
+import SidebarView from 'sub_SlideSideBar/client/index'
 
 import * as Actions from 'dux/show'
 
@@ -51,6 +52,7 @@ let AudienceView = React.createClass({
             <Chat presentationId={this.props.params.showId} />
           < /div >
           <AudienceList audience={this.props.audience.toArray()} />
+          <SidebarView deck={this.props.deck} end={this.props.maxIndex}/>
       </ div >
     );
   }
@@ -58,10 +60,11 @@ let AudienceView = React.createClass({
 
 function mapStateToProps (state) {
   return {
-    audience: state.audience.get('audience')
+    audience: state.audience.get('audience'),
+    maxIndex: state.show.maxIndex, 
+    deck: state.deck
   }
 }
 
 export default connect(mapStateToProps, Actions)(AudienceView)
-            // <SidebarView gid={this.props.presentation} setIndex={this.props.setIndex} end={this.props.end}/>
             // <Code gid={this.props.presentation} />

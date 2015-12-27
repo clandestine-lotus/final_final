@@ -1,19 +1,16 @@
 /*
   This is the entry point. Export a react component here.
 */
-
 import React from 'react';
-import Presentations from 'db/Presentations.js'
+
 import Thumbnail from './components/thumbnail'
 
 let SidebarView = React.createClass({
 
   createThumbnails () {
-    let pres = Presentations.findOne({gid: this.props.gid})
-    let end = this.props.end + 1 ? this.props.end + 1 : pres.svgs.length
     let mapped = []
-    for(var i = 0; i < end; i++){
-      mapped.push(<Thumbnail key={i} svg={pres.svgs[i]} index={i} setIndex={this.props.setIndex} gid={this.props.gid}/>)
+    for(var i = 0; i < this.props.end; i++){
+      mapped.push(<Thumbnail key={i} svg={this.props.deck[i]} index={i} setIndex={this.props.setIndex} gid={this.props.gid}/>)
     }
     return mapped;
   },
