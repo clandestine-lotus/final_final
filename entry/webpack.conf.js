@@ -17,7 +17,7 @@ module.exports = {
     'react-addons-linked-state-mixin': 'React.addons.LinkedStateMixin',
     'react-addons-test-utils': 'React.addons.TestUtils',
     'material-ui': 'mui',
-    'material-ui/styles': 'mui.styles'
+    'material-ui/styles': 'mui.Styles'
   },
   devServer: {
     // You can change this to your server IP address to access it remotely
