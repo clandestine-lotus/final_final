@@ -13,15 +13,12 @@ import {getPresentation} from 'dux/deck'
 
 // import SidebarView from 'sub_SlideSideBar/client/index'
 import Code from 'db/Codes'
-import Audience from 'db/Audience'
-
 
 import Slide from 'sub_Slide'
 import Chat from 'sub_chat/client/posts'
 import AudienceList from 'sub_AudienceList/client/index'
 
 import * as Actions from 'dux/show'
-import * as AudAct from 'dux/audience'
 
 let AudienceView = React.createClass({
 
