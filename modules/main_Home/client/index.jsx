@@ -7,6 +7,7 @@ import Login from 'sub_Login/client'
 import * as homeActions from 'dux/HomeReductions'
 // Use getMeteorData() instead
 import Presentations from 'db/Presentations'
+import Codes from 'db/Codes'
 import Select from 'main_Select/client'
 
 import { RaisedButton, AppBar, Dialog } from 'material-ui'
@@ -36,10 +37,11 @@ let Home = React.createClass({
 
     let code = event.target[0].value;
     // Validate code
-    let pres = Presentations.findOne({ code })
+    let pres = Codes.findOne({ _id: code })
+    console.log(pres)
     if (pres) {
       this.props.codeValidation(false);
-      this.props.submitCode(pres.gid);
+      this.props.submitCode(pres._id);
     } else {
       this.props.codeValidation(true);
     }
@@ -134,7 +136,7 @@ let Home = React.createClass({
               </form>
 
               {/*TODO: Simplify this double tertiary*/}
-              {this.props.home.get('presentationCode') ? <Link to = "/audience">Join!</Link> : null}
+              {this.props.home.get('presentationCode') ? <Link to = {`/audience/${this.props.home.get('presentationCode')}`}>Join!</Link> : null}
               {this.props.home.get('invalidCode') ? 'Please Enter Valid Code' : null}
             </div>
           </div>
