@@ -3,7 +3,7 @@ module.exports = {
   path: 'select',
   getComponent(location, cb) {
     require.ensure([], (require) => {
-      cb(null, require('./select.jsx'))
+      cb(null, require('./client'))
     })
   }
 }

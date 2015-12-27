@@ -7,7 +7,7 @@ import Login from 'sub_Login/client'
 import * as homeActions from 'dux/HomeReductions'
 // Use getMeteorData() instead
 import Presentations from 'db/Presentations'
-import Select from 'main_Select/select'
+import Select from 'main_Select/client'
 
 import { RaisedButton, AppBar, Dialog } from 'material-ui'
 // TODO: Use theming to pick colors
