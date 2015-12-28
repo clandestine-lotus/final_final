@@ -7,7 +7,7 @@ import { routeReducer } from 'redux-simple-router'
 /* eslint-disable */
 import Presenter from 'main_Presenter/client/components/Reducers'
 /* eslint-enable */
-import SelectPresentation from 'dux/PresenterReductions'
+import SelectPresentation from 'dux/SelectReductions'
 import Home from 'dux/HomeReductions'
 import Projector from 'main_Projector/client/components/ProjectorReducers'
 import Audience from 'dux/audience'

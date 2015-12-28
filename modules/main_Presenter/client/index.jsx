@@ -13,43 +13,39 @@ import Code from 'sub_SharingCode/client/index'
 import AudienceList from 'sub_AudienceList/client/index'
 import Presentations from 'db/Presentations'
 
+import { CircularProgress } from 'material-ui'
+
+
 let Presenter = React.createClass({
-  mixins: [ReactMeteorData],
+  // mixins: [ReactMeteorData],
 
   componentWillMount() {
-    let user = Meteor.user()._id;
-
-    let link = this.props.data.link;
-    let gid = this.props.data.gid;
-
-    Meteor.call('createPresentation', link, user, gid, function (err, result) {
-      if (err) {
-        console.error('from preview ', err);
-      } else {
-        console.log('success!', this.props.params.gid);
-        // react.props.setPresentation(gid);
-        // window.open('/projector/' + gid);
-      }
-    })
   },
 
   componentDidMount() {
     const context = this
-    Presentation.find({gid: this.props.presentation}).observe({
+    Presentations.find({gid: this.props.presentation}).observe({
+      added: doc => {
+        // Change readystate of the presentation
+        this.props.presentationReady()
+
+        // Register window listener to recycle shortcodes for presentations
+        window.addEventListener('beforeunload', () => {
+          Presentations.update(
+            {_id: doc._id},
+            {$unset: {code: ''}},
+            (err, result) => {
+              if (err) console.log(err)
+            }
+          )
+        })
+      },
+
       changed: (id, doc) => {
         context.props.setIndex(doc.index)
       }
     })
 
-    window.addEventListener('beforeunload', ()=>{
-      Presentations.update(
-        {_id: this.data.presentationId},
-        {$unset: {code: ''}},
-        (err, result) => {
-          if (err) console.log(err);
-        }
-      );
-    });
   },
 
   componentWillUnmount() {
@@ -57,17 +53,19 @@ let Presenter = React.createClass({
       {_id: this.data.presentationId},
       {$unset: {code: ''}},
       (err, result) => {
-        if (err) console.log(err);
+        if (err) console.log(err)
       }
-    );
+    )
   },
 
-  getMeteorData() {
-    var presentation = Presentations.findOne({gid: this.props.presentation});
-    return {
-      presentationId: presentation._id
-    }
-  },
+  // getMeteorData() {
+  //   console.log(this.props)
+
+  //   var presentation = Presentations.findOne({gid: this.props.presentation})
+  //   return {
+  //     presentationId: presentation._id
+  //   }
+  // },
 
   nextSlide() {
     Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) + 1)
@@ -82,10 +80,17 @@ let Presenter = React.createClass({
   },
 
   render() {
+    const progress = {
+      position: 'absolute',
+      left: '50%',
+      top: '50%',
+      transform: 'translate(-50%, -50%)',
+    }
+
     return (
       <div className="container">
         {
-          this.props.presentation ?
+          this.props.presenter.getIn(['presentation', 'isReady']) ?
           <div className="presenterSlide">
             Current Slide
             <Slides
@@ -101,7 +106,11 @@ let Presenter = React.createClass({
             <Code gid={this.props.presentation} />
             <SidebarView gid={this.props.presentation} setIndex={this.changeSlide}/>
           </div> :
-          <Link to="/select">Choose a Slide</Link>
+          <div>
+            <div>Loading. Please wait.</div><br />
+            <CircularProgress mode="indeterminate" size={1} style={progress} />
+          </div>
+          /*<Link to="/select">Choose a Slide</Link>*/
         }
       </div>
     )

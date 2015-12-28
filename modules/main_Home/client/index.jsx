@@ -23,7 +23,6 @@ let Home = React.createClass({
         this.props.logout();
       }
     });
-
   },
 
   // Get the presentation data for shortcode validation
@@ -46,7 +45,7 @@ let Home = React.createClass({
   },
 
   render() {
-    let primaryColor = Colors.cyan500;
+    let primaryColor = Colors.cyan500
 
     let hero = {
       height: '100vh',
@@ -85,6 +84,7 @@ let Home = React.createClass({
     }
 
     const create = {
+      // backgroundColor: 'white',
       height: '7rem',
       width: '30rem',
     }
