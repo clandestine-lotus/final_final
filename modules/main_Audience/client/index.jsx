@@ -67,4 +67,3 @@ function mapStateToProps (state) {
 }
 
 export default connect(mapStateToProps, Actions)(AudienceView)
-            // <Code gid={this.props.presentation} />

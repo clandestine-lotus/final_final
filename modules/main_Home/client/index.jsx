@@ -94,7 +94,7 @@ let Home = React.createClass({
     const actions = 
     this.props.showCode ? 
     [
-      <Link to = {`/presentercontrol/${this.props.showCode}`}>Start Presentation</Link>,
+      <Link to = {`/present/${this.props.showCode}`}>Start Presentation</Link>,
       { text: 'Cancel' }
     ] : 
     [{text: 'Cancel'}]
