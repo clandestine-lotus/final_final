@@ -1,6 +1,5 @@
 import {Map, List} from 'immutable'
 
-import Presentations from 'db/Presentations.js'
 import Audience from 'db/Audience.js'
 
 //////////////////

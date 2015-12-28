@@ -7,7 +7,7 @@ import { routeReducer } from 'redux-simple-router'
 /* eslint-disable */
 import Presenter from 'main_Presenter/client/components/Reducers'
 /* eslint-enable */
-import SelectPresentation from 'dux/SelectReductions'
+// import SelectPresentation from 'dux/SelectReductions'
 import Home from 'dux/HomeReductions'
 import Projector from 'main_Projector/client/components/ProjectorReducers'
 import Audience from 'dux/audience'
@@ -19,11 +19,10 @@ import Deck from 'dux/deck'
 // Slide index and metadata storage
 import Show from 'dux/show'
 // picker that gets data from google api
-import deckPicker from 'dux/deckPicker'
+import SelectPresentation from 'dux/deckPicker'
 
 // add reducers here
 export default combineReducers({
-  deckPicker: deckPicker,
   chat: Chat,
   show: Show,
   deck: Deck,

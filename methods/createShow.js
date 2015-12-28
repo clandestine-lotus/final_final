@@ -26,6 +26,6 @@ export default function (gid) {
   // add code to the codes db
   Codes.upsert({_id: code}, {ownerId: this.userId, _id: code, gid: gid, showId: showId, createdAt: new Date()}) 
 
-  return showId
+  return code
 
 }

@@ -4,79 +4,38 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-
-import * as PresenterActions from './components/PresenterActions'
-
-import Slides from 'sub_Slides/client/index'
-import SidebarView from 'sub_SlideSideBar/client/index'
-import Code from 'sub_SharingCode/client/index'
-import AudienceList from 'sub_AudienceList/client/index'
-import Presentations from 'db/Presentations'
-
 import { CircularProgress } from 'material-ui'
 
+import * as PresenterActions from 'dux/show'
+
+import {trackPresenter} from 'dux/show'
+import {getPresentation} from 'dux/deck'
+import {trackAudience} from 'dux/audience'
+
+import Slide from 'sub_Slide'
+import SidebarView from 'sub_SlideSideBar/client/index'
+import AudienceList from 'sub_AudienceList/client/index'
+import Chat from 'sub_chat/client/posts'
+
+import Codes from 'db/Codes'
 
 let Presenter = React.createClass({
-  // mixins: [ReactMeteorData],
-
-  componentWillMount() {
-  },
 
   componentDidMount() {
-    const context = this
-    Presentations.find({gid: this.props.presentation}).observe({
-      added: doc => {
-        // Change readystate of the presentation
-        this.props.presentationReady()
-
-        // Register window listener to recycle shortcodes for presentations
-        window.addEventListener('beforeunload', () => {
-          Presentations.update(
-            {_id: doc._id},
-            {$unset: {code: ''}},
-            (err, result) => {
-              if (err) console.log(err)
-            }
-          )
-        })
-      },
-
-      changed: (id, doc) => {
-        context.props.setIndex(doc.index)
-      }
-    })
-
+    const Code = Codes.findOne(this.props.params.code)
+    // set ID data in store.show
+    this.props.setIds(Code)
+    // start tracker for presenter
+    this.trackPresenter = trackPresenter(Code.showId)
+    // start tracker that hydrates the store once
+    this.trackGetDeck = getPresentation(Code.gid)
+    this.trackAudience = trackAudience(Code.showId)
   },
 
   componentWillUnmount() {
-    Presentations.update(
-      {_id: this.data.presentationId},
-      {$unset: {code: ''}},
-      (err, result) => {
-        if (err) console.log(err)
-      }
-    )
-  },
-
-  // getMeteorData() {
-  //   console.log(this.props)
-
-  //   var presentation = Presentations.findOne({gid: this.props.presentation})
-  //   return {
-  //     presentationId: presentation._id
-  //   }
-  // },
-
-  nextSlide() {
-    Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) + 1)
-  },
-
-  prevSlide() {
-    Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) - 1)
-  },
-
-  changeSlide(index, gid) {
-    Meteor.call('changeIndex', gid, index)
+    this.trackAudience.stop()
+    this.trackPresenter.stop()
+    this.trackGetDeck.stop()
   },
 
   render() {
@@ -87,30 +46,24 @@ let Presenter = React.createClass({
       transform: 'translate(-50%, -50%)',
     }
 
+    const {increment, decrement, setIndex} = this.props
+
     return (
       <div className="container">
         {
-          this.props.presenter.getIn(['presentation', 'isReady']) ?
+          this.props.deck.length ?
           <div className="presenterSlide">
             Current Slide
-            <Slides
-              gid={this.props.presentation}
-              index={this.props.presenter.getIn(['presentation', 'index'])}
-            />
-            Next Slide
-            <Slides
-              gid={this.props.presentation}
-              index={this.props.presenter.getIn(['presentation', 'index']) + 1}
-            />
-            <button onClick={this.prevSlide}>prev</button><button onClick={this.nextSlide}>next</button>
-            <Code gid={this.props.presentation} />
-            <SidebarView gid={this.props.presentation} setIndex={this.changeSlide}/>
+            <Slide/>
+            <button onClick={decrement}>prev</button><button onClick={increment}>next</button>
+            <SidebarView deck={this.props.deck} end={this.props.max}/>
+            <AudienceList audience={this.props.audience.toArray()} />
+            <Chat presentationId={this.props.params.showId} />
           </div> :
           <div>
             <div>Loading. Please wait.</div><br />
             <CircularProgress mode="indeterminate" size={1} style={progress} />
           </div>
-          /*<Link to="/select">Choose a Slide</Link>*/
         }
       </div>
     )
@@ -120,7 +73,10 @@ let Presenter = React.createClass({
 function mapStateToProps (state) {
   return {
     presenter: state.presenter,
-    presentation: state.previews.get('presentation')
+    presentation: state.previews,
+    deck: state.deck,
+    audience: state.audience.get('audience'),
+    max: state.show.numSlides
   }
 }
 

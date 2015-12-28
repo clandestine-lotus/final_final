@@ -17,10 +17,6 @@ import Audience from 'main_Audience/client/routes'
 // Delete chat when you're finished
 import chat from 'sub_chat/client/routes'
 
-//testing
-import DeckPicker from 'sub_DeckPicker/routes'
-import PresenterControl from 'main_PresenterControl/routes'
-
 // define root component
 const App = React.createClass({
   render() {
@@ -42,8 +38,6 @@ const rootRoute = {
       Presenter,
       Projector,
       Audience,
-      DeckPicker,
-      PresenterControl,
       // Delete chat when you're finished
       chat
     ]
