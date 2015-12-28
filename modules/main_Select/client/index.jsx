@@ -5,16 +5,21 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import * as PresenterActions from 'dux/SelectReductions'
+import DecksDB from 'db/Decks'
+import { getPreviews } from 'dux/deckPicker'
+import Deck from './deck'
+
 
 import { GridList, GridTile, CircularProgress } from 'material-ui'
 // TODO: Use theming to pick colors
 import { Colors } from 'material-ui/styles'
 
 
-let Presenter = React.createClass({
-  componentWillMount() {
-    this.props.getPreviews();
+let SelectPresentation = React.createClass({
+  mixins: [ReactMeteorData],
+
+  componentDidMount() {
+    this.props.getPreviews()
   },
 
   componentDidUpdate() {
@@ -22,28 +27,31 @@ let Presenter = React.createClass({
     window.dispatchEvent(new Event('resize'))
   },
 
-  selectPresentation(data) {
-    let user = Meteor.userId()
-    let link = data.link
-    let gid = data.gid
+  getMeteorData(){
+    return {DecksList: DecksDB.find({ownderId: Meteor.userId()}, {fields: {gid: 1}}).fetch() }
+  },
 
-    // TODO: Get rid of setPresentation action????
-    this.props.setPresentation(data.gid)
-    Meteor.call('createPresentation', link, user, gid, function (err, result) {
-      if (err) {
-        console.error('from preview ', err)
+  renderDecks(){
+    let isReady = gid => {
+      if (this.data.DecksList.length) {
+        // return arr of gids
+        let gidArr = this.data.DecksList.map(function (obj) {
+          return obj.gid
+        })
+
+        // check if gidArr is in the localDB
+        return gidArr.indexOf(gid) !== -1
       } else {
-        console.log('success!', gid)
-        // react.props.setPresentation(gid)
-        // window.open('/projector/' + gid)
+        // not in the db for sure
+        return false
       }
+    }
+    return this.props.previews.map((deck) => {
+      return <Deck key={deck.gid} isReady={isReady(deck.gid)} deck={deck} />
     })
   },
 
   render() {
-    const tile = {
-      height: '15rem',
-    }
 
     const progress = {
       position: 'absolute',
@@ -52,25 +60,13 @@ let Presenter = React.createClass({
       transform: 'translate(-50%, -50%)',
     }
 
-    if (this.props.previews.size) {
+    if (this.props.previews.length) {
       return (
         <GridList className="twelve columns"
           padding={8}
           cols={3}
         >
-          {
-            this.props.previews.map(preview =>
-              <Link
-                to={'/present'}
-                key={preview.gid}
-              ><GridTile
-                title={preview.title}
-                children={<img src={preview.thumbnail}/>}
-                onClick={this.selectPresentation.bind(null, preview)}
-                style={tile}
-              /></Link>
-            )
-          }
+          {this.renderDecks()}
         </GridList>
       )
     } else {
@@ -81,8 +77,9 @@ let Presenter = React.createClass({
 
 function mapStateToProps (state) {
   return {
-    previews: state.previews.get('list')
+    previews: state.previews
   }
 }
 
-export default connect(mapStateToProps, PresenterActions)(Presenter)
+export default connect(mapStateToProps, {getPreviews})(SelectPresentation)
+

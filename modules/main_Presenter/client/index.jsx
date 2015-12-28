@@ -120,7 +120,7 @@ let Presenter = React.createClass({
 function mapStateToProps (state) {
   return {
     presenter: state.presenter,
-    presentation: state.previews.get('presentation')
+    presentation: state.previews
   }
 }
 
