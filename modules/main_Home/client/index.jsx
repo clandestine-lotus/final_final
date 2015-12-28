@@ -25,11 +25,6 @@ let Home = React.createClass({
     });
   },
 
-  // Get the presentation data for shortcode validation
-  // getMeteorData() {
-
-  // },
-
   submitCode(event) {
     event.preventDefault();
 
@@ -96,6 +91,14 @@ let Home = React.createClass({
       margin: '0',
     })
 
+    const actions = 
+    this.props.showCode ? 
+    [
+      <Link to = {`/presentercontrol/${this.props.showCode}`}>Start Presentation</Link>,
+      { text: 'Cancel' }
+    ] : 
+    [{text: 'Cancel'}]
+
     return (
       <div className="hero" style={hero}>
       <AppBar
@@ -109,7 +112,7 @@ let Home = React.createClass({
         <div>
           <Dialog
             title={<h3 style={dialogTitle}>Select a Presentation</h3>}
-            actions={[{ text: 'Cancel' }]}
+            actions={actions}
             autoDetectWindowHeight
             autoScrollBodyContent
             open={this.props.home.get('showSelect')}
@@ -134,7 +137,7 @@ let Home = React.createClass({
               </form>
 
               {/*TODO: Simplify this double tertiary*/}
-              {this.props.home.get('presentationCode') ?  <Link to = {`/audience/${this.props.home.get('presentationCode')}`}>Join!</Link> : null}
+              {this.props.home.get('presentationCode') ? <Link to = {`/audience/${this.props.home.get('presentationCode')}`}>Join!</Link> : null}
               {this.props.home.get('invalidCode') ? 'Please Enter Valid Code' : null}
             </div>
           </div>
@@ -146,7 +149,8 @@ let Home = React.createClass({
 
 function mapStateToProps(state) {
   return {
-    home: state.home,
+    home: state.home, 
+    showCode: state.show.showCode
   }
 }
 

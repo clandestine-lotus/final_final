@@ -1,27 +1,28 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import {Link} from 'react-router'
+import {setShow} from 'dux/show'
 import {GridTile} from 'material-ui'
 
 let Deck = React.createClass({
   createShow: function (deck) {
-    console.log('hi')
+    let {setShow} = this.props
     Meteor.call('createDeck', deck.link, deck.gid, function (err, result){
       if (err) {
         throw new Error('cannot create deck', err)
       } else {
-        console.log('created deck', result)
         Meteor.call('createShow', deck.gid, function (err, code) {
           if(err){
             throw new Error('Cannot create Show')
           } else {
-            console.log('created!', code);
+            setShow(code)
           }
         })      
       }
     })
   },
   render: function () {
-    const {isReady, deck} = this.props
+    const {deck} = this.props
     const tile = {
       height: '15rem',
     }
@@ -37,5 +38,11 @@ let Deck = React.createClass({
   }
 })
 
-export default Deck
+function selectState (state) {
+  return {}
+}
+
+
+export default connect(selectState, {setShow})(Deck)
+
     

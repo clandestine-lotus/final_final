@@ -9,6 +9,7 @@ const SET_MAX = 'SET_MAX'
 const NUM_SLIDES = 'NUM_SLIDES'
 const SET_CURRENT_SLIDE = 'SET_CURRENT_SLIDE'
 const SET_IDS = 'SET_IDS'
+const SET_CODE = 'SET_CODE'
 
 
 ////////////////////////
@@ -37,6 +38,13 @@ const setSlide = function(index) {
   return {
     type: SET_CURRENT_SLIDE,
     payload: index
+  }
+}
+
+const setCode = function (code) {
+  return {
+    type: SET_CODE,
+    payload: code
   }
 }
 
@@ -81,6 +89,12 @@ export function trackPresenter (id) {
 //////////////////////
 
 // actions to increment slide
+export function setShow (code) {
+  return function (dispatch) {
+    dispatch(setCode(code))
+  }
+}
+
 export function increment() {
   return setIndex(null, 1)
 }
@@ -121,8 +135,7 @@ export function setIndex(index, operator) {
     // if not an owner... check if index ahead of owner
     } else if (index > show.maxIndex){
       console.log('cannot be ahead of presenter: ', index, ' from ', show.maxIndex, ' slides')
-      return ;
-      
+      return '';
     // if ok, change store index without touching db
     } else {
       // increment currentIndex using set
@@ -161,6 +174,7 @@ const initialState = {
   ownerId: null,
   showId: null,
   gid: null,
+  showCode: null
 }
 
 //////////////
@@ -169,6 +183,8 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+  case SET_CODE: 
+    return Object.assign({}, state, {showCode: action.payload})
   case NUM_SLIDES:
     return Object.assign({}, state, {numSlides: action.payload})
   case SET_MAX:
