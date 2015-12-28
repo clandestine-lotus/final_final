@@ -1,22 +1,25 @@
-import React from 'react';
-import Presentations from 'db/Presentations'
+import React from 'react'
+import {connect} from 'react-redux'
 
+import * as actionCreators from 'dux/show'
 
 let Thumbnail = React.createClass({
   setThumb () {
     return { __html: this.props.svg}
   },
 
-  changeSlide () {
-    this.props.setIndex(this.props.index, this.props.gid)
-  },
-
   render() {
+    const {setIndex} = this.props
     return (
-      <div className="thumbnail" onClick={this.changeSlide} dangerouslySetInnerHTML={this.setThumb()}></div>
+      <div className="thumbnail" onClick={() => setIndex(this.props.index)} dangerouslySetInnerHTML={this.setThumb()}></div>
     );
   }
 })
 
 
-export default Thumbnail
+function selectState (state) {
+  return {}
+}
+
+
+export default connect(selectState, actionCreators)(Thumbnail)
