@@ -6,12 +6,11 @@ import { connect } from 'react-redux'
 
 import {trackPresenter, setIds} from 'dux/show'
 import {getPresentation} from 'dux/deck'
-// import { bindActionCreators, createStore, applyMiddleware } from 'redux'
-// import thunk from 'redux-thunk'
-// import * as ProjectorActions from './components/ProjectorActions.jsx'
+
 import Slide from 'sub_Slide'
+
 import Codes from 'db/Codes'
-// import Presentations from 'db/Presentations'
+
 
 let Projector = React.createClass({
 
