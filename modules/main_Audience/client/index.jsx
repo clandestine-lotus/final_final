@@ -4,25 +4,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { bindActionCreators } from 'redux'
 
-import store from 'dux/store'
 import {trackPresenter} from 'dux/show'
 import {trackAudience, addAudience, removeViewer} from 'dux/audience'
 import {getPresentation} from 'dux/deck'
 
-// import SidebarView from 'sub_SlideSideBar/client/index'
+// import SidebarView from 'sub_SlideSideBar/client'
 import Code from 'db/Codes'
 
 import Login from 'sub_Login/client'
 import Slide from 'sub_Slide'
 import Chat from 'sub_chat/client/posts'
-import AudienceList from 'sub_AudienceList/client/index'
-import SidebarView from 'sub_SlideSideBar/client/index'
+import AudienceList from 'sub_AudienceList/client'
+import SidebarView from 'sub_SlideSideBar/client'
+import Pace from 'sub_Pace/client'
 
 import * as Actions from 'dux/show'
 
-import { RaisedButton, FlatButton, AppBar, Dialog } from 'material-ui'
+import { AppBar, RaisedButton } from 'material-ui'
 
 let AudienceView = React.createClass({
 
@@ -49,7 +48,8 @@ let AudienceView = React.createClass({
     const {increment, decrement, setIndex} = this.props
 
     const nav = {
-      height: '10vh'
+      height: '10vh',
+      minHeight: '10vh'
     }
 
     const sidebar = {
@@ -66,28 +66,38 @@ let AudienceView = React.createClass({
           style={nav}
         />
 
-        <div className="container">
-        <div className="row">
-          <div className="two columns">
-            <SidebarView deck={this.props.deck} end={this.props.maxIndex} style={sidebar} />
-          </div>
-          <div className="seven columns">
-            <div className="row">
-              <div className="presenterSlide">
-                <Slide />
-                <button onClick={decrement}>prev</button><button onClick={increment}>next</button>
+
+          <div className="row">
+            <div className="two columns" style={sidebar}>
+              <SidebarView deck={this.props.deck} end={this.props.maxIndex} />
+            </div>
+            <div className="seven columns">
+              <div className="row">
+                <div className="presenterSlide">
+                  <Slide />
+                  <div className="row">
+                    <div className="four columns">
+                      <RaisedButton onClick={decrement}>prev</RaisedButton>
+                    </div>
+                    <div className="four columns">
+                      <Pace />
+                    </div>
+                    <div className="four columns">
+                      <RaisedButton onClick={increment}>next</RaisedButton>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <Chat presentationId={this.props.params.showId} />
               </div>
             </div>
-            <div className="row">
-              <Chat presentationId={this.props.params.showId} />
+            <div className="three columns">
+              <AudienceList audience={this.props.audience.toArray()} />
             </div>
           </div>
-          <div className="three columns">
-            <AudienceList audience={this.props.audience.toArray()} />
-          </div>
         </div>
-        </div>
-      </div>
+
     )
   }
 })

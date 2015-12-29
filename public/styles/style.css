@@ -3,6 +3,7 @@
 }
 
 #logo {
+  line-height: 10vh;
   color: white;
   font-size: 4rem;
   font-weight: 300;
@@ -11,6 +12,7 @@
 
 .container {
   height: 90vh;
+  overflowY: scroll;
 }
 
 .columns {
