@@ -2,37 +2,39 @@
   This is the entry point. Export a react component here.
 */
 import React from 'react'
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
 
+import {trackPresenter, setIds} from 'dux/show'
+import {getPresentation} from 'dux/deck'
 // import { bindActionCreators, createStore, applyMiddleware } from 'redux'
 // import thunk from 'redux-thunk'
 // import * as ProjectorActions from './components/ProjectorActions.jsx'
 import Slide from 'sub_Slide'
-// import Code from 'sub_SharingCode/client/index'
+import Codes from 'db/Codes'
 // import Presentations from 'db/Presentations'
 
 let Projector = React.createClass({
-  // getInitialState: function () {
-  //   var self = this
-  //   var query = Presentations.find({gid: this.props.params.gid})
-  //   var handle = query.observeChanges({
-  //     changed: function (id, changed) {
-  //       self.props.setIndex(changed.index)
-  //     }
-  //   });
-  //   return {}
-  // },
+
+  componentDidMount () { 
+    const Code = Codes.findOne(this.props.params.code)
+    this.props.setIds(Code)
+    this.trackPresenter = trackPresenter(Code.showId)
+    this.trackGetDeck = getPresentation(Code.gid)
+  },
+
+  componentWillUnmount () { 
+    this.trackPresenter.stop()
+    this.trackGetDeck.stop()
+  },
 
   render: function () {
     return <Slide />
   }
 })
 
-// function mapStateToProps (state) {
-//   return {
-//     projector: state.projector,
-//     presentation: state.previews.list.get('presentation')
-//   }
-// }
+function mapStateToProps (state) {
+  return {}
+}
 
-export default Projector
+
+export default connect(mapStateToProps, {setIds})(Projector)
