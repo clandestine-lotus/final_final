@@ -16,13 +16,8 @@ let SidebarView = React.createClass({
   },
 
   render() {
-    const sidebarStyle = {
-      width: '10%',
-      height: '50%',
-      overflowY: 'scroll'
-    }
     return (
-      <div style={sidebarStyle}>{this.createThumbnails()}</div>
+      <div>{ this.createThumbnails() }</div>
     )
   }
 })

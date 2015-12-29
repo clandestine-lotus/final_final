@@ -1,0 +1,19 @@
+* {
+  /*border: 1px dotted grey;*/
+}
+
+#logo {
+  color: white;
+  font-size: 4rem;
+  font-weight: 300;
+  text-decoration: none;
+}
+
+.container {
+  height: 90vh;
+}
+
+.columns {
+  padding: 0 5px;
+}
+
