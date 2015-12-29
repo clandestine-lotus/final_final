@@ -1,44 +1,39 @@
 /*
   This is the entry point. Export a react component here.
 */
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
-import { bindActionCreators, createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
-import * as ProjectorActions from './components/ProjectorActions.jsx'
-import Slides from 'sub_Slides/client/index'
-import Code from 'sub_SharingCode/client/index'
-import Presentations from 'db/Presentations'
+import {trackPresenter, setIds} from 'dux/show'
+import {getPresentation} from 'dux/deck'
+
+import Slide from 'sub_Slide'
+
+import Codes from 'db/Codes'
+
 
 let Projector = React.createClass({
-  getInitialState: function () {
-    var self = this
-    var query = Presentations.find({gid: this.props.params.gid})
-    var handle = query.observeChanges({
-      changed: function (id, changed) {
-        self.props.setIndex(changed.index)
-      }
-    });
-    return {}
+
+  componentDidMount () { 
+    const Code = Codes.findOne(this.props.params.code)
+    this.props.setIds(Code)
+    this.trackPresenter = trackPresenter(Code.showId)
+    this.trackGetDeck = getPresentation(Code.gid)
+  },
+
+  componentWillUnmount () { 
+    this.trackPresenter.stop()
+    this.trackGetDeck.stop()
   },
 
   render: function () {
-    console.log('in render ', this.props.projector.get('presentation'))
-    return (
-      <div>
-        <Slides gid={this.props.params.gid} index={this.props.projector.getIn(['presentation', 'index'])}/>
-        <Code gid={this.props.params.gid}/>
-      </div>
-    );
+    return <Slide />
   }
 })
 
 function mapStateToProps (state) {
-  return {
-    projector: state.projector,
-    presentation: state.previews.list.get('presentation')
-  }
+  return {}
 }
 
-export default connect(mapStateToProps, ProjectorActions)(Projector)
+
+export default connect(mapStateToProps, {setIds})(Projector)
