@@ -9,7 +9,7 @@ import * as homeActions from 'dux/HomeReductions'
 import Codes from 'db/Codes'
 import Select from 'main_Select/client'
 
-import { RaisedButton, AppBar, Dialog } from 'material-ui'
+import { RaisedButton, FlatButton, AppBar, Dialog } from 'material-ui'
 // TODO: Use theming to pick colors
 import { Colors } from 'material-ui/styles'
 
@@ -92,12 +92,16 @@ let Home = React.createClass({
     })
 
     const actions = 
-    this.props.showCode ? 
     [
-      <Link to = {`/present/${this.props.showCode}`}>Start Presentation</Link>,
-      { text: 'Cancel' }
-    ] : 
-    [{text: 'Cancel'}]
+      <FlatButton 
+        containerElement={<Link to = {`/present/${this.props.showCode}`}/>}
+        label="Start Presentation"
+        disabled={!!!this.props.showCode}
+      />,
+      <FlatButton
+        label="Cancel" 
+      />
+    ]
 
     return (
       <div className="hero" style={hero}>
