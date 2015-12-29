@@ -2,7 +2,7 @@
   This is the entry point. Export a react component here.
 */
 import React, { Component } from 'react'
-import Presentations from 'db/Presentations'
+// import Presentations from 'db/Presentations'
 
 export default class Code extends Component {
   constructor () {
