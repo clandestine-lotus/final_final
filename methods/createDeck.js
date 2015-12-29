@@ -23,6 +23,15 @@ export default function (url, gid) {
     }
   })
 
+  let transition = Meteor.bindEnvironment((err, transitions) => {
+    if(err) {
+      throw new Meteor.Error('from bind env and transition grabber', err) 
+    } else {
+      doc.transitions = transitions
+      Decks.upsert({gid: gid}, {$set: doc})
+    }
+  })
+  
   // change privacy setting of the presentation to public
   GoogleApi.post('drive/v2/files/' + gid + '/permissions',
                 {data: {'type': 'anyone', 'role': 'reader'}},
@@ -30,8 +39,9 @@ export default function (url, gid) {
                   if (err){
                     throw new Meteor.Error('GoogleAPI: ' + err)
                   } else {
-                    // pass in url to get an array of svgs
-                    getSVG.getSVGs(url, doIt)
+                    // pass in url to get an array of svgs and an array of transitions
+                    getSVG.getSvgsFromUrl(url, doIt)
+                    getSVG.getElementEffectsFromUrl(url, transition)
                   }
                 })
 }
