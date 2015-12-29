@@ -57,42 +57,17 @@ const Pace = React.createClass({
   },
 
   render() {
-    const selected = {
-      color: 'dodgerblue'
-    }
     return (
       <span>
         <IconButton
-          tooltip="Way too fast"
-          disabled={this.props.pace.get('currentPace') == -1}
-          onClick={this.clickHandler.bind(null, -1)}
-          onTapTouch={this.clickHandler.bind(null, -1)}
+          tooltip="Way too slow"
+          disabled={this.props.pace.get('currentPace') == 1}
+          onClick={this.clickHandler.bind(null, 1)}
+          onTapTouch={this.clickHandler.bind(null, 1)}
         ><FontIcon
           className="material-icons"
           hoverColor={Styles.Colors.cyan500}
-        >hotel</FontIcon>
-        </IconButton>
-
-        <IconButton
-          tooltip="Too fast"
-          disabled={this.props.pace.get('currentPace') == -0.5}
-          onClick={this.clickHandler.bind(null, -0.5)}
-          onTapTouch={this.clickHandler.bind(null, -0.5)}
-        ><FontIcon
-          className="material-icons"
-          hoverColor={Styles.Colors.cyan500}
-        >directions_walk</FontIcon>
-        </IconButton>
-
-        <IconButton
-          tooltip="Just Right"
-          disabled={this.props.pace.get('currentPace') == 0}
-          onClick={this.clickHandler.bind(null, -0)}
-          onTapTouch={this.clickHandler.bind(null, -0)}
-        ><FontIcon
-          className="material-icons"
-          hoverColor={Styles.Colors.cyan500}
-        >directions_run</FontIcon>
+        ><h6>hotel</h6></FontIcon>
         </IconButton>
 
         <IconButton
@@ -103,18 +78,40 @@ const Pace = React.createClass({
         ><FontIcon
           className="material-icons"
           hoverColor={Styles.Colors.cyan500}
-        >directions_bike</FontIcon>
+        ><h6>directions_walk</h6></FontIcon>
         </IconButton>
 
         <IconButton
-          tooltip="Way too slow"
-          disabled={this.props.pace.get('currentPace') == 1}
-          onClick={this.clickHandler.bind(null, 1)}
-          onTapTouch={this.clickHandler.bind(null, 1)}
+          tooltip="Just Right"
+          disabled={this.props.pace.get('currentPace') == 0}
+          onClick={this.clickHandler.bind(null, 0)}
+          onTapTouch={this.clickHandler.bind(null, 0)}
         ><FontIcon
           className="material-icons"
           hoverColor={Styles.Colors.cyan500}
-        >flight</FontIcon>
+        ><h6>directions_run</h6></FontIcon>
+        </IconButton>
+
+        <IconButton
+          tooltip="Too fast"
+          disabled={this.props.pace.get('currentPace') == -0.5}
+          onClick={this.clickHandler.bind(null, -0.5)}
+          onTapTouch={this.clickHandler.bind(null, -0.5)}
+        ><FontIcon
+          className="material-icons"
+          hoverColor={Styles.Colors.cyan500}
+        ><h6>directions_bike</h6></FontIcon>
+        </IconButton>
+
+        <IconButton
+          tooltip="Way too fast"
+          disabled={this.props.pace.get('currentPace') == -1}
+          onClick={this.clickHandler.bind(null, -1)}
+          onTapTouch={this.clickHandler.bind(null, -1)}
+        ><FontIcon
+          className="material-icons"
+          hoverColor={Styles.Colors.cyan500}
+        ><h6>flight</h6></FontIcon>
         </IconButton>
       </span>
     )

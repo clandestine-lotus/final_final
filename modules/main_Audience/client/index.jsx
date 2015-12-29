@@ -21,7 +21,7 @@ import Pace from 'sub_Pace/client'
 
 import * as Actions from 'dux/show'
 
-import { AppBar, RaisedButton } from 'material-ui'
+import { AppBar, RaisedButton, IconButton, FontIcon, Styles } from 'material-ui'
 
 let AudienceView = React.createClass({
 
@@ -44,6 +44,10 @@ let AudienceView = React.createClass({
     this.trackGetDeck.stop()
   },
 
+  clickHandler() {
+
+  },
+
   render() {
     const {increment, decrement, setIndex} = this.props
 
@@ -60,15 +64,16 @@ let AudienceView = React.createClass({
     return (
         <div>
         <AppBar
+          id="nav"
           title={<Link to="/" id="logo">final_final</Link>}
           iconElementRight={<Login />}
           showMenuIconButton={false}
           style={nav}
         />
 
-
+        <div className="container">
           <div className="row">
-            <div className="two columns" style={sidebar}>
+            <div id="sidebar_container" className="two columns" style={sidebar} >
               <SidebarView deck={this.props.deck} end={this.props.maxIndex} />
             </div>
             <div className="seven columns">
@@ -76,14 +81,26 @@ let AudienceView = React.createClass({
                 <div className="presenterSlide">
                   <Slide />
                   <div className="row">
-                    <div className="four columns">
-                      <RaisedButton onClick={decrement}>prev</RaisedButton>
-                    </div>
-                    <div className="four columns">
+                    <div className="twelve columns slide_nav" style={{textAlign: "center"}}>
+                      <IconButton
+                        tooltip="Previous Slide"
+                        onClick={decrement}
+                        onTapTouch={decrement}
+                      ><FontIcon
+                        className="material-icons"
+                        hoverColor={Styles.Colors.cyan500}
+                      ><h6>chevron_left</h6></FontIcon>
+                      </IconButton>
                       <Pace />
-                    </div>
-                    <div className="four columns">
-                      <RaisedButton onClick={increment}>next</RaisedButton>
+                      <IconButton
+                        tooltip="Next Slide"
+                        onClick={increment}
+                        onTapTouch={increment}
+                      ><FontIcon
+                        className="material-icons"
+                        hoverColor={Styles.Colors.cyan500}
+                      ><h6>chevron_right</h6></FontIcon>
+                      </IconButton>
                     </div>
                   </div>
                 </div>
@@ -97,7 +114,7 @@ let AudienceView = React.createClass({
             </div>
           </div>
         </div>
-
+      </div>
     )
   }
 })

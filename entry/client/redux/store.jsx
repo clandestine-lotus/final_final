@@ -14,7 +14,8 @@ let finalCreateStore
 
 Meteor.startup(() => {
   // Implement store with redux devtools in dev environment only
-  if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
+  if (false) {
+  // if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
     finalCreateStore = compose(
       // Enable middleware:
       applyMiddleware(thunk),
