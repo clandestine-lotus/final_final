@@ -12,6 +12,7 @@ export default function (index, transition, id) {
     setObj.presenterIndex = index
     setObj.presenterTransition = transition
     if(show.maxIndex === index && show.maxTransition < transition) {
+      console.log(show.maxIndex, show.maxTransition, "did we get in this change?")
       setObj.maxTransition = transition
     }
     if (show.maxIndex < index) {

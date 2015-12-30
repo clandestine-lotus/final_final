@@ -14,10 +14,11 @@ let Slide = React.createClass({
       let element = document.getElementById(transitions[currentIndex][i])
       element.setAttribute("visibility", "hidden")
     }
-    // console.log(this.state)
-    for(var j = 0; j < currentTransition; j++){
-      let element = document.getElementById(transitions[currentIndex][j])
-      element.setAttribute("visibility", "visible")
+    if(currentTransition <= transitions[currentIndex].length) {
+      for(var j = 0; j < currentTransition; j++){
+        let element = document.getElementById(transitions[currentIndex][j])
+        element.setAttribute("visibility", "visible")
+      }
     }
   },
 

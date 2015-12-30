@@ -74,24 +74,21 @@ const setCode = function (code) {
 
 
 // setMax internal function for the tracker to change
-const setMax = function (index, transition) {
+const setMax = function (index, transition, maxTransition) {
   return function (dispatch, getState) {
     const { show } = getState()
 
     if (show.currentIndex === show.presenterIndex){
       // change currnent slide if it's at the max one...
+      dispatch(setSlide(index))      
+      dispatch(setMaxTransition(maxTransition))
       if(show.currentTransition === show.presenterTransition){
         dispatch(setTransitionIndex(transition))
       }
-      if(show.maxTransition < transition){
-        dispatch(setMaxTransition(transition))
-      }
-      dispatch(setSlide(index))      
     }
     if(show.maxIndex < index){
       dispatch(newMax(index))
     }
-    console.log(show.currentTransition, show.currentIndex, "we are getting to end of setMax")
   }
 }
 
@@ -108,8 +105,7 @@ export function trackPresenter (id) {
     let show = Shows.findOne({_id: id})
     if (show){
       const {dispatch} = require('../store.js')
-      console.log('hi in here', show.presenterIndex, show.presenterTransition)
-      dispatch(setMax(show.presenterIndex, show.presenterTransition))
+      dispatch(setMax(show.presenterIndex, show.presenterTransition, show.maxTransition))
       dispatch(setPresenter(show.presenterIndex))
       dispatch(setPresenterTransition(show.presenterTransition))
       // set the current slide to presenterIndex if owner is logged in
@@ -117,7 +113,6 @@ export function trackPresenter (id) {
       if (show.ownerId === Meteor.userId()){
         dispatch(setSlide(show.presenterIndex))
         dispatch(setTransitionIndex(show.presenterTransition))
-        console.log('we are tracking presenter', show.presenterIndex, show.presenterTransition)
       }
     }
   })
@@ -140,7 +135,7 @@ export function transitionHandler (operator) {
     let index = show.currentTransition + operator
     let slide = show.currentIndex
     if (index < 0) {
-      index = transitions[slide - 1].length ? transitions[slide - 1].length - 1 : 0
+      index = transitions[slide - 1].length ? transitions[slide - 1].length : 0
       dispatch(decrement(index))
     } else if (index > transitions[slide].length) {
       dispatch(increment())
@@ -156,7 +151,6 @@ export function increment() {
 
 // actions to decrement slide
 export function decrement(transitionIndex) {
-  console.log(transitionIndex, 'in decrement')
   return setIndex(null, -1, transitionIndex)
 }
 
