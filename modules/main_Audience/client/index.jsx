@@ -44,10 +44,6 @@ let AudienceView = React.createClass({
     this.trackGetDeck.stop()
   },
 
-  clickHandler() {
-
-  },
-
   render() {
     const {increment, decrement, setIndex} = this.props
 

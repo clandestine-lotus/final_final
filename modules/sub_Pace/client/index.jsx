@@ -4,7 +4,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import * as paceActions from './components/PaceReductions'
+import * as paceActions from 'dux/PaceReductions'
 
 import { IconButton, FontIcon, Styles } from 'material-ui'
 
