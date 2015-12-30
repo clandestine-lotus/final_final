@@ -8,16 +8,27 @@ let Slide = React.createClass({
     slideIndex: React.PropTypes.number,
   },
 
+  getInitialState () {
+    return {"refresh": true}
+  },
+
+  componentWillReceiveProps (nextProps) {
+    let change = (nextProps.currentIndex === this.props.currentIndex && nextProps.currentTransition === this.props.currentTransition)
+    this.setState({"refresh": !change})
+  },
+
   componentDidUpdate () { 
     let {transitions, currentIndex, currentTransition} = this.props
-    for(var i = 0; i < transitions[currentIndex].length; i++){
-      let element = document.getElementById(transitions[currentIndex][i])
-      element.setAttribute("visibility", "hidden")
-    }
-    if(currentTransition <= transitions[currentIndex].length) {
-      for(var j = 0; j < currentTransition; j++){
-        let element = document.getElementById(transitions[currentIndex][j])
-        element.setAttribute("visibility", "visible")
+    if(this.state.refresh) {  
+      for(var i = 0; i < transitions[currentIndex].length; i++){
+        let element = document.getElementById(transitions[currentIndex][i])
+        element.setAttribute("visibility", "hidden")
+      }
+      if(currentTransition <= transitions[currentIndex].length) {
+        for(var j = 0; j < currentTransition; j++){
+          let element = document.getElementById(transitions[currentIndex][j])
+          element.setAttribute("visibility", "visible")
+        }
       }
     }
   },
