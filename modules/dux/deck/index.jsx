@@ -1,6 +1,7 @@
 // import {Map, List} from 'immutable'
 import Decks from 'db/Decks'
 import { numSlides } from 'dux/show'
+import { setTransitions } from 'dux/transitions'
 
 const SET_DECK = 'SET_DECK'
 
@@ -21,6 +22,8 @@ export function getPresentation (id) {
       dispatch(setDeck(deck.svgs))
       // set the number of slides in the deck
       dispatch(numSlides(deck.svgs.length))
+      // set the transitions in presentation 
+      dispatch(setTransitions(deck.transitions))
       // kill the autorun
       computation.stop()
     } else {

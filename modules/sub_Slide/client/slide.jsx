@@ -2,9 +2,23 @@ import { connect } from 'react-redux'
 import React from 'react'
 
 let Slide = React.createClass({
+
   propTypes: {
     // optional to force slide to render a particular index
     slideIndex: React.PropTypes.number,
+  },
+
+  componentDidUpdate () { 
+    let {transitions, currentIndex, currentTransition} = this.props
+    for(var i = 0; i < transitions[currentIndex].length; i++){
+      let element = document.getElementById(transitions[currentIndex][i])
+      element.setAttribute("visibility", "hidden")
+    }
+    // console.log(this.state)
+    for(var j = 0; j < currentTransition; j++){
+      let element = document.getElementById(transitions[currentIndex][j])
+      element.setAttribute("visibility", "visible")
+    }
   },
 
   makeSlides: function (index) {
@@ -37,7 +51,6 @@ let Slide = React.createClass({
         slideDiv = <div dangerouslySetInnerHTML={this.makeSlides(slideIndex)} />
       }
     }
-
     return <div>{ slideDiv }</div>
   }
 })
@@ -51,6 +64,8 @@ function selectState (state) {
     ownerId: state.show.ownerId,
     showId: state.show.showId,
     deck: state.deck,
+    currentTransition: state.show.currentTransition,
+    transitions: state.transitions
   }
 }
 

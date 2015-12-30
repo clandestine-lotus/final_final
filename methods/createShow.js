@@ -11,6 +11,8 @@ export default function (gid) {
     ownerId: this.userId,
     presenterIndex: 0,
     maxIndex: 0,
+    presenterTransition: 0,
+    maxTransition: 0,
     gid: gid,
     createdAt: new Date(),
     // code: code,
