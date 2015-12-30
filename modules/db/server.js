@@ -25,6 +25,11 @@ Meteor.publish('', function () {
   return Codes.find({createdAt: {$gt: d}})
 })
 
+// AUTOPUBLISHED: user info for logged in user
+Meteor.publish('', function () {
+  return Meteor.users.find(this.userId)
+})
+
 // gets one deck from id or gid
 Meteor.publish('deck', function (id) {
   return Decks.find({$or: [{_id: id}, {gid: id}]})
