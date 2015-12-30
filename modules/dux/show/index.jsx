@@ -70,6 +70,7 @@ const setMax = function (index) {
 // track the maxIndex and presenterIndex from the server
 export function trackPresenter (id) {
   return Tracker.autorun(function (computation) {
+    Meteor.subscribe('show', id)
     let show = Shows.findOne({_id: id})
     if (show){
       const {dispatch} = require('../store.js')

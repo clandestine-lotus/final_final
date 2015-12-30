@@ -13,6 +13,7 @@ const SET_DECK = 'SET_DECK'
 export function getPresentation (id) {
   return Tracker.autorun(function (computation) {
     // id can be gid or document id! 
+    Meteor.subscribe('deck', id)
     let deck = Decks.findOne({$or: [{_id: id}, {gid: id}]})
     if (deck){
       const {dispatch} = require('../store.js')
