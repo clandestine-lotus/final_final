@@ -1,12 +1,12 @@
 /*
   This is the entry point. Export a react component here.
 */
-import React, {Component} from 'react'
+import React from 'react'
 import AudienceCard from './components/AudienceCard'
 
 import { List } from 'material-ui'
 
-export default class AudienceList extends Component{
+export default React.createClass({
 
   render() {
     return (
@@ -20,4 +20,4 @@ export default class AudienceList extends Component{
       </List>
     )
   }
-}
+})

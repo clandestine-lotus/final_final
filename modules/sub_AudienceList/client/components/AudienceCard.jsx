@@ -1,9 +1,10 @@
-import React, {Component} from 'react'
+import React from 'react'
 import image from '../public/default.png'
 
 import { ListItem, Avatar } from 'material-ui'
 
-export default class AudienceCard extends Component{
+
+export default React.createClass({
 
   render() {
     const question = this.props.user.question ? {background: 'green'} : {background: 'white'}
@@ -11,6 +12,7 @@ export default class AudienceCard extends Component{
     return (
       <ListItem
         style={question}
+        disabled
         leftAvatar={
           <Avatar
             src={this.props.user.thumbnail || image}
@@ -21,4 +23,4 @@ export default class AudienceCard extends Component{
       </ListItem>
     )
   }
-}
+})
