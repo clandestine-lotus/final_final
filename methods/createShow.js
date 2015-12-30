@@ -3,7 +3,7 @@ import Shows from 'db/Shows'
 import Codes from 'db/Codes'
 
 // method for creating a new deck in database with svg elements
-export default (gid) => {
+export default function (gid) {
   // generate a new, code, overwrites any old ones
   // may cause conflicts if there are a hundred simultanous shows
   const code = Random.hexString(3)
@@ -17,7 +17,7 @@ export default (gid) => {
   }
 
   // add show to the db
-  const showId = Shows.insert(doc, (err, showId) => {
+  const showId = Shows.insert(doc, function (err, showId) {
     if (err) {
       throw new Meteor.Error(err, 'did not insert show')
     }

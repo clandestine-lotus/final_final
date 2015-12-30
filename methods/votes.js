@@ -1,6 +1,6 @@
 import PostsDB from 'db/Posts'
 
-export default (id, count) => {
+export default function (id, count) {
   count = count || 1
 
   if (this.userId) {

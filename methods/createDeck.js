@@ -2,7 +2,7 @@ const getSVG = Meteor.npmRequire('google-slides-downloader')
 import Decks from 'db/Decks'
 
 // method for creating a new deck in database with svg elements
-export default (url, gid) => {
+export default function (url, gid) {
   const userId = this.userId
 
   let doc = {
@@ -26,12 +26,12 @@ export default (url, gid) => {
   // change privacy setting of the presentation to public
   GoogleApi.post('drive/v2/files/' + gid + '/permissions',
                 {data: {'type': 'anyone', 'role': 'reader'}},
-                (err, result) => {
+                function (err, result) {
                   if (err){
                     throw new Meteor.Error('GoogleAPI: ' + err)
                   } else {
                     // pass in url to get an array of svgs
-                    getSVG.getSVGs(url, doIt);
+                    getSVG.getSVGs(url, doIt)
                   }
                 })
 }

@@ -1,3 +1,6 @@
+import ReactDOM from 'react-dom'
+import React from 'react'
+
 import { createHistory } from 'history'
 import { Provider } from 'react-redux'
 import { syncReduxAndRouter } from 'redux-simple-router'

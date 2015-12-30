@@ -31,7 +31,7 @@ export function addAudience (show, user) {
     thumbnail: user.services.google.picture
   }
 
-  return Audience.upsert({user: user._id }, profile, (err, result) => {
+  return Audience.upsert({user: user._id }, profile, function (err, result) {
     if (err) {
       throw new Meteor.Error(err, 'did not add to audience')
     }
@@ -39,7 +39,7 @@ export function addAudience (show, user) {
 }
 
 export function removeAudience (user) {
-  Audience.remove({user: user}, (err, result) => {
+  Audience.remove({user: user}, function (err, result) {
     if (err) {
       throw new Meteor.Error(err, 'could not remove audience member')
     }
