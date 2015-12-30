@@ -38,13 +38,10 @@ class Root extends React.Component {
   }
 }
 
-// run listeners that dispatch actions here
-
 Meteor.startup(function () {
   let rootElement = document.createElement('div')
   rootElement.id = 'app'
   document.body.appendChild(rootElement)
 
   ReactDOM.render(<Root store={store} />, rootElement)
-  // ReactDOM.render(<div> Hello!! </div>, rootElement)
 })
