@@ -1,18 +1,7 @@
-// import global styles
-import 'css/global.scss'
-
-// import Meteor Methods for optimistic updates
-import '../../methods/client'
-
-/*eslint-disable*/
-import ReactDOM from 'react-dom'; // ESLINT: unused var
-import React from 'react'; // ESLINT: unused var
-/*eslint-enable*/
-
+// Seed and initialize react components
 import './root';
 
 // set scope for google auth to include drive access
-// TODO: access drive as read-only
 var scopes = ['https://www.googleapis.com/auth/drive'];
 
 Accounts.ui.config({

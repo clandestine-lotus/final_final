@@ -5,7 +5,6 @@ import createDeck from './createDeck'
 import createShow from './createShow'
 import { updatePace, updateUserCount, addAudience, removeAudience } from './Audience'
 
-
 // add to combined Meteor.methods, which will have the var name.
 Meteor.methods({
   addAudience,
@@ -17,4 +16,3 @@ Meteor.methods({
   updateUserCount,
   votes,
 })
-

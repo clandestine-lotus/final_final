@@ -28,7 +28,7 @@ export function addAudience (show, user) {
     presentation: show,
     user: user._id,
     name: user.profile.name,
-    thumbnail: user.services.google.picture 
+    thumbnail: user.services.google.picture
   }
 
   return Audience.upsert({user: user._id }, profile, function (err, result) {

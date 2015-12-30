@@ -1,21 +1,22 @@
+import ReactDOM from 'react-dom'
+import React from 'react'
+
 import { createHistory } from 'history'
 import { Provider } from 'react-redux'
 import { syncReduxAndRouter } from 'redux-simple-router'
-/*eslint-disable*/
-import { Router, Route, Link, IndexRoute } from 'react-router' // ESLINT: unused vars (Route, Link, IndexRoute)
-/*eslint-enable*/
+import { Router } from 'react-router'
 
 // import redux elements
-import DevTools from './redux/DevTools.jsx'
-import store from './redux/store.jsx'
+import DevTools from './redux/DevTools'
+import store from './redux/store'
 
-import rootRoute from './routes.jsx'
+import rootRoute from './routes'
 
 // bind redux and router with history
 const history = createHistory()
 syncReduxAndRouter(history, store)
 
-let showDevTools;
+let showDevTools
 if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
   // DEV: expose store as a global var
   window.store = store
@@ -26,7 +27,7 @@ if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
 
 class Root extends React.Component {
   render() {
-    const { store } = this.props;
+    const { store } = this.props
     return (
       <Provider store={store}>
         <div>

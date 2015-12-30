@@ -22,10 +22,9 @@ export default function (gid) {
       throw new Meteor.Error(err, 'did not insert show')
     }
   })
-  
+
   // add code to the codes db
-  Codes.upsert({_id: code}, {ownerId: this.userId, _id: code, gid: gid, showId: showId, createdAt: new Date()}) 
+  Codes.upsert({_id: code}, {ownerId: this.userId, _id: code, gid: gid, showId: showId, createdAt: new Date()})
 
   return code
-
 }

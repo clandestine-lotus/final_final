@@ -24,6 +24,6 @@ export default function (index, id) {
       console.log(setObj);
       return setObj
     }
-  })    
+  })
 }
 
