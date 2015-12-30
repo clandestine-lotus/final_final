@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import React from 'react'
+import $ from 'jquery'
 
 let Slide = React.createClass({
 
@@ -21,13 +22,11 @@ let Slide = React.createClass({
     let {transitions, currentIndex, currentTransition} = this.props
     if(this.state.refresh) {  
       for(var i = 0; i < transitions[currentIndex].length; i++){
-        let element = document.getElementById(transitions[currentIndex][i])
-        element.setAttribute("visibility", "hidden")
+        $('.slide').find('#' + transitions[currentIndex][i]).attr("visibility", "hidden")
       }
       if(currentTransition <= transitions[currentIndex].length) {
         for(var j = 0; j < currentTransition; j++){
-          let element = document.getElementById(transitions[currentIndex][j])
-          element.setAttribute("visibility", "visible")
+          $('.slide').find('#' + transitions[currentIndex][j]).attr("visibility", "visible")
         }
       }
     }
@@ -63,7 +62,7 @@ let Slide = React.createClass({
         slideDiv = <div dangerouslySetInnerHTML={this.makeSlides(slideIndex)} />
       }
     }
-    return <div>{ slideDiv }</div>
+    return <div className="slide">{ slideDiv }</div>
   }
 })
 

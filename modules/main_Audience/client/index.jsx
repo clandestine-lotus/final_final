@@ -70,7 +70,7 @@ let AudienceView = React.createClass({
         <div id="app" className="container">
           <div className="row">
             <div id="sidebar_container" className="two columns" style={sidebar} >
-              <SidebarView deck={this.props.deck} end={this.props.maxIndex} />
+              <SidebarView deck={this.props.deck} end={this.props.maxIndex + 1} />
             </div>
             <div className="six columns">
               <div className="row">
