@@ -4,6 +4,12 @@ import './root';
 // set scope for google auth to include drive access
 var scopes = ['https://www.googleapis.com/auth/drive'];
 
+// use ctrl+m to view these collections on the client
+if (process.env.NODE_ENV !== 'production'){
+  Package['meteortoys:toykit'].MeteorToysDict.set('Mongol', 
+    {collections: ['codes', 'decks', 'posts', 'shows'] })
+}
+
 Accounts.ui.config({
   'passwordSignupFields': 'USERNAME_ONLY',
   'requestPermissions': { 'google': scopes },
