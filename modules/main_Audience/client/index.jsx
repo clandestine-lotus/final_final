@@ -63,7 +63,7 @@ let AudienceView = React.createClass({
 
         <div id="app" className="container">
           <div className="row">
-            <div id="sidebar_container" className="two columns" style={sidebar} >
+            <div id="sidebar_container" className="one columns" style={sidebar} >
               <SidebarView deck={this.props.deck} end={this.props.maxIndex} />
             </div>
             <div className="seven columns">
@@ -99,7 +99,7 @@ let AudienceView = React.createClass({
                 <Chat presentationId={this.props.params.showId} />
               </div>
             </div>
-            <div className="three columns">
+            <div className="four columns">
               <AudienceList audience={this.props.audience.toArray()} />
             </div>
           </div>
