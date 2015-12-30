@@ -56,7 +56,6 @@ let Presenter = React.createClass({
             Current Slide
             <Slide/>
             <button onClick={()=> transitionHandler(-1)}>prev</button><button onClick={()=> transitionHandler(1)}>next</button>
-            <SidebarView deck={this.props.deck} end={this.props.max}/>
             <AudienceList audience={this.props.audience.toArray()} />
             <Chat presentationId={this.props.params.showId} />
           </div> :
@@ -70,6 +69,7 @@ let Presenter = React.createClass({
   }
 })
 
+            // <SidebarView deck={this.props.deck} end={this.props.max}/>
 function mapStateToProps (state) {
   return {
     presenter: state.presenter,

@@ -28,17 +28,23 @@ let AudienceView = React.createClass({
   componentDidMount() {
     const Codes = Code.findOne(this.props.params.code)
     this.props.setIds(Codes)
-    addAudience(Codes.showId)
+    if (Meteor.userId()) {
+      addAudience(Codes.showId)
+    }
     this.trackAudience = trackAudience(Codes.showId)
     this.trackPresenter = trackPresenter(Codes.showId)
     this.trackGetDeck = getPresentation(Codes.gid)
     window.addEventListener('beforeunload', () => {
-      removeViewer()
+      if (Meteor.userId()) {
+        removeViewer()
+      }
     })
   },
 
   componentWillUnmount() {
-    removeViewer()
+    if (Meteor.userId()) {
+      removeViewer()
+    }
     this.trackAudience.stop()
     this.trackPresenter.stop()
     this.trackGetDeck.stop()
