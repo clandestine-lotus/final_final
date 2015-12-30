@@ -2,11 +2,6 @@ import { combineReducers } from 'redux'
 import { routeReducer } from 'redux-simple-router'
 
 // import reducers to add them to the store
-
-// presenter is unused for now
-/* eslint-disable */
-/* eslint-enable */
-// import SelectPresentation from 'dux/SelectReductions'
 import Home from 'dux/HomeReductions'
 import Audience from 'dux/audience'
 import Chat from 'dux/chat'
