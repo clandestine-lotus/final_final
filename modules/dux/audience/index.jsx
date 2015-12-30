@@ -26,6 +26,7 @@ const setAudience = function (audience) {
 
 export function trackAudience (show) {
   return Tracker.autorun(function () {
+    Meteor.subscribe('audience', show)
     let audience = Audience.find({presentation: show}).fetch()
     if (audience.length > 0) {
       const {dispatch} = require('../store.js')

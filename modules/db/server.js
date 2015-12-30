@@ -17,6 +17,14 @@ const mongoCollections = {
 // PUBLISHED DATA //
 ////////////////////
 
+// AUTOPUBLISHED: get recent codes, <24h old
+Meteor.publish('', function () {
+  let d = new Date()
+  // TODO: change date to -1
+  d.setDate(d.getDate() - 10)
+  return Codes.find({createdAt: {$gt: d}})
+})
+
 // gets one deck from id or gid
 Meteor.publish('deck', function (id) {
   return Decks.find({$or: [{_id: id}, {gid: id}]})
@@ -27,11 +35,9 @@ Meteor.publish('ownerDecks', function () {
   return Decks.find({ownerId: this.userId})
 })
 
-// get recent codes, <24h old
+// get codes from a specific user
 Meteor.publish('codes', function () {
-  let d = new Date()
-  d.setDate(d.getDate() - 1)
-  return Codes.find({createdAt: {$gt: d}})
+  return Codes.find({ownerId: this.userId})
 })
 
 // get show from _id
@@ -42,4 +48,9 @@ Meteor.publish('show', function (id) {
 // get Q&A from a show
 Meteor.publish('posts', function (showId) {
   return Posts.find({presentationId: showId})
+})
+
+// get Audience list
+Meteor.publish('audience', function (show) {
+  return Audience.find({presentation: show})
 })
