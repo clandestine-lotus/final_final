@@ -10,22 +10,26 @@ let Slide = React.createClass({
   },
 
   getInitialState () {
+    // set initial state of refresh to true so transitions will go
     return {"refresh": true}
   },
 
   componentWillReceiveProps (nextProps) {
+    // set refresh to whether there has been a change in either currentIndex or currentTransition
     let change = (nextProps.currentIndex === this.props.currentIndex && nextProps.currentTransition === this.props.currentTransition)
     this.setState({"refresh": !change})
   },
 
   componentDidUpdate () { 
     let {transitions, currentIndex, currentTransition} = this.props
-    if(this.state.refresh) {  
+    if(this.state.refresh) {
       for(var i = 0; i < transitions[currentIndex].length; i++){
+        // select element by id within slide component and set to hidden 
         $('.slide').find('#' + transitions[currentIndex][i]).attr("visibility", "hidden")
       }
       if(currentTransition <= transitions[currentIndex].length) {
         for(var j = 0; j < currentTransition; j++){
+          // select element by id within slide component and set visible up to current transition
           $('.slide').find('#' + transitions[currentIndex][j]).attr("visibility", "visible")
         }
       }

@@ -79,10 +79,12 @@ const setMax = function (index, transition, maxTransition) {
     const { show } = getState()
 
     if (show.currentIndex === show.presenterIndex){
-      // change currnent slide if it's at the max one...
-      dispatch(setSlide(index))      
+      // change currnent slide if it's matching the presenter's current slide
+      dispatch(setSlide(index)) 
+      // set maxTransition to DB maxTransition if current slides match up     
       dispatch(setMaxTransition(maxTransition))
       if(show.currentTransition === show.presenterTransition){
+        // change current Transition if it matches presenter's current transition
         dispatch(setTransitionIndex(transition))
       }
     }
@@ -106,6 +108,7 @@ export function trackPresenter (id) {
     if (show){
       const {dispatch} = require('../store.js')
       dispatch(setMax(show.presenterIndex, show.presenterTransition, show.maxTransition))
+      // set presenter transition and index via DB updates
       dispatch(setPresenter(show.presenterIndex))
       dispatch(setPresenterTransition(show.presenterTransition))
       // set the current slide to presenterIndex if owner is logged in
@@ -132,15 +135,17 @@ export function setShow (code) {
 export function transitionHandler (operator) {
   return function(dispatch, getState) {
     const { show, transitions } = getState()
-    let index = show.currentTransition + operator
-    let slide = show.currentIndex
+    // increment transition by operator
+    let transition = show.currentTransition + operator
+    let index = show.currentIndex
     if (index < 0) {
-      index = transitions[slide - 1].length ? transitions[slide - 1].length : 0
-      dispatch(decrement(index))
-    } else if (index > transitions[slide].length) {
+      // set transition to either length of previous slide transitions or 0
+      transition = transitions[index - 1].length ? transitions[index - 1].length : 0
+      dispatch(decrement(transition))
+    } else if (transition > transitions[index].length) {
       dispatch(increment())
     } else {
-      dispatch(setIndex(slide, 0, index))
+      dispatch(setIndex(index, 0, transition))
     }
   }
 } // this code is lame/awesome who wrote this?
@@ -164,6 +169,7 @@ export function setIndex(index, operator, transition) {
       index = show.currentIndex + operator
     }
 
+    // if transition is not defined, set to 0
     if (transition === null){
       transition = 0
     }
@@ -186,7 +192,7 @@ export function setIndex(index, operator, transition) {
         }
       })
 
-    // if not an owner... check if index ahead of owner
+    // if not an owner... check if index or transition index ahead of owner
     } else if (index > show.maxIndex || (index === show.maxIndex && transition > show.maxTransition)){
       console.log('cannot be ahead of presenter: ', index, ' from ', show.maxIndex, ' slides')
       return '';
@@ -194,6 +200,7 @@ export function setIndex(index, operator, transition) {
     } else {
       // increment currentIndex using set
       dispatch(setSlide(index))
+      // increment currentTransition
       dispatch(setTransitionIndex(transition))
     }
   }

@@ -11,7 +11,9 @@ export default function (index, transition, id) {
   if (show.ownerId === this.userId){
     setObj.presenterIndex = index
     setObj.presenterTransition = transition
+    // if the current Index is the maxIndex AND the maxTransition is less than current Transition
     if(show.maxIndex === index && show.maxTransition < transition) {
+      // resent maxTransition
       setObj.maxTransition = transition
     }
     if (show.maxIndex < index) {
@@ -25,8 +27,6 @@ export default function (index, transition, id) {
     if (err){
       throw new Meteor.Error('Update Failed')
     } else {
-      // console.log(err || ('Changed: ' + count));
-      // console.log(setObj);
       return setObj
     }
   })
