@@ -31,7 +31,7 @@ let Deck = React.createClass({
       <GridTile
         title={deck.title}
         children={<img src={deck.thumbnail}/>}
-        onClick={()=>this.createShow(deck)}
+        onClick={() => this.createShow(deck)}
         style={tile}
       />
     )

@@ -92,16 +92,16 @@ let Home = React.createClass({
     })
 
     const actions = 
-    [
-      <FlatButton 
-        containerElement={<Link to = {`/present/${this.props.showCode}`}/>}
-        label="Start Presentation"
-        disabled={!!!this.props.showCode}
-      />,
-      <FlatButton
-        label="Cancel" 
-      />
-    ]
+      [
+        <FlatButton 
+          containerElement={<Link to = {`/present/${this.props.showCode}`}/>}
+          label="Start Presentation"
+          disabled={!!!this.props.showCode}
+        />,
+        <FlatButton
+          label="Cancel" 
+        />
+      ]
 
     return (
       <div className="hero" style={hero}>

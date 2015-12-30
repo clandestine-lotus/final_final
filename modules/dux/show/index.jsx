@@ -125,7 +125,7 @@ export function setIndex(index, operator) {
     if (Meteor.userId() === show.ownerId){
       // sends the index to update the presenterIndex and maxIndex
       Meteor.call('ownerShowUpdate', index, show.showId, function (err, result) {
-        if(err){
+        if (err){
           console.log('update failed')
         } else {
           // used to dispatch store action here, use tracker instead (not optimisic)   

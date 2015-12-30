@@ -38,9 +38,6 @@ class Root extends React.Component {
   }
 }
 
-// run listeners that dispatch actions here
-import 'dux/client.jsx'
-
 Meteor.startup(function () {
   let rootElement = document.createElement('div')
   rootElement.id = 'app'
