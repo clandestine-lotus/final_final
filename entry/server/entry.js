@@ -1,7 +1,6 @@
 // import server files here
-
-import '../../methods/server.js'
-import 'db/server.js'
+import '../../methods/server';
+import 'db/server';
 
 
 // Do server-rendering only in proudction mode

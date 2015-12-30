@@ -1,7 +1,7 @@
 import Shows from 'db/Shows'
 
   // method for changing the index of the slide for the current presentation
-export default function (index, id) {
+export default (index, id) => {
   let show = Shows.findOne({_id: id})
   let setObj = {}
   if (!show){
@@ -16,7 +16,7 @@ export default function (index, id) {
   } else {
     throw new Meteor.Error('Not the owner changing the persenterIndex!')
   }
-  Shows.update({_id: id}, {$set: setObj}, function (err, count) {
+  Shows.update({_id: id}, {$set: setObj}, (err, count) => {
     if (err){
       throw new Meteor.Error('Update Failed')
     } else {
@@ -24,6 +24,6 @@ export default function (index, id) {
       console.log(setObj);
       return setObj
     }
-  })    
+  })
 }
 
