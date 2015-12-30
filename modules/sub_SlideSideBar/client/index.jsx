@@ -10,19 +10,14 @@ let SidebarView = React.createClass({
   createThumbnails () {
     let mapped = []
     for(var i = 0; i < this.props.end; i++){
-      mapped.push(<Thumbnail key={i} svg={this.props.deck[i]} index={i} />)
+      mapped.push(<Thumbnail className="thumb" key={i} svg={this.props.deck[i]} index={i} />)
     }
     return mapped;
   },
 
   render() {
-    const sidebarStyle = {
-      width: '10%',
-      height: '50%',
-      overflowY: 'scroll'
-    }
     return (
-      <div style={sidebarStyle}>{this.createThumbnails()}</div>
+      <div>{ this.createThumbnails() }</div>
     )
   }
 })

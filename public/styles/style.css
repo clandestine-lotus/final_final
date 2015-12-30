@@ -1,0 +1,74 @@
+* {
+  /*border: 1px dotted grey;*/
+}
+
+/* Larger than mobile */
+@media (min-width: 250px) {
+  #logo {
+    background: url(http://findicons.com/files/icons/2338/reflection/128/presentation.png) no-repeat;
+    background-size: contain;
+    color: transparent;
+  }
+
+  #sidebar_container {
+    display: none;
+  }
+
+  #nav {
+    height: 40px;
+  }
+}
+
+/* Larger than tablet */
+@media (min-width: 550px) {
+  #logo {
+    background-image: none;
+    /*line-height: 10vh;*/
+    color: white;
+    font-size: 4rem;
+    font-weight: 300;
+    text-decoration: none;
+  }
+
+  #sidebar_container {
+    display: inline-block;
+  }
+
+  #nav {
+    height: 50px;
+  }
+
+  #app {
+    position: relative;
+    height: calc(100vh - 60px);
+  }
+}
+
+.container {
+  height: 90vh;
+  overflowY: scroll;
+}
+
+.columns {
+  padding: 0 5px;
+}
+
+#slide_nav button {
+  padding: 1.5rem !important;
+}
+
+/* Larger than mobile */
+@media (min-width: 400px) {
+}
+
+/* Larger than phablet (also point when grid becomes active) */
+@media (min-width: 550px) {}
+
+/* Larger than tablet */
+@media (min-width: 750px) {}
+
+/* Larger than desktop */
+@media (min-width: 1000px) {}
+
+/* Larger than Desktop HD */
+@media (min-width: 1200px) {}
