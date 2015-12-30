@@ -51,11 +51,6 @@ let AudienceView = React.createClass({
   render() {
     const {increment, decrement, setIndex} = this.props
 
-    const nav = {
-      height: '10vh',
-      minHeight: '10vh'
-    }
-
     const sidebar = {
       height: '90vh',
       overflowY: 'scroll'
@@ -68,10 +63,9 @@ let AudienceView = React.createClass({
           title={<Link to="/" id="logo">final_final</Link>}
           iconElementRight={<Login />}
           showMenuIconButton={false}
-          style={nav}
         />
 
-        <div className="container">
+        <div id="app" className="container">
           <div className="row">
             <div id="sidebar_container" className="two columns" style={sidebar} >
               <SidebarView deck={this.props.deck} end={this.props.maxIndex} />
@@ -81,7 +75,7 @@ let AudienceView = React.createClass({
                 <div className="presenterSlide">
                   <Slide />
                   <div className="row">
-                    <div className="twelve columns slide_nav" style={{textAlign: "center"}}>
+                    <div id="slide_nav" className="twelve columns" style={{textAlign: "center"}}>
                       <IconButton
                         tooltip="Previous Slide"
                         onClick={decrement}

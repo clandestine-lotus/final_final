@@ -13,13 +13,17 @@
   #sidebar_container {
     display: none;
   }
+
+  #nav {
+    height: 40px;
+  }
 }
 
 /* Larger than tablet */
 @media (min-width: 550px) {
   #logo {
     background-image: none;
-    line-height: 10vh;
+    /*line-height: 10vh;*/
     color: white;
     font-size: 4rem;
     font-weight: 300;
@@ -28,6 +32,15 @@
 
   #sidebar_container {
     display: inline-block;
+  }
+
+  #nav {
+    height: 50px;
+  }
+
+  #app {
+    position: relative;
+    height: calc(100vh - 60px);
   }
 }
 
@@ -40,8 +53,8 @@
   padding: 0 5px;
 }
 
-.slide_nav > button {
-  padding: 10rem;
+#slide_nav button {
+  padding: 1.5rem !important;
 }
 
 /* Larger than mobile */
