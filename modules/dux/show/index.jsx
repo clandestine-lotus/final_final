@@ -74,19 +74,23 @@ const setCode = function (code) {
 
 
 // setMax internal function for the tracker to change
-const setMax = function (index, maxTransition, transition) {
+const setMax = function (index, transition) {
   return function (dispatch, getState) {
     const { show } = getState()
 
-    if (show.currentIndex === show.maxIndex){
+    if (show.currentIndex === show.presenterIndex){
       // change currnent slide if it's at the max one...
       if(show.currentTransition === show.presenterTransition){
         dispatch(setTransitionIndex(transition))
       }
+      if(show.maxTransition < transition){
+        dispatch(setMaxTransition(transition))
+      }
       dispatch(setSlide(index))      
     }
-    dispatch(newMax(index))
-    dispatch(setMaxTransition(maxTransition))
+    if(show.maxIndex < index){
+      dispatch(newMax(index))
+    }
   }
 }
 
@@ -103,9 +107,9 @@ export function trackPresenter (id) {
     let show = Shows.findOne({_id: id})
     if (show){
       const {dispatch} = require('../store.js')
+      dispatch(setMax(show.presenterIndex, show.presenterTransition))
       dispatch(setPresenter(show.presenterIndex))
       dispatch(setPresenterTransition(show.presenterTransition))
-      dispatch(setMax(show.maxIndex, show.maxTransition, show.presenterTransition))
       // set the current slide to presenterIndex if owner is logged in
       // if persenter has to reload, position will not be lost
       if (show.ownerId === Meteor.userId()){
