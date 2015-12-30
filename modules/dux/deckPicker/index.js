@@ -11,7 +11,7 @@ function addPreviews (previews) {
 
 // makes a ajax call to the google api to get preview and metadata
 export function getPreviews () {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     GoogleApi.get('drive/v2/files?q=mimeType="application/vnd.google-apps.presentation"', {}, function (err, result) {
       if (err) console.error(err);
       // Map an array of preview objects with specific properties

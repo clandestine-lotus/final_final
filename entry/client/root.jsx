@@ -39,7 +39,6 @@ class Root extends React.Component {
 }
 
 // run listeners that dispatch actions here
-import 'dux/client.jsx'
 
 Meteor.startup(function () {
   let rootElement = document.createElement('div')
@@ -47,4 +46,5 @@ Meteor.startup(function () {
   document.body.appendChild(rootElement)
 
   ReactDOM.render(<Root store={store} />, rootElement)
+  // ReactDOM.render(<div> Hello!! </div>, rootElement)
 })
