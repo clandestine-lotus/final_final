@@ -57,6 +57,10 @@
   padding: 1.5rem !important;
 }
 
+.badgeContainer > span {
+  transform: translate(-10%, -25%);
+}
+
 /* Larger than mobile */
 @media (min-width: 400px) {
 }

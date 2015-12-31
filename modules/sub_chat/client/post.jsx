@@ -3,43 +3,121 @@ import { connect } from 'react-redux'
 import { expand } from 'dux/chat'
 import Posts from './posts.jsx'
 
+import {
+  Badge, IconButton, FontIcon, RaisedButton,
+  Card, CardHeader, CardActions, CardText,
+  Styles } from 'material-ui'
+
+
 let Post = React.createClass({
   hasVoted: false,
-  upvote(){
+
+  accepted: false,
+
+  style: {
+    badge: {
+      // display: 'inline',
+      padding: '0',
+      width: '100%',
+    },
+    card: {
+      width: '100%'
+    },
+    replies: {
+      paddingTop: '0',
+      paddingBottom: '0',
+    },
+    name: {
+      margin: '0',
+    }
+  },
+
+  liClickHandler(e) {
+    console.log('li clicked');
+  },
+
+  acceptAnswer(e) {
+    e.stopPropagation()
+    console.log('accepted!')
+  },
+
+  upvote() {
     Meteor.call('votes', this.props.post._id, 1)
     this.hasVoted = true
   },
 
-  render(){
-    let voteBtn;
+  render() {
     const { dispatch, expandId, post } = this.props
-    if (post.supporters.indexOf(Meteor.userId()) !== -1){
-      voteBtn = ''
-    } else {
-      voteBtn = <button className="upvote" onClick={ this.upvote }> +1 </button> 
-    }
-    return (
-        <li>
-          <span className="post">
-            +{post.votes} <strong>{post.name}</strong>: {post.text} 
-          </span>
-          <div>
-          { this.props.isReply ? 
-            '' : 
-            <button className="reply" onClick={ () => dispatch(expand(post._id, expandId)) } >Expand</button> }
-            { voteBtn }
-          </div>
-          { expandId === post._id ?
-            <ul>
-              <Posts isReply threadId={expandId}/>
-            </ul>
-            : ''}
-        </li>
 
-        )
+    const previewText = post.text.length > 30 ? post.text.substr(0, 30) + '...' : post.text
+
+    return (
+      <div>
+        <Badge
+          className="badgeContainer"
+          badgeContent={'+' + post.votes}
+          secondary
+          style={this.style.badge}
+          children={
+            <Card
+              initiallyExpanded={this.props.isReply}
+              style={this.style.card}
+              onExpandChange={() => dispatch(expand(post._id, expandId))}
+            >
+              <CardHeader
+                title={
+                  <h5
+                    style={this.style.name}
+                  >{post.name}:
+                  </h5>}
+                subtitle={this.props.isReply ? null : previewText}
+                avatar={
+                  <IconButton
+                    tooltip="Upvote"
+                    disabled={post.supporters.indexOf(Meteor.userId()) !== -1}
+                    onClick={this.upvote}
+                    onTapTouch={this.upvote}
+                    hoverColor={Styles.Colors.cyan500}
+                  ><FontIcon
+                    className="material-icons"
+                  >thumb_up</FontIcon>
+                  </IconButton>
+                }
+                actAsExpander={!this.props.isReply}
+                showExpandableButton={!this.props.isReply}
+              />
+              <CardText expandable>
+                {post.text}
+              </CardText>
+              <CardText
+                expandable
+                style={this.style.replies}
+              >
+                {
+                  expandId === post._id ?
+                  <Posts isReply threadId={expandId}/>
+                  : null
+                }
+              </CardText>
+              {
+                this.props.isReply ?
+                  <CardActions>
+                    <RaisedButton label="Accept as Best"/>
+                  </CardActions>
+                  : <CardActions>
+                    <RaisedButton
+                      label="Reply"
+                      onClick={ () => dispatch(expand(post._id, expandId)) }
+                    />
+                  </CardActions>
+                }
+            </Card>
+          }
+        />
+      </div>
+    )
   }
 })
-
 
 function selectState(state) {
   return {
@@ -55,3 +133,55 @@ function selectState(state) {
 // }
 
 export default connect(selectState)(Post)
+
+    // return (
+    //   <div>
+    //     <Badge
+    //       className="badgeContainer"
+    //       badgeContent={'+' + post.votes}
+    //       secondary
+    //       style={this.style.badge}
+    //       children={
+    //         <Paper
+    //           z-index={1}
+    //         >
+    //           <ListItem
+    //             autoGenerateNestedIndicator
+    //             leftAvatar={
+    //               <IconButton
+    //                 tooltip="Accept answer"
+    //                 onClick={this.acceptAnswer}
+    //                 onTapTouch={this.acceptAnswer}
+    //               ><FontIcon
+    //                 hoverColor={Styles.Colors.cyan500}
+    //                 className="material-icons"
+    //               >check</FontIcon>
+    //               </IconButton>
+    //             }
+    //             rightIconButton={
+    //               <IconButton
+    //                 tooltip="Upvote"
+    //                 disabled={post.supporters.indexOf(Meteor.userId()) !== -1}
+    //                 onClick={this.upvote}
+    //                 onTapTouch={this.upvote}
+    //                 hoverColor={Styles.Colors.cyan500}
+    //               ><FontIcon
+    //                 className="material-icons"
+    //               >thumb_up</FontIcon>
+    //               </IconButton>
+    //             }
+    //             primaryText={post.name}
+    //             secondaryText={
+    //               post.text
+    //             }
+    //             secondaryTextLines={2}
+    //             initiallyOpen={false}
+    //             onClick={this.liClickHandler}
+    //             style={this.style.listItem}
+    //             nestedItems={[<div>Hello</div>]}
+    //           />
+    //         </Paper>
+    //       }
+    //     />
+    //   </div>
+    // )
