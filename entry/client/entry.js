@@ -1,3 +1,6 @@
+// import client methods for optimisic loading
+import '../../methods/client';
+
 // Seed and initialize react components
 import './root';
 

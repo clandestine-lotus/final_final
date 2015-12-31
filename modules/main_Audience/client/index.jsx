@@ -29,12 +29,12 @@ let AudienceView = React.createClass({
     const Codes = Code.findOne(this.props.params.code)
     this.props.setIds(Codes)
     if (Meteor.userId()) {
-      addAudience(Codes.showId)
+      addAudience(Codes.showId, Meteor.user())
     }
     this.trackGetDeck = getPresentation(Codes.gid)
     this.trackAudience = trackAudience(Codes.showId)
     this.trackPresenter = trackPresenter(Codes.showId)
-    this.props.initialPresentation(Codes.showId)
+    Actions.initialPresentation(Codes.showId)
     window.addEventListener('beforeunload', () => {
       if (Meteor.userId()) {
         removeViewer()
