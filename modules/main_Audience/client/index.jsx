@@ -34,7 +34,7 @@ let AudienceView = React.createClass({
     this.trackGetDeck = getPresentation(Codes.gid)
     this.trackAudience = trackAudience(Codes.showId)
     this.trackPresenter = trackPresenter(Codes.showId)
-    this.props.audienceStart(Codes.showId)
+    this.props.initialPresentation(Codes.showId)
     window.addEventListener('beforeunload', () => {
       if (Meteor.userId()) {
         removeViewer()
