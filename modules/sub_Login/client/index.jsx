@@ -19,6 +19,6 @@ export default class Login extends Component {
 
   render() {
     // Just render a placeholder container that will be filled in
-    return <span ref="container" />;
+    return <span ref="container" style={{color: 'white'}}/>;
   }
 }

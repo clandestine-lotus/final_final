@@ -1,91 +1,85 @@
 /*
   This is the entry point. Export a react component here.
 */
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import { CircularProgress } from 'material-ui'
 
-import * as PresenterActions from './components/PresenterActions.jsx'
+import * as PresenterActions from 'dux/show'
 
-import { bindActionCreators, createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from './reducers';
-import Slides from 'sub_Slides/client/index'
+import {trackPresenter} from 'dux/show'
+import {getPresentation} from 'dux/deck'
+import {trackAudience} from 'dux/audience'
+
+import Slide from 'sub_Slide'
 import SidebarView from 'sub_SlideSideBar/client/index'
-import Code from 'sub_SharingCode/client/index'
 import AudienceList from 'sub_AudienceList/client/index'
-import Presentations from 'db/Presentations'
+import Chat from 'sub_chat/client/posts'
+
+import Codes from 'db/Codes'
 
 let Presenter = React.createClass({
-  mixins: [ReactMeteorData],
 
   componentDidMount() {
-    window.addEventListener('beforeunload', ()=>{
-      Presentations.update(
-        {_id: this.data.presentationId},
-        {$unset: {code: ''}},
-        (err, result) => {
-          if (err) console.log(err);
-        }
-      );
-    });
+    const Code = Codes.findOne(this.props.params.code)
+    // set ID data in store.show
+    this.props.setIds(Code)
+    // start tracker for audience
+    this.trackAudience = trackAudience(Code.showId)
+    // start tracker that hydrates the store once
+    this.trackGetDeck = getPresentation(Code.gid)
+    // start tracker for presenter
+    this.trackPresenter = trackPresenter(Code.showId)
+    // start tracker that hydrates store
+    PresenterActions.initialPresentation(Codes.showId)
   },
 
-  componentWillUnmount () { 
-    Presentations.update(
-      {_id: this.data.presentationId},
-      {$unset: {code: ''}},
-      (err, result) => {
-        if (err) console.log(err);
-      }
-    );
+  componentWillUnmount() {
+    this.trackAudience.stop()
+    this.trackPresenter.stop()
+    this.trackGetDeck.stop()
   },
 
-  getMeteorData () {
-    var presentation = Presentations.findOne({gid: this.props.presentation});
-    return {
-      presentationId: presentation._id
+  render() {
+    const progress = {
+      position: 'absolute',
+      left: '50%',
+      top: '50%',
+      transform: 'translate(-50%, -50%)',
     }
-  },
 
-  nextSlide () { 
-    Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) + 1);
-  },
+    const {transitionHandler, setIndex} = this.props
 
-  prevSlide () { 
-    Meteor.call('changeIndex', this.props.presentation, this.props.presenter.getIn(['presentation', 'index']) - 1);
-  },
-
-  changeSlide (index, gid) {
-    Meteor.call('changeIndex', gid, index);
-  },
-
-  render: function () {
     return (
-      < div className="container" >
-        {this.props.presentation ? 
+      <div className="container">
+        {
+          this.props.deck.length ?
           <div className="presenterSlide">
             Current Slide
-            < Slides
-              gid={this.props.presentation}
-              index={this.props.presenter.getIn(['presentation', 'index'])} />
-            Next Slide
-            < Slides
-              gid={this.props.presentation}
-              index={this.props.presenter.getIn(['presentation', 'index']) + 1} />
-            <button onClick={this.prevSlide}>prev</button><button onClick={this.nextSlide}>next</button>
-            < Code gid={this.props.presentation} />
-            <SidebarView gid={this.props.presentation} setIndex={this.changeSlide}/>
-          < /div > : <Link to="/selectpresentation">Choose a Slide</Link>}
-      </ div >
-    );
+            <Slide/>
+            <button onClick={() => transitionHandler(-1)}>prev</button><button onClick={() => transitionHandler(1)}>next</button>
+            <AudienceList audience={this.props.audience.toArray()} />
+            <SidebarView deck={this.props.deck} end={this.props.max}/>
+            <Chat presentationId={this.props.params.showId} />
+          </div> :
+          <div>
+            <div>Loading. Please wait.</div><br />
+            <CircularProgress mode="indeterminate" size={1} style={progress} />
+          </div>
+        }
+      </div>
+    )
   }
 })
 
 function mapStateToProps (state) {
   return {
     presenter: state.presenter,
-    presentation: state.previews.list.get('presentation')
+    presentation: state.previews,
+    deck: state.deck,
+    audience: state.audience.get('audience'),
+    max: state.show.numSlides
   }
 }
 

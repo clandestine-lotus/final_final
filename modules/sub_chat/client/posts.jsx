@@ -17,6 +17,9 @@ import Post from './post.jsx'
 let Posts = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
+    if (!this.props.isReply){
+      Meteor.subscribe('posts', this.props.presentationId)
+    }
     // if this a reply, get all the replies with 'threadId' as a prop
     let thread = {presentationId: this.props.presentationId, threadId: this.props.threadId || null}
     return {postsList: PostsDB.find(thread, {sort: {votes: -1}}).fetch() }
@@ -41,7 +44,7 @@ let Posts = React.createClass({
       // add the threadID as a prop for replies to a question thread
       post.threadId = this.props.threadId
     }
-    PostsDB.insert(post)
+    Meteor.call('createPost', post)
     
     input.value = ''
   },
