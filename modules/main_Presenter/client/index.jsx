@@ -25,11 +25,14 @@ let Presenter = React.createClass({
     const Code = Codes.findOne(this.props.params.code)
     // set ID data in store.show
     this.props.setIds(Code)
-    // start tracker for presenter
-    this.trackPresenter = trackPresenter(Code.showId)
+    // start tracker for audience
+    this.trackAudience = trackAudience(Code.showId)
     // start tracker that hydrates the store once
     this.trackGetDeck = getPresentation(Code.gid)
-    this.trackAudience = trackAudience(Code.showId)
+    // start tracker for presenter
+    this.trackPresenter = trackPresenter(Code.showId)
+    // start tracker that hydrates store
+    this.props.initialPresentation(Codes.showId)
   },
 
   componentWillUnmount() {

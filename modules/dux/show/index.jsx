@@ -13,7 +13,7 @@ const SET_CODE = 'SET_CODE'
 const SET_TRANSITION_INDEX = 'SET_TRANSITION_INDEX'
 const SET_MAX_TRANSITION = 'SET_MAX_TRANSITION'
 const SET_PRESENTER_TRANSITION = 'SET_PRESENTER_TRANSITION'
-const INITIALIZE_AUDIENCE = 'INITIALIZE_AUDIENCE'
+const INITIALIZE_PRESENTATION = 'INITIALIZE_PRESENTATION'
 
 
 ////////////////////////
@@ -73,9 +73,9 @@ const setCode = function (code) {
   }
 }
 
-const initializeAudience = function (info) {
+const initializePresentation = function (info) {
   return {
-    type: INITIALIZE_AUDIENCE,
+    type: INITIALIZE_PRESENTATION,
     payload: info
   }
 }
@@ -142,8 +142,8 @@ export function setShow (code) {
   }
 }
 
-// actions to initialize audience state
-export function audienceStart (id) {
+// actions to hydrate store and initialize presentation on first load
+export function initialPresentation (id) {
   return Tracker.autorun(function (computation) {
     let {dispatch} = require('../store.js')
     Meteor.subscribe('show', id)
@@ -157,7 +157,7 @@ export function audienceStart (id) {
         currentIndex: show.presenterIndex,
         currentTransition: show.presenterTransition
       }
-      dispatch(initializeAudience(newState))
+      dispatch(initializePresentation(newState))
       computation.stop()
     }
   })
@@ -298,7 +298,7 @@ export default function (state = initialState, action) {
     return Object.assign({}, state, {maxTransition: action.payload}) 
   case SET_PRESENTER_TRANSITION: 
     return Object.assign({}, state, {presenterTransition: action.payload})
-  case INITIALIZE_AUDIENCE:
+  case INITIALIZE_PRESENTATION:
     return Object.assign({}, state, action.payload)
   default:
     return state;

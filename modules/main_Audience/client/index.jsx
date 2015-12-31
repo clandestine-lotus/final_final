@@ -31,9 +31,9 @@ let AudienceView = React.createClass({
     if (Meteor.userId()) {
       addAudience(Codes.showId)
     }
+    this.trackGetDeck = getPresentation(Codes.gid)
     this.trackAudience = trackAudience(Codes.showId)
     this.trackPresenter = trackPresenter(Codes.showId)
-    this.trackGetDeck = getPresentation(Codes.gid)
     this.props.audienceStart(Codes.showId)
     window.addEventListener('beforeunload', () => {
       if (Meteor.userId()) {

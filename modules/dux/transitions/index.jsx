@@ -1,5 +1,3 @@
-import {List} from 'immutable'
-
 const SET_TRANSITIONS = 'SET_TRANSITIONS'
 
 
