@@ -27,16 +27,10 @@ let Home = React.createClass({
 
   submitCode(event) {
     event.preventDefault();
-
     let code = event.target[0].value;
     // Validate code
     let show = Codes.findOne(code)
-    if (show) {
-      this.props.codeValidation(false);
-      this.props.submitCode(show._id);
-    } else {
-      this.props.codeValidation(true);
-    }
+    this.props.checkCode(show)
   },
 
   render() {
@@ -103,6 +97,8 @@ let Home = React.createClass({
         />
       ]
 
+    let redirect = this.props.home.get('presenter') ? <Link to = {`/present/${this.props.home.get('presentationCode')}`}>Join!</Link> : <Link to = {`/audience/${this.props.home.get('presentationCode')}`}>Join!</Link> 
+
     return (
       <div className="hero" style={hero}>
       <AppBar
@@ -139,10 +135,8 @@ let Home = React.createClass({
               <form onSubmit={this.submitCode} style={{margin: '0'}}>
                 <input placeholder="Enter Code" maxLength={4} style={join} />
               </form>
-
-              {/*TODO: Simplify this double tertiary*/}
-              {this.props.home.get('presentationCode') ? <Link to = {`/audience/${this.props.home.get('presentationCode')}`}>Join!</Link> : null}
               {this.props.home.get('invalidCode') ? 'Please Enter Valid Code' : null}
+              {this.props.home.get('presentationCode') ? redirect : null}
             </div>
           </div>
         </div>
