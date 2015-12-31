@@ -44,7 +44,7 @@ let Posts = React.createClass({
       // add the threadID as a prop for replies to a question thread
       post.threadId = this.props.threadId
     }
-    PostsDB.insert(post)
+    Meteor.call('createPost', post)
     
     input.value = ''
   },

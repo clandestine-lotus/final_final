@@ -22,7 +22,7 @@ Meteor.publish('', function () {
   let d = new Date()
   // TODO: change date to -1
   d.setDate(d.getDate() - 10)
-  return Codes.find({createdAt: {$gt: d}})
+  return Codes.find({createdAt: {$gt: d}}, {sort: {createdAt: -1}, limit: 300})
 })
 
 // AUTOPUBLISHED: user info for logged in user
@@ -59,3 +59,20 @@ Meteor.publish('posts', function (showId) {
 Meteor.publish('audience', function (show) {
   return Audience.find({presentation: show})
 })
+
+//////////////
+// DB RULES //
+//////////////
+
+// checks if user is logged in, and the doc in question is has the same ownerId
+let ownerChange = function (userId, doc) {
+  return (userId && doc.ownerId === userId)
+}
+
+// allow client-side db updates from logged in users
+Posts.allow({
+  insert: ownerChange,
+  update: ownerChange,
+  remove: ownerChange
+})
+
