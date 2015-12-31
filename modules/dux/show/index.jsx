@@ -1,4 +1,4 @@
-import Shows from 'db/shows'
+import Shows from 'db/Shows'
 
 //////////////////
 // ACTION TYPES //
@@ -13,6 +13,7 @@ const SET_CODE = 'SET_CODE'
 const SET_TRANSITION_INDEX = 'SET_TRANSITION_INDEX'
 const SET_MAX_TRANSITION = 'SET_MAX_TRANSITION'
 const SET_PRESENTER_TRANSITION = 'SET_PRESENTER_TRANSITION'
+const INITIALIZE_AUDIENCE = 'INITIALIZE_AUDIENCE'
 
 
 ////////////////////////
@@ -72,6 +73,12 @@ const setCode = function (code) {
   }
 }
 
+const initializeAudience = function (info) {
+  return {
+    type: INITIALIZE_AUDIENCE,
+    payload: info
+  }
+}
 
 // setMax internal function for the tracker to change
 const setMax = function (index, transition, maxTransition) {
@@ -87,6 +94,10 @@ const setMax = function (index, transition, maxTransition) {
         // change current Transition if it matches presenter's current transition
         dispatch(setTransitionIndex(transition))
       }
+    }
+    if(show.maxTransition < maxTransition && show.currentIndex < show.maxIndex) {
+      console.log('should update')
+      dispatch(setMaxTransition(maxTransition))
     }
     if(show.maxIndex < index){
       dispatch(newMax(index))
@@ -125,20 +136,41 @@ export function trackPresenter (id) {
 // EXPORTED ACTIONS //
 //////////////////////
 
-// actions to increment slide
 export function setShow (code) {
   return function (dispatch) {
     dispatch(setCode(code))
   }
 }
 
+// actions to initialize audience state
+export function audienceStart (id) {
+  return Tracker.autorun(function (computation) {
+    let {dispatch} = require('../store.js')
+    Meteor.subscribe('show', id)
+    let show = Shows.findOne({_id: id})
+    if (show){
+      let newState = {
+        maxIndex: show.maxIndex,
+        maxTransition: show.maxTransition,
+        presenterIndex: show.presenterIndex,
+        presenterTransition: show.presenterIndex,
+        currentIndex: show.presenterIndex,
+        currentTransition: show.presenterTransition
+      }
+      dispatch(initializeAudience(newState))
+      computation.stop()
+    }
+  })
+}
+
+// actions to handle next and previous button clicks
 export function transitionHandler (operator) {
   return function(dispatch, getState) {
     const { show, transitions } = getState()
     // increment transition by operator
     let transition = show.currentTransition + operator
     let index = show.currentIndex
-    if (index < 0) {
+    if (transition < 0) {
       // set transition to either length of previous slide transitions or 0
       transition = transitions[index - 1].length ? transitions[index - 1].length : 0
       dispatch(decrement(transition))
@@ -148,8 +180,9 @@ export function transitionHandler (operator) {
       dispatch(setIndex(index, 0, transition))
     }
   }
-} // this code is lame/awesome who wrote this?
+}
 
+// actions to increment slide
 export function increment() {
   return setIndex(null, 1, 0)
 }
@@ -265,6 +298,8 @@ export default function (state = initialState, action) {
     return Object.assign({}, state, {maxTransition: action.payload}) 
   case SET_PRESENTER_TRANSITION: 
     return Object.assign({}, state, {presenterTransition: action.payload})
+  case INITIALIZE_AUDIENCE:
+    return Object.assign({}, state, action.payload)
   default:
     return state;
   }

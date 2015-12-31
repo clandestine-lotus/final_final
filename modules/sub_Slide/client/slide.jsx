@@ -50,7 +50,7 @@ let Slide = React.createClass({
       slideDiv = <div> Loading... </div>
     } else {
       
-      let { currentIndex, slideIndex, maxIndex } = this.props
+      let { currentIndex, slideIndex } = this.props
       
       // use passed in index if present
       if (slideIndex == undefined){ slideIndex = currentIndex }
