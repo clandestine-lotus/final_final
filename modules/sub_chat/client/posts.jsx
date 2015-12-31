@@ -37,38 +37,38 @@ let Posts = React.createClass({
     },
     send: {
       width: '10%',
-      color: Styles.Colors.cyan500
     }
   },
 
   handleSubmit(event){
     event.preventDefault()
-    // let input = TextField.getValue()
-
     let input = this.refs.threadInput
+    let inputText = input.getValue()
 
-    console.log(input);
+    if (inputText) {
+      let post = {
+        // TODO!
+        // add presentationID
+        presentationId: this.props.presentationId,
+        // TODO: should validate this form for non-empty input. Also should escape/clean
+        text: input.getValue(),
+        createdAt: new Date(),
+        ownerId: Meteor.userId(),
+        name: Meteor.user().profile.name,
+        votes: 0,
+        supporters: [],
+        threadId: null,
+      }
+      if (this.props.isReply) {
+        // add the threadID as a prop for replies to a question thread
+        post.threadId = this.props.threadId
+      }
+      Meteor.call('createPost', post)
 
-
-    let post = {
-      // TODO!
-      // add presentationID
-      presentationId: this.props.presentationId,
-      text: input.getValue(),
-      createdAt: new Date(),
-      ownerId: Meteor.userId(),
-      name: Meteor.user().profile.name,
-      votes: 0,
-      supporters: [],
-      threadId: null,
+      input.clearValue()
+    } else {
+      // TODO: Add a snackbar message
     }
-    if (this.props.isReply) {
-      // add the threadID as a prop for replies to a question thread
-      post.threadId = this.props.threadId
-    }
-    Meteor.call('createPost', post)
-
-    input.clearValue()
   },
 
   renderPosts() {
@@ -84,17 +84,11 @@ let Posts = React.createClass({
     // set the text input
     if (Meteor.userId()){
       const labelText = isReply ? 'Reply to this question' : 'Ask a question!'
-      // form = (
-      //   <form className="newThread chat" onSubmit={this.handleSubmit} >
-      //     <input type="text" ref="threadInput" placeholder={ placehldr }/>
-      //   </form>
-      // )
       form = (
         <div>
           <TextField
             ref="threadInput"
             floatingLabelText={labelText}
-            underlineStyle={{borderColor: Styles.Colors.cyan500}}
             onEnterKeyDown={this.handleSubmit}
           />
           <IconButton
@@ -103,6 +97,7 @@ let Posts = React.createClass({
             onTapTouch={this.handleSubmit}
             style={this.styles.send}
           ><FontIcon
+            hoverColor={Styles.Colors.cyan500}
             className="material-icons"
           >send</FontIcon>
           </IconButton>

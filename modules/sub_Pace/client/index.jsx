@@ -64,8 +64,8 @@ const Pace = React.createClass({
           disabled={this.props.pace.get('currentPace') == 1}
           onClick={this.clickHandler.bind(null, 1)}
           onTapTouch={this.clickHandler.bind(null, 1)}
-          hoverColor={Styles.Colors.cyan500}
         ><FontIcon
+          hoverColor={Styles.Colors.cyan500}
           className="material-icons"
         ><h6>hotel</h6></FontIcon>
         </IconButton>
@@ -75,8 +75,8 @@ const Pace = React.createClass({
           disabled={this.props.pace.get('currentPace') == 0.5}
           onClick={this.clickHandler.bind(null, 0.5)}
           onTapTouch={this.clickHandler.bind(null, 0.5)}
-          hoverColor={Styles.Colors.cyan500}
         ><FontIcon
+          hoverColor={Styles.Colors.cyan500}
           className="material-icons"
         ><h6>directions_walk</h6></FontIcon>
         </IconButton>
@@ -86,8 +86,8 @@ const Pace = React.createClass({
           disabled={this.props.pace.get('currentPace') == 0}
           onClick={this.clickHandler.bind(null, 0)}
           onTapTouch={this.clickHandler.bind(null, 0)}
-          hoverColor={Styles.Colors.cyan500}
         ><FontIcon
+          hoverColor={Styles.Colors.cyan500}
           className="material-icons"
         ><h6>directions_run</h6></FontIcon>
         </IconButton>
@@ -97,8 +97,8 @@ const Pace = React.createClass({
           disabled={this.props.pace.get('currentPace') == -0.5}
           onClick={this.clickHandler.bind(null, -0.5)}
           onTapTouch={this.clickHandler.bind(null, -0.5)}
-          hoverColor={Styles.Colors.cyan500}
         ><FontIcon
+          hoverColor={Styles.Colors.cyan500}
           className="material-icons"
         ><h6>directions_bike</h6></FontIcon>
         </IconButton>
@@ -108,8 +108,8 @@ const Pace = React.createClass({
           disabled={this.props.pace.get('currentPace') == -1}
           onClick={this.clickHandler.bind(null, -1)}
           onTapTouch={this.clickHandler.bind(null, -1)}
-          hoverColor={Styles.Colors.cyan500}
         ><FontIcon
+          hoverColor={Styles.Colors.cyan500}
           className="material-icons"
         ><h6>flight</h6></FontIcon>
         </IconButton>
