@@ -8,26 +8,14 @@ import * as paceActions from 'dux/PaceReductions'
 
 import { IconButton, FontIcon, Styles } from 'material-ui'
 
-
-// TODO: fix this to find the right presentation id when the time comes.
-const TODO_PRESENTATION_ID = 1
-// this.props.show
-
 const Pace = React.createClass({
-
-  // // addUser() {
-  // componentDidMount() {
-  //   // this.updateUserCount(1)
-  // },
-
-  // // removeUser() {
-  // componentWillUnmount() {
-  //   // this.updateUserCount(-1)
-  //   this.updatePace(0)
-  // },
+  // removeUser() {
+  componentWillUnmount() {
+    this.updatePace(0)
+  },
 
   // updateUserCount(delta) {
-  //   Meteor.call('updateUserCount', TODO_PRESENTATION_ID, delta, function(err, numChanged, status) {
+  //   Meteor.call('updateUserCount', this.props.show, delta, function(err, numChanged, status) {
   //     if (err) {
   //       console.error('Error updating pace:', err)
   //     } else {
@@ -40,7 +28,7 @@ const Pace = React.createClass({
     const oldPace = this.props.pace.get('currentPace')
     let delta = newPace - oldPace
 
-    Meteor.call('updatePace', TODO_PRESENTATION_ID, delta, function(err, numChanged, status) {
+    Meteor.call('updatePace', this.props.show, delta, function(err, numChanged, status) {
       if (err) {
         console.error('Error updating pace:', err)
       } else {
@@ -122,7 +110,7 @@ const Pace = React.createClass({
 function mapStateToProps(state) {
   return {
     pace: state.pace,
-    show: state.show.showID
+    show: state.show.showId
   }
 }
 

@@ -4,7 +4,9 @@
   Expects "speed" (num between -1 and 1) as a prop.
 */
 
-import React from 'react';
+import React from 'react'
+
+import { trackSpeed } from 'dux/PaceReductions'
 
 import Audience from 'db/Audience'
 
@@ -15,21 +17,26 @@ let speedometerObjects = {}
 
 export const Speedometer = React.createClass({
   propTypes: {
-    speed: React.PropTypes.number
+    speed: React.PropTypes.number,
+    showId: React.PropTypes.string,
+    viewers: React.PropTypes.number
   },
 
   componentDidMount() {
-    speedometerObjects.watch = Audience.find({presId: TODO_PRESENTATION_ID}).observe({
-      changed: function (id, doc) {
-        console.log('speedometer:', doc.rawSpeed, doc.numUsers, doc.rawSpeed / doc.numUsers);
+    // track changes in show speed from DB  
+    this.trackSpeed = trackSpeed(this.props.showId)
+    // speedometerObjects.watch = Audience.find({presId: TODO_PRESENTATION_ID}).observe({
+    //   changed: function (id, doc) {
+    //     console.log('speedometer:', doc.rawSpeed, doc.numUsers, doc.rawSpeed / doc.numUsers);
 
-        // this.props.speed = doc.rawSpeed / doc.numUsers
-      }
-    })
+    //     // this.props.speed = doc.rawSpeed / doc.numUsers
+    //   }
+    // })
   },
 
   componentWillUnmount() {
-    speedometerObjects.watch.stop();
+    this.trackSpeed.stop()
+    // speedometerObjects.watch.stop();
   },
 
   pickColor(speed) {
