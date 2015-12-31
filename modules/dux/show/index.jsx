@@ -203,7 +203,7 @@ export function setIndex(index, operator, transition) {
     }
 
     // if transition is not defined, set to 0
-    if (transition === null){
+    if (!transition){
       transition = 0
     }
 
