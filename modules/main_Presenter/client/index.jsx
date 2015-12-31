@@ -25,11 +25,14 @@ let Presenter = React.createClass({
     const Code = Codes.findOne(this.props.params.code)
     // set ID data in store.show
     this.props.setIds(Code)
-    // start tracker for presenter
-    this.trackPresenter = trackPresenter(Code.showId)
+    // start tracker for audience
+    this.trackAudience = trackAudience(Code.showId)
     // start tracker that hydrates the store once
     this.trackGetDeck = getPresentation(Code.gid)
-    this.trackAudience = trackAudience(Code.showId)
+    // start tracker for presenter
+    this.trackPresenter = trackPresenter(Code.showId)
+    // start tracker that hydrates store
+    this.props.initialPresentation(Codes.showId)
   },
 
   componentWillUnmount() {
@@ -46,7 +49,7 @@ let Presenter = React.createClass({
       transform: 'translate(-50%, -50%)',
     }
 
-    const {increment, decrement, setIndex} = this.props
+    const {transitionHandler, setIndex} = this.props
 
     return (
       <div className="container">
@@ -55,8 +58,7 @@ let Presenter = React.createClass({
           <div className="presenterSlide">
             Current Slide
             <Slide/>
-            <button onClick={decrement}>prev</button><button onClick={increment}>next</button>
-            <SidebarView deck={this.props.deck} end={this.props.max}/>
+            <button onClick={()=> transitionHandler(-1)}>prev</button><button onClick={()=> transitionHandler(1)}>next</button>
             <AudienceList audience={this.props.audience.toArray()} />
             <Chat presentationId={this.props.params.showId} />
           </div> :
@@ -70,6 +72,7 @@ let Presenter = React.createClass({
   }
 })
 
+            // <SidebarView deck={this.props.deck} end={this.props.max}/>
 function mapStateToProps (state) {
   return {
     presenter: state.presenter,

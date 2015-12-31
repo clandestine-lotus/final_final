@@ -1,6 +1,7 @@
 // import {Map, List} from 'immutable'
 import Decks from 'db/Decks'
 import { numSlides } from 'dux/show'
+import { setTransitions } from 'dux/transitions'
 
 const SET_DECK = 'SET_DECK'
 
@@ -17,10 +18,12 @@ export function getPresentation (id) {
     let deck = Decks.findOne({$or: [{_id: id}, {gid: id}]})
     if (deck){
       const {dispatch} = require('../store.js')
+      dispatch(setTransitions(deck.transitions))
       // set the ownerId, showId
       dispatch(setDeck(deck.svgs))
       // set the number of slides in the deck
       dispatch(numSlides(deck.svgs.length))
+      // set the transitions in presentation 
       // kill the autorun
       computation.stop()
     } else {

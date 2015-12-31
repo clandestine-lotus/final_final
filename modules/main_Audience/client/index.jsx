@@ -28,24 +28,31 @@ let AudienceView = React.createClass({
   componentDidMount() {
     const Codes = Code.findOne(this.props.params.code)
     this.props.setIds(Codes)
-    addAudience(Codes.showId)
+    if (Meteor.userId()) {
+      addAudience(Codes.showId)
+    }
+    this.trackGetDeck = getPresentation(Codes.gid)
     this.trackAudience = trackAudience(Codes.showId)
     this.trackPresenter = trackPresenter(Codes.showId)
-    this.trackGetDeck = getPresentation(Codes.gid)
+    this.props.initialPresentation(Codes.showId)
     window.addEventListener('beforeunload', () => {
-      removeViewer()
+      if (Meteor.userId()) {
+        removeViewer()
+      }
     })
   },
 
   componentWillUnmount() {
-    removeViewer()
+    if (Meteor.userId()) {
+      removeViewer()
+    }
     this.trackAudience.stop()
     this.trackPresenter.stop()
     this.trackGetDeck.stop()
   },
 
   render() {
-    const {increment, decrement, setIndex} = this.props
+    const {setIndex, transitionHandler} = this.props
 
     const sidebar = {
       height: '90vh',
@@ -64,7 +71,7 @@ let AudienceView = React.createClass({
         <div id="app" className="container">
           <div className="row">
             <div id="sidebar_container" className="two columns" style={sidebar} >
-              <SidebarView deck={this.props.deck} end={this.props.maxIndex} />
+              <SidebarView deck={this.props.deck} end={this.props.maxIndex + 1} />
             </div>
             <div className="six columns">
               <div className="row">
@@ -74,8 +81,8 @@ let AudienceView = React.createClass({
                     <div id="slide_nav" className="twelve columns" style={{textAlign: "center"}}>
                       <IconButton
                         tooltip="Previous Slide"
-                        onClick={decrement}
-                        onTapTouch={decrement}
+                        onClick={() => transitionHandler(-1) }
+                        onTapTouch={() => transitionHandler(-1) }
                       ><FontIcon
                         className="material-icons"
                         hoverColor={Styles.Colors.cyan500}
@@ -84,8 +91,8 @@ let AudienceView = React.createClass({
                       <Pace />
                       <IconButton
                         tooltip="Next Slide"
-                        onClick={increment}
-                        onTapTouch={increment}
+                        onClick={() => transitionHandler(1)}
+                        onTapTouch={() => transitionHandler(1)}
                       ><FontIcon
                         className="material-icons"
                         hoverColor={Styles.Colors.cyan500}

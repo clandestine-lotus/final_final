@@ -6,6 +6,7 @@ import Home from 'dux/HomeReductions'
 import Audience from 'dux/audience'
 import Chat from 'dux/chat'
 import Pace from 'dux/PaceReductions'
+import Transitions from 'dux/transitions'
 
 // Slide data storage
 import Deck from 'dux/deck'
@@ -23,5 +24,6 @@ export default combineReducers({
   previews: SelectPresentation,
   home: Home,
   audience: Audience,
+  transitions: Transitions,
   pace: Pace,
 })
