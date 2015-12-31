@@ -28,24 +28,18 @@ let AudienceView = React.createClass({
   componentDidMount() {
     const Codes = Code.findOne(this.props.params.code)
     this.props.setIds(Codes)
-    if (Meteor.userId()) {
-      addAudience(Codes.showId, Meteor.user())
-    }
+    addAudience(Codes.showId, Meteor.user())
     this.trackGetDeck = getPresentation(Codes.gid)
     this.trackAudience = trackAudience(Codes.showId)
     this.trackPresenter = trackPresenter(Codes.showId)
     Actions.initialPresentation(Codes.showId)
     window.addEventListener('beforeunload', () => {
-      if (Meteor.userId()) {
-        removeViewer()
-      }
+      removeViewer(Codes.showId, Meteor.userId())
     })
   },
 
   componentWillUnmount() {
-    if (Meteor.userId()) {
-      removeViewer()
-    }
+    removeViewer(this.props.showId, Meteor.userId())
     this.trackAudience.stop()
     this.trackPresenter.stop()
     this.trackGetDeck.stop()
@@ -120,8 +114,10 @@ function mapStateToProps (state) {
   return {
     audience: state.audience.get('audience'),
     maxIndex: state.show.maxIndex,
+    showId: state.show.showId,
     deck: state.deck
   }
 }
+
 
 export default connect(mapStateToProps, Actions)(AudienceView)

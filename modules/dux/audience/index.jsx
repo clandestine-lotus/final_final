@@ -39,17 +39,17 @@ export function trackAudience (show) {
 // EXPORTED ACTIONS //
 //////////////////////
 
-export function addAudience (show) {
+export function addAudience (show, user) {
   // console.log('hello')
-  Meteor.call('addAudience', show, Meteor.user(), function (err, result) {
+  Meteor.call('addAudience', show, user, function (err, result) {
     if (err) {
       throw new Meteor.Error(err, 'problem adding audience member')
     }
-  })
+  }) 
 }
 
-export function removeViewer (){
-  Meteor.call('removeAudience', Meteor.user()._id, function (err, result){
+export function removeViewer (show, user){
+  Meteor.call('removeAudience', show, user, function (err, result){
     if (err) {
       throw new Meteor.Error(err, 'problem removing audience member')
     }

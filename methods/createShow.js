@@ -15,7 +15,7 @@ export default function (gid) {
     maxTransition: 0,
     gid: gid,
     createdAt: new Date(),
-    // code: code,
+    viewers: 0,
   }
 
   // add show to the db
