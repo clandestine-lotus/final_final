@@ -83,8 +83,8 @@ let AudienceView = React.createClass({
                         tooltip="Previous Slide"
                         onClick={() => transitionHandler(-1) }
                         onTapTouch={() => transitionHandler(-1) }
-                        hoverColor={Styles.Colors.cyan500}
                       ><FontIcon
+                        hoverColor={Styles.Colors.cyan500}
                         className="material-icons"
                       ><h6>chevron_left</h6></FontIcon>
                       </IconButton>
@@ -93,8 +93,8 @@ let AudienceView = React.createClass({
                         tooltip="Next Slide"
                         onClick={() => transitionHandler(1)}
                         onTapTouch={() => transitionHandler(1)}
-                        hoverColor={Styles.Colors.cyan500}
                       ><FontIcon
+                        hoverColor={Styles.Colors.cyan500}
                         className="material-icons"
                       ><h6>chevron_right</h6></FontIcon>
                       </IconButton>

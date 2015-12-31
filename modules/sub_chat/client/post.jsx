@@ -12,11 +12,8 @@ import {
 let Post = React.createClass({
   hasVoted: false,
 
-  accepted: false,
-
   style: {
     badge: {
-      // display: 'inline',
       padding: '0',
       width: '100%',
     },
@@ -30,10 +27,6 @@ let Post = React.createClass({
     name: {
       margin: '0',
     }
-  },
-
-  liClickHandler(e) {
-    console.log('li clicked');
   },
 
   acceptAnswer(e) {
@@ -77,8 +70,8 @@ let Post = React.createClass({
                     disabled={post.supporters.indexOf(Meteor.userId()) !== -1}
                     onClick={this.upvote}
                     onTapTouch={this.upvote}
-                    hoverColor={Styles.Colors.cyan500}
                   ><FontIcon
+                    hoverColor={Styles.Colors.cyan500}
                     className="material-icons"
                   >thumb_up</FontIcon>
                   </IconButton>
@@ -106,9 +99,13 @@ let Post = React.createClass({
               {
                 this.props.isReply ?
                   <CardActions>
-                    <RaisedButton label="Accept as Best"/>
+                    <RaisedButton
+                      label="Accept as Best"
+                      onClick={this.acceptAnswer}
+                      onTapTouch={this.acceptAnswer}
+                    />
                   </CardActions>
-                  : <RaisedButton
+                  : <RaisedButton // TODO: hide this button when expanded
                     label="Expand"
                     actAsExpander
                   />
@@ -128,62 +125,4 @@ function selectState(state) {
   }
 }
 
-// function selectReducers(dispatch){
-//   return {
-//     dispatchExpand: id => dispatch(require('dux/chat').expand(id))
-//   }
-// }
-
 export default connect(selectState)(Post)
-
-    // return (
-    //   <div>
-    //     <Badge
-    //       className="badgeContainer"
-    //       badgeContent={'+' + post.votes}
-    //       secondary
-    //       style={this.style.badge}
-    //       children={
-    //         <Paper
-    //           z-index={1}
-    //         >
-    //           <ListItem
-    //             autoGenerateNestedIndicator
-    //             leftAvatar={
-    //               <IconButton
-    //                 tooltip="Accept answer"
-    //                 onClick={this.acceptAnswer}
-    //                 onTapTouch={this.acceptAnswer}
-    //               ><FontIcon
-    //                 hoverColor={Styles.Colors.cyan500}
-    //                 className="material-icons"
-    //               >check</FontIcon>
-    //               </IconButton>
-    //             }
-    //             rightIconButton={
-    //               <IconButton
-    //                 tooltip="Upvote"
-    //                 disabled={post.supporters.indexOf(Meteor.userId()) !== -1}
-    //                 onClick={this.upvote}
-    //                 onTapTouch={this.upvote}
-    //                 hoverColor={Styles.Colors.cyan500}
-    //               ><FontIcon
-    //                 className="material-icons"
-    //               >thumb_up</FontIcon>
-    //               </IconButton>
-    //             }
-    //             primaryText={post.name}
-    //             secondaryText={
-    //               post.text
-    //             }
-    //             secondaryTextLines={2}
-    //             initiallyOpen={false}
-    //             onClick={this.liClickHandler}
-    //             style={this.style.listItem}
-    //             nestedItems={[<div>Hello</div>]}
-    //           />
-    //         </Paper>
-    //       }
-    //     />
-    //   </div>
-    // )
