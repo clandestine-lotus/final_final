@@ -29,6 +29,7 @@ packages
 
 # Meteor stuff
 .meteor/local
+.demeteorized
 
 # npm stuff
 packages
