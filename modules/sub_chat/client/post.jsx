@@ -23,7 +23,7 @@ let Post = React.createClass({
     card: {
       width: '100%'
     },
-    replies: {
+    noTopBotPad: {
       paddingTop: '0',
       paddingBottom: '0',
     },
@@ -85,13 +85,17 @@ let Post = React.createClass({
                 }
                 actAsExpander={!this.props.isReply}
                 showExpandableButton={!this.props.isReply}
+                style={this.style.noTopBotPad}
               />
-              <CardText expandable>
+              <CardText
+                expandable
+                style={this.style.noTopBotPad}
+              >
                 {post.text}
               </CardText>
               <CardText
                 expandable
-                style={this.style.replies}
+                style={this.style.noTopBotPad}
               >
                 {
                   expandId === post._id ?
@@ -104,12 +108,10 @@ let Post = React.createClass({
                   <CardActions>
                     <RaisedButton label="Accept as Best"/>
                   </CardActions>
-                  : <CardActions>
-                    <RaisedButton
-                      label="Reply"
-                      onClick={ () => dispatch(expand(post._id, expandId)) }
-                    />
-                  </CardActions>
+                  : <RaisedButton
+                    label="Expand"
+                    actAsExpander
+                  />
                 }
             </Card>
           }
