@@ -65,8 +65,8 @@ const Pace = React.createClass({
           onClick={this.clickHandler.bind(null, 1)}
           onTapTouch={this.clickHandler.bind(null, 1)}
         ><FontIcon
-          className="material-icons"
           hoverColor={Styles.Colors.cyan500}
+          className="material-icons"
         ><h6>hotel</h6></FontIcon>
         </IconButton>
 
@@ -76,8 +76,8 @@ const Pace = React.createClass({
           onClick={this.clickHandler.bind(null, 0.5)}
           onTapTouch={this.clickHandler.bind(null, 0.5)}
         ><FontIcon
-          className="material-icons"
           hoverColor={Styles.Colors.cyan500}
+          className="material-icons"
         ><h6>directions_walk</h6></FontIcon>
         </IconButton>
 
@@ -87,8 +87,8 @@ const Pace = React.createClass({
           onClick={this.clickHandler.bind(null, 0)}
           onTapTouch={this.clickHandler.bind(null, 0)}
         ><FontIcon
-          className="material-icons"
           hoverColor={Styles.Colors.cyan500}
+          className="material-icons"
         ><h6>directions_run</h6></FontIcon>
         </IconButton>
 
@@ -98,8 +98,8 @@ const Pace = React.createClass({
           onClick={this.clickHandler.bind(null, -0.5)}
           onTapTouch={this.clickHandler.bind(null, -0.5)}
         ><FontIcon
-          className="material-icons"
           hoverColor={Styles.Colors.cyan500}
+          className="material-icons"
         ><h6>directions_bike</h6></FontIcon>
         </IconButton>
 
@@ -109,8 +109,8 @@ const Pace = React.createClass({
           onClick={this.clickHandler.bind(null, -1)}
           onTapTouch={this.clickHandler.bind(null, -1)}
         ><FontIcon
-          className="material-icons"
           hoverColor={Styles.Colors.cyan500}
+          className="material-icons"
         ><h6>flight</h6></FontIcon>
         </IconButton>
       </span>
