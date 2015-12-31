@@ -8,7 +8,7 @@ import './chat.scss'
 // child directives
 import Post from './post.jsx'
 
-import { List, Divider, TextField } from 'material-ui'
+import { List, TextField, IconButton, FontIcon, Styles } from 'material-ui'
 
 
 /**
@@ -31,17 +31,30 @@ let Posts = React.createClass({
   styles: {
     list: {
       maxWidth: '100%',
+    },
+    input: {
+      width: '90%',
+    },
+    send: {
+      width: '10%',
+      color: Styles.Colors.cyan500
     }
   },
 
   handleSubmit(event){
-    event.preventDefault();
-    let input = this.refs.threadInput;
+    event.preventDefault()
+    // let input = TextField.getValue()
+
+    let input = this.refs.threadInput
+
+    console.log(input);
+
+
     let post = {
       // TODO!
       // add presentationID
       presentationId: this.props.presentationId,
-      text: input.value,
+      text: input.getValue(),
       createdAt: new Date(),
       ownerId: Meteor.userId(),
       name: Meteor.user().profile.name,
@@ -55,13 +68,11 @@ let Posts = React.createClass({
     }
     Meteor.call('createPost', post)
 
-    input.value = ''
+    input.clearValue()
   },
 
   renderPosts() {
     return this.data.postsList.map((post) => {
-      console.log(post);
-
       return <Post isReply={this.props.isReply} key={post._id} post={post} />
     })
   },
@@ -72,10 +83,31 @@ let Posts = React.createClass({
 
     // set the text input
     if (Meteor.userId()){
-      const placehldr = isReply ? 'Reply to this question' : 'Ask a question!'
-      form = (<form className="newThread chat" onSubmit={this.handleSubmit} >
-      <input type="text" ref="threadInput" placeholder={ placehldr }/>
-      </form>)
+      const labelText = isReply ? 'Reply to this question' : 'Ask a question!'
+      // form = (
+      //   <form className="newThread chat" onSubmit={this.handleSubmit} >
+      //     <input type="text" ref="threadInput" placeholder={ placehldr }/>
+      //   </form>
+      // )
+      form = (
+        <div>
+          <TextField
+            ref="threadInput"
+            floatingLabelText={labelText}
+            underlineStyle={{borderColor: Styles.Colors.cyan500}}
+            onEnterKeyDown={this.handleSubmit}
+          />
+          <IconButton
+            disabled={false}
+            onClick={this.handleSubmit}
+            onTapTouch={this.handleSubmit}
+            style={this.styles.send}
+          ><FontIcon
+            className="material-icons"
+          >send</FontIcon>
+          </IconButton>
+      </div>
+      )
     } else {
       form = 'Log in to ask Questions'
     }
@@ -84,9 +116,9 @@ let Posts = React.createClass({
       <List
         style={this.styles.list}
       >
-        { isReply ? null : <div>{ form }</div> }
+        { isReply ? null : form }
         {this.renderPosts()}
-        { isReply ? <div>{ form }</div> : null }
+        { isReply ? form : null }
       </List>
     )
   }
