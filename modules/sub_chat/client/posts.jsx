@@ -8,6 +8,8 @@ import './chat.scss'
 // child directives
 import Post from './post.jsx'
 
+import { List, TextField, IconButton, FontIcon, Styles } from 'material-ui'
+
 
 /**
  *   if this is a reply and not top-level,
@@ -16,6 +18,7 @@ import Post from './post.jsx'
 
 let Posts = React.createClass({
   mixins: [ReactMeteorData],
+
   getMeteorData(){
     if (!this.props.isReply){
       Meteor.subscribe('posts', this.props.presentationId)
@@ -25,59 +28,94 @@ let Posts = React.createClass({
     return {postsList: PostsDB.find(thread, {sort: {votes: -1}}).fetch() }
   },
 
-  handleSubmit(event){
-    event.preventDefault();
-    let input = this.refs.threadInput;
-    let post = {
-      // TODO! 
-      // add presentationID
-      presentationId: this.props.presentationId,
-      text: input.value,
-      createdAt: new Date(),
-      ownerId: Meteor.userId(),
-      name: Meteor.user().profile.name,
-      votes: 0,
-      supporters: [],
-      threadId: null,
+  styles: {
+    list: {
+      maxWidth: '100%',
+    },
+    input: {
+      width: '90%',
+    },
+    send: {
+      width: '10%',
     }
-    if (this.props.isReply) {
-      // add the threadID as a prop for replies to a question thread
-      post.threadId = this.props.threadId
-    }
-    Meteor.call('createPost', post)
-    
-    input.value = ''
   },
 
-  renderPosts(){
+  handleSubmit(event){
+    event.preventDefault()
+    let input = this.refs.threadInput
+    let inputText = input.getValue()
+
+    if (inputText) {
+      let post = {
+        // TODO!
+        // add presentationID
+        presentationId: this.props.presentationId,
+        // TODO: should validate this form for non-empty input. Also should escape/clean
+        text: input.getValue(),
+        createdAt: new Date(),
+        ownerId: Meteor.userId(),
+        name: Meteor.user().profile.name,
+        votes: 0,
+        supporters: [],
+        threadId: null,
+      }
+      if (this.props.isReply) {
+        // add the threadID as a prop for replies to a question thread
+        post.threadId = this.props.threadId
+      }
+      Meteor.call('createPost', post)
+
+      input.clearValue()
+    } else {
+      // TODO: Add a snackbar message
+    }
+  },
+
+  renderPosts() {
     return this.data.postsList.map((post) => {
       return <Post isReply={this.props.isReply} key={post._id} post={post} />
     })
   },
 
   render() {
-    let form = null;
-    const { isReply } = this.props;
-    
+    let form = null
+    const { isReply } = this.props
+
     // set the text input
     if (Meteor.userId()){
-      const placehldr = isReply ? 'Reply to this question' : 'Ask a question!'
-      form = (<form className="newThread chat" onSubmit={this.handleSubmit} >
-      <input type="text" ref="threadInput" placeholder={ placehldr }/>        
-      </form>)
+      const labelText = isReply ? 'Reply to this question' : 'Ask a question!'
+      form = (
+        <div>
+          <TextField
+            ref="threadInput"
+            floatingLabelText={labelText}
+            onEnterKeyDown={this.handleSubmit}
+          />
+          <IconButton
+            disabled={false}
+            onClick={this.handleSubmit}
+            onTapTouch={this.handleSubmit}
+            style={this.styles.send}
+          ><FontIcon
+            hoverColor={Styles.Colors.cyan500}
+            className="material-icons"
+          >send</FontIcon>
+          </IconButton>
+      </div>
+      )
     } else {
       form = 'Log in to ask Questions'
     }
 
     return (
-      <div>
-        <ul>
-        { isReply ? '' : <li> { form } </li> }
+      <List
+        style={this.styles.list}
+      >
+        { isReply ? null : form }
         {this.renderPosts()}
-        { isReply ? <li> { form } </li> : '' }
-        </ul>
-      </div>
-      )
+        { isReply ? form : null }
+      </List>
+    )
   }
 })
 
