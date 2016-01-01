@@ -1,19 +1,19 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 // Mongo collections
 import PostsDB from 'db/Posts'
 
-import './chat.scss'
 
 // child directives
 import Post from './post.jsx'
 
-import { List, TextField, IconButton, FontIcon, Styles } from 'material-ui'
+import { Card, CardText, List, TextField, IconButton, FontIcon, Styles } from 'material-ui'
 
 
 /**
  *   if this is a reply and not top-level,
- *   expect props of: isReply true, threadId
+ *   expect props of: isReply === true, threadId
  */
 
 let Posts = React.createClass({
@@ -21,11 +21,13 @@ let Posts = React.createClass({
 
   getMeteorData(){
     if (!this.props.isReply){
-      Meteor.subscribe('posts', this.props.presentationId)
+      Meteor.subscribe('posts', this.props.showId)
     }
     // if this a reply, get all the replies with 'threadId' as a prop
-    let thread = {presentationId: this.props.presentationId, threadId: this.props.threadId || null}
-    return {postsList: PostsDB.find(thread, {sort: {votes: -1}}).fetch() }
+    let thread = {showId: this.props.showId, threadId: this.props.threadId || null}
+    return {
+      postsList: PostsDB.find(thread, {sort: {answered: 1, votes: -1}}).fetch(),
+    }
   },
 
   styles: {
@@ -45,17 +47,16 @@ let Posts = React.createClass({
     let input = this.refs.threadInput
     let inputText = input.getValue()
 
-    if (inputText) {
+    if (inputText.length > 1) {
       let post = {
-        // TODO!
-        // add presentationID
-        presentationId: this.props.presentationId,
-        // TODO: should validate this form for non-empty input. Also should escape/clean
+        showId: this.props.showId,
+        presenterId: this.props.presenterId,
+        slideIndex: this.props.currentIndex,
         text: input.getValue(),
-        createdAt: new Date(),
         ownerId: Meteor.userId(),
         name: Meteor.user().profile.name,
         votes: 0,
+        answered: false,
         supporters: [],
         threadId: null,
       }
@@ -63,9 +64,12 @@ let Posts = React.createClass({
         // add the threadID as a prop for replies to a question thread
         post.threadId = this.props.threadId
       }
-      Meteor.call('createPost', post)
+      Meteor.call('createPost', post, function (err, res) {
+        if (!err){
+          input.clearValue()
+        }
+      })
 
-      input.clearValue()
     } else {
       // TODO: Add a snackbar message
     }
@@ -73,50 +77,53 @@ let Posts = React.createClass({
 
   renderPosts() {
     return this.data.postsList.map((post) => {
-      return <Post isReply={this.props.isReply} key={post._id} post={post} />
+      return <Post isProjector={this.props.isProjector} isReply={this.props.isReply} key={post._id} post={post} />
     })
   },
 
   render() {
     let form = null
-    const { isReply } = this.props
+    const { isReply, isProjector } = this.props
 
     // set the text input
-    if (Meteor.userId()){
+    if (Meteor.userId() && !isProjector){
       const labelText = isReply ? 'Reply to this question' : 'Ask a question!'
       form = (
         <div>
-          <TextField
-            ref="threadInput"
-            floatingLabelText={labelText}
-            onEnterKeyDown={this.handleSubmit}
-          />
-          <IconButton
-            disabled={false}
-            onClick={this.handleSubmit}
-            onTapTouch={this.handleSubmit}
-            style={this.styles.send}
-          ><FontIcon
-            hoverColor={Styles.Colors.cyan500}
-            className="material-icons"
-          >send</FontIcon>
-          </IconButton>
-      </div>
+          <Card>
+            <CardText style={{'text-align': 'center'}}>
+              <TextField ref="threadInput" floatingLabelText={labelText} onEnterKeyDown={this.handleSubmit} />
+              <IconButton disabled={false} onClick={this.handleSubmit} onTapTouch={this.handleSubmit} style={this.styles.send} >
+                <FontIcon hoverColor={Styles.Colors.cyan500} className="material-icons">
+                  send
+                </FontIcon>
+              </IconButton>
+            </CardText>
+          </Card>
+        </div>
       )
     } else {
-      form = 'Log in to ask Questions'
+      form = isReply || isProjector ? '' : 'Log in to ask Questions'
     }
 
     return (
       <List
         style={this.styles.list}
       >
-        { isReply ? null : form }
         {this.renderPosts()}
-        { isReply ? form : null }
+        { form }
       </List>
     )
   }
 })
 
-export default Posts
+
+function mapStateToProps (state) {
+  return {
+    showId: state.show.showId,
+    presenterId: state.show.ownerId,
+    currentIndex: state.show.currentIndex,
+  }
+}
+
+export default connect(mapStateToProps)(Posts)
