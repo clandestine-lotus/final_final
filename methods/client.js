@@ -2,6 +2,8 @@
 import votes from './votes'
 import ownerShowUpdate from './ownerShowUpdate'
 import createPost from './createPost'
+import questionAnswered from './questionAnswered'
+
 
 // add to combined Meteor.methods, which will have the var name.
 Meteor.methods({
@@ -14,4 +16,5 @@ Meteor.methods({
   // updateUserCount,
   votes,
   createPost,
+  questionAnswered,
 })

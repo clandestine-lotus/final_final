@@ -52,7 +52,7 @@ Meteor.publish('show', function (id) {
 
 // get Q&A from a show
 Meteor.publish('posts', function (showId) {
-  return Posts.find({presentationId: showId})
+  return Posts.find({showId: showId})
 })
 
 // get Audience list
