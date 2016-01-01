@@ -8,8 +8,6 @@ import Select from 'main_Select/routes'
 import Presenter from 'main_Presenter/client/routes'
 import Projector from 'main_Projector/client/routes'
 import Audience from 'main_Audience/client/routes'
-// Delete chat when you're finished
-import chat from 'sub_chat/client/routes'
 
 // define root component
 const App = React.createClass({
@@ -30,8 +28,6 @@ const rootRoute = {
       Presenter,
       Projector,
       Audience,
-      // Delete chat when you're finished
-      chat
     ]
   }]
 }
