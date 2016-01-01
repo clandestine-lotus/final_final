@@ -7,7 +7,7 @@ import { CircularProgress } from 'material-ui'
 
 import * as PresenterActions from 'dux/show'
 
-import {trackPresenter} from 'dux/show'
+import {trackPresenter, trackQuestionMode} from 'dux/show'
 import {getPresentation} from 'dux/deck'
 import {trackAudience} from 'dux/audience'
 
@@ -17,11 +17,13 @@ import SidebarView from 'sub_SlideSideBar/client'
 import AudienceList from 'sub_AudienceList/client'
 import Chat from 'sub_chat/client/posts'
 import Speedometer from 'sub_Speedometer/client'
+import Grid from 'sub_chat/client/grid'
 
 // TODO: subscribe for db access instead
 import Codes from 'db/Codes'
 
-import { IconButton, FontIcon, Styles } from 'material-ui'
+import { Dialog, IconButton, FontIcon, Styles } from 'material-ui'
+import { Colors } from 'material-ui/styles'
 
 let Presenter = React.createClass({
 
@@ -29,6 +31,8 @@ let Presenter = React.createClass({
     const Code = Codes.findOne(this.props.params.code)
     // set ID data in store.show
     this.props.setIds(Code)
+    // start tracker for questionMode 
+    this.trackQuestionMode = trackQuestionMode(Code.showId)
     // start tracker for audience
     this.trackAudience = trackAudience(Code.showId)
     // start tracker that hydrates the store once
@@ -36,12 +40,13 @@ let Presenter = React.createClass({
     // start tracker for presenter
     this.trackPresenter = trackPresenter(Code.showId)
     // start tracker that hydrates store
-    PresenterActions.initialPresentation(Codes.showId)
+    PresenterActions.initialPresentation(Code.showId)
   },
 
   componentWillUnmount() {
     this.trackAudience.stop()
     this.trackPresenter.stop()
+    this.trackQuestionMode.stop()
     this.trackGetDeck.stop()
   },
 
@@ -63,8 +68,13 @@ let Presenter = React.createClass({
   },
 
   startQA(e) {
-    e.stopPropagation()
+    if(e) {
+      e.stopPropagation()
+    }
     // TODO: add "isQA" to db, and subscribe qa mode to it
+    // this.props.setQuestions()
+    let state = !this.props.show.question
+    Meteor.call('questionMode', this.props.show.showId, state)
   },
 
   openProjector(e) {
@@ -74,9 +84,27 @@ let Presenter = React.createClass({
 
   renderPresenter() {
     const { transitionHandler } = this.props
+    
+    let primaryColor = Colors.cyan500
+
+    const dialogTitle = {
+      backgroundColor: primaryColor,
+      color: 'white',
+      padding: '1rem 2rem',
+      fontWeight: '300',
+    }
+
 
     return (
       <div>
+        <Dialog
+          title={<h3 style={dialogTitle}>Questions</h3>}
+          autoDetectWindowHeight
+          autoScrollBodyContent
+          open={this.props.show.question}
+          onRequestClose={this.startQA}
+        >< Grid/>
+        </Dialog>
         <div className="row">
           <div className="six columns">
             <div className="row">
@@ -116,7 +144,7 @@ let Presenter = React.createClass({
                 </IconButton>
 
                 <IconButton
-                  tooltip="Start Q&A"
+                  tooltip="Q&A"
                   onClick={this.startQA}
                   onTapTouch={this.startQA}
                 ><FontIcon
