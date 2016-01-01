@@ -6,38 +6,10 @@
 
 import React from 'react'
 
-import { trackSpeed } from 'dux/PaceReductions'
-
-import Audience from 'db/Audience'
-
-// TODO: fix this to find the right presentation id when the time comes.
-const TODO_PRESENTATION_ID = 1
-
-let speedometerObjects = {}
-
-export const Speedometer = React.createClass({
-  propTypes: {
-    speed: React.PropTypes.number,
-    showId: React.PropTypes.string,
-    viewers: React.PropTypes.number
-  },
-
-  componentDidMount() {
-    // track changes in show speed from DB  
-    this.trackSpeed = trackSpeed(this.props.showId)
-    // speedometerObjects.watch = Audience.find({presId: TODO_PRESENTATION_ID}).observe({
-    //   changed: function (id, doc) {
-    //     console.log('speedometer:', doc.rawSpeed, doc.numUsers, doc.rawSpeed / doc.numUsers);
-
-    //     // this.props.speed = doc.rawSpeed / doc.numUsers
-    //   }
-    // })
-  },
-
-  componentWillUnmount() {
-    this.trackSpeed.stop()
-    // speedometerObjects.watch.stop();
-  },
+let Speedometer = React.createClass({
+  // propTypes: {
+  //   speed: React.PropTypes.number
+  // },
 
   pickColor(speed) {
     const distFromCenter = Math.floor(Math.abs(speed) * 10);
@@ -58,9 +30,9 @@ export const Speedometer = React.createClass({
     return distColors[distFromCenter] || '#58D058';
   },
 
+    // === undefined ? 0 : this.props.speed;
   render() {
-    const speed = this.props.speed === undefined ? 0 : this.props.speed;
-
+    const speed = this.props.speed 
 
     const color = this.pickColor(speed);
 
@@ -82,7 +54,7 @@ export const Speedometer = React.createClass({
       borderRight: '5px solid transparent',
       borderBottom: '7px solid ' + color,
       position: 'absolute',
-      left: (speed + 1) * 50 + '%',
+      left: (-speed + 1) * 50 + '%',
       transform: 'translateX(-50%)'
     }
 
@@ -96,3 +68,4 @@ export const Speedometer = React.createClass({
   }
 })
 
+export default Speedometer

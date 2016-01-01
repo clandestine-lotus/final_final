@@ -22,7 +22,7 @@ export function addAudience (show, user) {
     }
   })
   // if user signed in, add to audience database
-  if(user._id){
+  if(user){
     let profile = {
       presentation: show,
       user: user._id,

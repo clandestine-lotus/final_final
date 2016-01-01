@@ -9,23 +9,9 @@ import * as paceActions from 'dux/PaceReductions'
 import { IconButton, FontIcon, Styles } from 'material-ui'
 
 const Pace = React.createClass({
-  // removeUser() {
-  componentWillUnmount() {
-    this.updatePace(0)
-  },
-
-  // updateUserCount(delta) {
-  //   Meteor.call('updateUserCount', this.props.show, delta, function(err, numChanged, status) {
-  //     if (err) {
-  //       console.error('Error updating pace:', err)
-  //     } else {
-  //       console.log('updateUserCount', err, numChanged, status)
-  //     }
-  //   })
-  // },
 
   updatePace(newPace) {
-    const oldPace = this.props.pace.get('currentPace')
+    let oldPace = this.props.pace.get('currentPace')
     let delta = newPace - oldPace
 
     Meteor.call('updatePace', this.props.show, delta, function(err, numChanged, status) {
@@ -41,7 +27,7 @@ const Pace = React.createClass({
     const newPace = value
 
     this.updatePace(newPace)
-
+    
     this.props.votePace(newPace)
   },
 

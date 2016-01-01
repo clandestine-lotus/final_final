@@ -1,3 +1,5 @@
+import Shows from 'db/Shows'
+
 /*
 ==============================
     Constant definitions
@@ -11,6 +13,12 @@ const SET_SPEED = 'SET_SPEED'
     Actions
 ==============================
  */
+const showSpeed = function (speed) {
+  return {
+    type: SET_SPEED,
+    payload: speed
+  }
+}
 
 export const votePace = function(paceDelta) {
   return {
@@ -19,22 +27,22 @@ export const votePace = function(paceDelta) {
   }
 }
 
-const showSpeed = function (speed) {
-  return {
-    type: SET_SPEED,
-    payload: speed
-  }
-}
 
-export const trackSpeed = function(showId) {
-  return Tracker.autorun(function () {
-    let {dispatch} = require('../store.js')
+export function trackSpeed (showId) {
+  return Tracker.autorun(function (computation) {
     Meteor.subscribe('show', showId)
     let show = Shows.findOne({_id: showId})
     if (show){
+      let {dispatch} = require('./store.js')
       let rawSpeed = show.rawSpeed || 0
       let speed = rawSpeed / show.viewers
-      dispatch('showSpeed', speed)
+      if(speed > 1){
+        speed = 1
+      }
+      if(speed < -1){
+        speed = -1
+      }
+      dispatch(showSpeed(speed))
     } 
   })
 }

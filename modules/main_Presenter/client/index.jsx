@@ -10,6 +10,8 @@ import * as PresenterActions from 'dux/show'
 import {trackPresenter, trackQuestionMode} from 'dux/show'
 import {getPresentation} from 'dux/deck'
 import {trackAudience} from 'dux/audience'
+import { trackSpeed } from 'dux/PaceReductions.jsx'
+
 
 import Nav from 'sub_AppNav'
 import Slide from 'sub_Slide'
@@ -18,6 +20,7 @@ import AudienceList from 'sub_AudienceList/client'
 import Chat from 'sub_chat/client/posts'
 import Speedometer from 'sub_Speedometer/client'
 import Grid from 'sub_chat/client/grid'
+// import Speedometer from 'sub_Speedometer/client/index'
 
 // TODO: subscribe for db access instead
 import Codes from 'db/Codes'
@@ -33,6 +36,8 @@ let Presenter = React.createClass({
     this.props.setIds(Code)
     // start tracker for questionMode 
     this.trackQuestionMode = trackQuestionMode(Code.showId)
+    // start tracker for show pace
+    this.trackSpeed = trackSpeed(Code.showId)
     // start tracker for audience
     this.trackAudience = trackAudience(Code.showId)
     // start tracker that hydrates the store once
@@ -48,6 +53,7 @@ let Presenter = React.createClass({
     this.trackPresenter.stop()
     this.trackQuestionMode.stop()
     this.trackGetDeck.stop()
+    this.trackSpeed.stop()
   },
 
   styles: {
@@ -154,6 +160,7 @@ let Presenter = React.createClass({
                 </IconButton>
               </div>
             </div>
+            <Speedometer speed={this.props.show.speed} />
             <div className="row">
               Next
               <Slide slideIndex={this.props.show.presenterIndex + 1} />
@@ -207,6 +214,7 @@ function mapStateToProps (state) {
     deck: state.deck,
     audience: state.audience.get('audience'),
     show: state.show
+
   }
 }
 
