@@ -46,7 +46,7 @@ let AudienceView = React.createClass({
   },
 
   render() {
-    const {setIndex, transitionHandler} = this.props
+    const {transitionHandler, increment, decrement} = this.props
 
     const sidebar = {
       height: '90vh',
@@ -75,8 +75,8 @@ let AudienceView = React.createClass({
                     <div id="slide_nav" className="twelve columns" style={{textAlign: "center"}}>
                       <IconButton
                         tooltip="Previous Slide"
-                        onClick={() => transitionHandler(-1) }
-                        onTapTouch={() => transitionHandler(-1) }
+                        onClick={() => decrement() }
+                        onTapTouch={() => decrement() }
                       ><FontIcon
                         hoverColor={Styles.Colors.cyan500}
                         className="material-icons"
@@ -85,8 +85,8 @@ let AudienceView = React.createClass({
                       <Pace />
                       <IconButton
                         tooltip="Next Slide"
-                        onClick={() => transitionHandler(1)}
-                        onTapTouch={() => transitionHandler(1)}
+                        onClick={() => increment()}
+                        onTapTouch={() => increment()}
                       ><FontIcon
                         hoverColor={Styles.Colors.cyan500}
                         className="material-icons"

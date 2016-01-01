@@ -166,14 +166,14 @@ export function initialPresentation (id) {
 // actions to handle next and previous button clicks
 export function transitionHandler (operator) {
   return function(dispatch, getState) {
-    const { show, transitions } = getState()
+    let { show, transitions } = getState()
     // increment transition by operator
     let transition = show.currentTransition + operator
     let index = show.currentIndex
     if (transition < 0) {
       // set transition to either length of previous slide transitions or 0
       transition = transitions[index - 1].length ? transitions[index - 1].length : 0
-      dispatch(decrement(transition))
+      dispatch(decrement())
     } else if (transition > transitions[index].length) {
       dispatch(increment())
     } else {
@@ -188,14 +188,18 @@ export function increment() {
 }
 
 // actions to decrement slide
-export function decrement(transitionIndex) {
-  return setIndex(null, -1, transitionIndex)
+export function decrement() {
+  return function (dispatch, getState) {
+    let { show, transitions } = getState()
+    let transition = transitions[show.currentIndex - 1].length ? transitions[show.currentIndex - 1].length : 0
+    dispatch(setIndex(null, -1, transition))
+  } 
 }
 
 // action to manually set index using the first arg
 export function setIndex(index, operator, transition) {
   return function(dispatch, getState){
-    const { show } = getState()
+    const { show, transitions } = getState()
 
     // get the desired index if !index
     if (index === null){
@@ -231,6 +235,11 @@ export function setIndex(index, operator, transition) {
       return '';
     // if ok, change store index without touching db
     } else {
+      if(show.maxIndex === index) {
+        transition = show.maxTransition
+      } else if (transitions[index].length) {
+        transition = transitions[index].length
+      }
       // increment currentIndex using set
       dispatch(setSlide(index))
       // increment currentTransition
