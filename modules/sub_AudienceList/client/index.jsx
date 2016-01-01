@@ -11,9 +11,8 @@ export default React.createClass({
   render() {
     return (
       <List
-        primaryText="Audience Members"
+        subheader="Audience Members"
       >
-        Audience Members
         {this.props.audience.map((user, i) => {
           return <AudienceCard user={user} key={i} />
         })}
