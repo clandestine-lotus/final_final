@@ -16,6 +16,7 @@ export default function (gid) {
     gid: gid,
     createdAt: new Date(),
     viewers: 0,
+    rawSpeed: 0
   }
 
   // add show to the db

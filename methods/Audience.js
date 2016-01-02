@@ -3,10 +3,9 @@ import Shows from 'db/Shows'
 
   // method for changing the index of the slide for the current presentation
 export function updatePace (id, delta) {
-  //subscribe to show with ID 
 
-  Audience.update(
-    {presId: id},
+  Shows.update(
+    {_id: id},
     {
       $setOnInsert: {rawSpeed: delta},
       $inc: {rawSpeed: delta},
@@ -23,7 +22,7 @@ export function addAudience (show, user) {
     }
   })
   // if user signed in, add to audience database
-  if(user._id){
+  if(user){
     let profile = {
       presentation: show,
       user: user._id,

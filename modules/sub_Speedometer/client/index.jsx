@@ -4,33 +4,12 @@
   Expects "speed" (num between -1 and 1) as a prop.
 */
 
-import React from 'react';
+import React from 'react'
 
-import Audience from 'db/Audience'
-
-// TODO: fix this to find the right presentation id when the time comes.
-const TODO_PRESENTATION_ID = 1
-
-let speedometerObjects = {}
-
-export const Speedometer = React.createClass({
-  propTypes: {
-    speed: React.PropTypes.number
-  },
-
-  componentDidMount() {
-    speedometerObjects.watch = Audience.find({presId: TODO_PRESENTATION_ID}).observe({
-      changed: function (id, doc) {
-        console.log('speedometer:', doc.rawSpeed, doc.numUsers, doc.rawSpeed / doc.numUsers);
-
-        // this.props.speed = doc.rawSpeed / doc.numUsers
-      }
-    })
-  },
-
-  componentWillUnmount() {
-    speedometerObjects.watch.stop();
-  },
+let Speedometer = React.createClass({
+  // propTypes: {
+  //   speed: React.PropTypes.number
+  // },
 
   pickColor(speed) {
     const distFromCenter = Math.floor(Math.abs(speed) * 10);
@@ -52,8 +31,7 @@ export const Speedometer = React.createClass({
   },
 
   render() {
-    const speed = this.props.speed === undefined ? 0 : this.props.speed;
-
+    const speed = typeof this.props.speed === 'number' ? this.props.speed : 0
 
     const color = this.pickColor(speed);
 
@@ -75,7 +53,7 @@ export const Speedometer = React.createClass({
       borderRight: '5px solid transparent',
       borderBottom: '7px solid ' + color,
       position: 'absolute',
-      left: (speed + 1) * 50 + '%',
+      left: (-speed + 1) * 50 + '%',
       transform: 'translateX(-50%)'
     }
 
@@ -89,3 +67,4 @@ export const Speedometer = React.createClass({
   }
 })
 
+export default Speedometer
