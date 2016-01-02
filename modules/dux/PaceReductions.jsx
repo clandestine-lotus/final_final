@@ -34,8 +34,9 @@ export function trackSpeed (showId) {
     let show = Shows.findOne({_id: showId})
     if (show){
       let {dispatch} = require('./store.js')
+      console.log(show.rawSpeed)
       let rawSpeed = show.rawSpeed || 0
-      let speed = rawSpeed / show.viewers
+      let speed = rawSpeed / show.viewers || 0
       if(speed > 1){
         speed = 1
       }

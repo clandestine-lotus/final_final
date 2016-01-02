@@ -30,9 +30,8 @@ let Speedometer = React.createClass({
     return distColors[distFromCenter] || '#58D058';
   },
 
-    // === undefined ? 0 : this.props.speed;
   render() {
-    const speed = this.props.speed 
+    const speed = typeof this.props.speed === 'number' ? this.props.speed : 0
 
     const color = this.pickColor(speed);
 

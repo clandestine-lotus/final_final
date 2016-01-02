@@ -18,9 +18,8 @@ import Slide from 'sub_Slide'
 import SidebarView from 'sub_SlideSideBar/client'
 import AudienceList from 'sub_AudienceList/client'
 import Chat from 'sub_chat/client/posts'
-import Speedometer from 'sub_Speedometer/client'
 import Grid from 'sub_chat/client/grid'
-// import Speedometer from 'sub_Speedometer/client/index'
+import Speedometer from 'sub_Speedometer/client/index'
 
 // TODO: subscribe for db access instead
 import Codes from 'db/Codes'
@@ -160,7 +159,7 @@ let Presenter = React.createClass({
                 </IconButton>
               </div>
             </div>
-            <Speedometer speed={this.props.show.speed} />
+            <Speedometer speed={this.props.speed} />
             <div className="row">
               Next
               <Slide slideIndex={this.props.show.presenterIndex + 1} />
@@ -213,7 +212,8 @@ function mapStateToProps (state) {
     presentation: state.previews,
     deck: state.deck,
     audience: state.audience.get('audience'),
-    show: state.show
+    show: state.show,
+    speed: state.pace.get('speed')
 
   }
 }
