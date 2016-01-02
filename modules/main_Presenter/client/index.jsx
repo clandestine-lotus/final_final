@@ -106,9 +106,10 @@ let Presenter = React.createClass({
           title={<h3 style={dialogTitle}>Questions</h3>}
           autoDetectWindowHeight
           autoScrollBodyContent
+          repositionOnUpdate
           open={this.props.show.question}
           onRequestClose={this.startQA}
-        ><Grid />
+        ><Chat />
         </Dialog>
         <div className="row">
           <div className="six columns">

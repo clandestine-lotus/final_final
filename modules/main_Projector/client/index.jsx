@@ -46,7 +46,7 @@ let Projector = React.createClass({
         <Dialog
           title={<h3 style={dialogTitle}>Questions</h3>}
           autoDetectWindowHeight
-          autoScrollBodyContent
+          repositionOnUpdate
           open={this.props.show.question}
         ><Grid isProjector/>
         </Dialog>
