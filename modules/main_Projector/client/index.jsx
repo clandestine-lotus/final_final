@@ -5,6 +5,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import {trackPresenter, trackQuestionMode, setIds} from 'dux/show'
+import {trackAudience} from 'dux/audience'
 import {getPresentation} from 'dux/deck'
 
 import Slide from 'sub_Slide'
@@ -12,7 +13,7 @@ import Grid from 'sub_chat/client/grid'
 
 import Codes from 'db/Codes'
 
-import { Dialog } from 'material-ui'
+import { Dialog, Paper } from 'material-ui'
 import { Colors } from 'material-ui/styles'
 
 let Projector = React.createClass({
@@ -23,12 +24,14 @@ let Projector = React.createClass({
     this.trackPresenter = trackPresenter(Code.showId)
     this.trackGetDeck = getPresentation(Code.gid)
     this.trackQuestionMode = trackQuestionMode(Code.showId)
+    this.trackAudience = trackAudience(Code.showId)
   },
 
   componentWillUnmount() {
     this.trackPresenter.stop()
     this.trackGetDeck.stop()
     this.trackQuestionMode.stop()
+    this.trackAudience.stop()
   },
 
   render() {
@@ -45,12 +48,19 @@ let Projector = React.createClass({
       <div>
         <Dialog
           title={<h3 style={dialogTitle}>Questions</h3>}
+          titleStyle={{marginBottom: '0'}}
           autoDetectWindowHeight
-          repositionOnUpdate
+          autoScrollBodyContent
           open={this.props.show.question}
         ><Grid isProjector/>
         </Dialog>
-        <div>Presentation Code: {this.props.params.code}</div>
+
+        <div style={{textAlign: 'center', backgroundColor: 'rgba(255, 255, 255, 0.75)', position: 'fixed', top: '0', width: '100%'}}>
+          <span style={{float: 'left'}}>Presentation Code: {this.props.params.code}</span>
+          <span>{window.location.origin}</span>
+          <span style={{float: 'right'}}>Viewers: {this.props.viewers}</span>
+        </div>
+
         <Slide />
       </div>
     )
@@ -59,7 +69,8 @@ let Projector = React.createClass({
 
 function mapStateToProps (state) {
   return {
-    show: state.show
+    show: state.show,
+    viewers: state.audience.get('viewers')
   }
 }
 

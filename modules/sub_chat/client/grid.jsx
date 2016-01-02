@@ -25,7 +25,7 @@ const style = {
 let Grid = React.createClass({
   mixins: [ReactMeteorData],
 
-  componentDidUpdate (){
+  componentDidUpdate() {
     window.dispatchEvent(new Event('resize'))
   },
 
@@ -46,22 +46,22 @@ let Grid = React.createClass({
       return (
         <GridTile>
           <Post style={style.fullsize} isProjector={this.props.isProjector} key={post._id} post={post} />
-        </GridTile>)
+        </GridTile>
+      )
     })
   },
 
   render() {
-
-
     return (
-      <GridList
-        cols={4}
-        padding={12}
-        cellHeight={180}
-        style={{width: '100%', height: '100%', overflowY: 'auto'}}
-      >
-        {this.renderPosts()}
-      </GridList>
+      <div>
+        {
+          this.data.postsList.map((post) => {
+            return (
+              <Post isProjector={this.props.isProjector} key={post._id} post={post} />
+            )
+          })
+        }
+      </div>
     )
   }
 })

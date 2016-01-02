@@ -50,14 +50,14 @@ let Post = React.createClass({
     const isPoster = post.ownerId === Meteor.userId()
 
     const Upvote = (<FlatButton
-      label="UPVOTE" 
+      label="UPVOTE"
       primary
       disabled={!Meteor.userId() || isPoster || post.supporters.indexOf(Meteor.userId()) !== -1}
       onClick={this.upvote}
       onTapTouch={this.upvote}
     />)
 
-    const Answer = (!isReply && !isPresenter ? <a></a> : 
+    const Answer = (!isReply && !isPresenter ? <a></a> :
       <FlatButton
         secondary
         label={'Bazinga!'}
@@ -65,12 +65,12 @@ let Post = React.createClass({
         onClick={this.acceptAnswer}
         onTapTouch={this.acceptAnswer}
       />)
-      
+
 
     const PostText = (<h6 style={style.noBotPad}><b>{post.text}</b></h6>)
     const PostName = (<sup style={style.noTopBotPad}><i>-{post.name} </i></sup>)
-    const AnswerText = (post.answer && post.answer.length > 1 ? 
-      <h7>A: {post.answer} </h7> 
+    const AnswerText = (post.answer && post.answer.length > 1 ?
+      <h7>A: {post.answer} </h7>
       : <b></b>)
 
     return (
@@ -98,13 +98,13 @@ let Post = React.createClass({
 
             </CardText>
 
-            {!post.answered ? '' : 
+            {!post.answered ? '' :
               <CardText style={style.noBotPad} actAsExpander={!this.props.isReply} >
-                {AnswerText} 
+                {AnswerText}
               </CardText>
             }
 
-            {this.props.isProjector ? '' :          
+            {this.props.isProjector ? '' :
               <CardActions>
                 {Upvote}{Answer}
               </CardActions>
