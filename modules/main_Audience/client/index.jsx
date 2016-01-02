@@ -3,16 +3,14 @@
 */
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 
 import {trackPresenter} from 'dux/show'
 import {trackAudience, addAudience, removeViewer} from 'dux/audience'
 import {getPresentation} from 'dux/deck'
 
-// import SidebarView from 'sub_SlideSideBar/client'
 import Code from 'db/Codes'
 
-import Login from 'sub_Login/client'
+import Nav from 'sub_AppNav'
 import Slide from 'sub_Slide'
 import Chat from 'sub_chat/client/posts'
 import AudienceList from 'sub_AudienceList/client'
@@ -21,7 +19,7 @@ import Pace from 'sub_Pace/client'
 
 import * as Actions from 'dux/show'
 
-import { AppBar, RaisedButton, IconButton, FontIcon, Styles } from 'material-ui'
+import { IconButton, FontIcon, Styles } from 'material-ui'
 
 let AudienceView = React.createClass({
 
@@ -46,7 +44,7 @@ let AudienceView = React.createClass({
   },
 
   render() {
-    const {transitionHandler, increment, decrement} = this.props
+    const {increment, decrement} = this.props
 
     const sidebar = {
       height: '90vh',
@@ -55,12 +53,7 @@ let AudienceView = React.createClass({
 
     return (
         <div>
-        <AppBar
-          id="nav"
-          title={<Link to="/" id="logo">final_final</Link>}
-          iconElementRight={<Login />}
-          showMenuIconButton={false}
-        />
+        <Nav />
 
         <div id="app" className="container">
           <div className="row">

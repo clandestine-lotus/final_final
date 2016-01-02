@@ -33,7 +33,7 @@ let Presenter = React.createClass({
     const Code = Codes.findOne(this.props.params.code)
     // set ID data in store.show
     this.props.setIds(Code)
-    // start tracker for questionMode 
+    // start tracker for questionMode
     this.trackQuestionMode = trackQuestionMode(Code.showId)
     // start tracker for show pace
     this.trackSpeed = trackSpeed(Code.showId)
@@ -73,7 +73,7 @@ let Presenter = React.createClass({
   },
 
   startQA(e) {
-    if(e) {
+    if (e) {
       e.stopPropagation()
     }
     // TODO: add "isQA" to db, and subscribe qa mode to it
@@ -89,7 +89,7 @@ let Presenter = React.createClass({
 
   renderPresenter() {
     const { transitionHandler } = this.props
-    
+
     let primaryColor = Colors.cyan500
 
     const dialogTitle = {
@@ -106,9 +106,10 @@ let Presenter = React.createClass({
           title={<h3 style={dialogTitle}>Questions</h3>}
           autoDetectWindowHeight
           autoScrollBodyContent
+          repositionOnUpdate
           open={this.props.show.question}
           onRequestClose={this.startQA}
-        >< Grid/>
+        ><Chat />
         </Dialog>
         <div className="row">
           <div className="six columns">

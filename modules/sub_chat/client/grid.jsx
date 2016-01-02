@@ -25,7 +25,12 @@ const style = {
 let Grid = React.createClass({
   mixins: [ReactMeteorData],
 
-  getMeteorData(){
+  componentDidMount() {
+    // Fixes dialog's padding-top not being set correctly
+    window.dispatchEvent(new Event('resize'))
+  },
+
+  getMeteorData() {
     if (!this.props.isReply){
       Meteor.subscribe('posts', this.props.showId)
     }
