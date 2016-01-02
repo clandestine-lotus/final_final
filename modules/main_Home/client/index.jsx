@@ -81,7 +81,15 @@ let Home = React.createClass({
         />
       ]
 
-    let redirect = this.props.home.get('presenter') ? <Link to = {`/present/${this.props.home.get('presentationCode')}`}>Join!</Link> : <Link to = {`/audience/${this.props.home.get('presentationCode')}`}>Join!</Link>
+    let redirectLink = this.props.home.get('presenter') ? "/present/" + this.props.home.get('presentationCode') : "/audience/" + this.props.home.get('presentationCode')
+    let redirect = (
+      <FlatButton 
+        linkButton
+        href={redirectLink}
+        label="Join Presentation"
+        disabled={!!!this.props.home.get('presentationCode')}
+      />
+    )
 
     return (
       <div className="hero" style={hero}>
@@ -113,7 +121,7 @@ let Home = React.createClass({
                 <input placeholder="Enter Code" maxLength={4} style={join} />
               </form>
               {this.props.home.get('invalidCode') ? 'Please Enter Valid Code' : null}
-              {this.props.home.get('presentationCode') ? redirect : null}
+              {this.props.home.get('presentationCode') && !this.props.home.get('invalidCode') ? redirect : null}
             </div>
           </div>
         </div>
