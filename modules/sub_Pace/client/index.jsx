@@ -27,7 +27,7 @@ const Pace = React.createClass({
     const newPace = value
 
     this.updatePace(newPace)
-    
+
     this.props.votePace(newPace)
   },
 
@@ -54,17 +54,6 @@ const Pace = React.createClass({
           hoverColor={Styles.Colors.cyan500}
           className="material-icons"
         ><h6>directions_walk</h6></FontIcon>
-        </IconButton>
-
-        <IconButton
-          tooltip="Just Right"
-          disabled={this.props.pace.get('currentPace') == 0}
-          onClick={this.clickHandler.bind(null, 0)}
-          onTapTouch={this.clickHandler.bind(null, 0)}
-        ><FontIcon
-          hoverColor={Styles.Colors.cyan500}
-          className="material-icons"
-        ><h6>directions_run</h6></FontIcon>
         </IconButton>
 
         <IconButton
