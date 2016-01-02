@@ -17,7 +17,7 @@ import { Colors } from 'material-ui/styles'
 
 let Projector = React.createClass({
 
-  componentDidMount () {
+  componentDidMount() {
     const Code = Codes.findOne(this.props.params.code)
     this.props.setIds(Code)
     this.trackPresenter = trackPresenter(Code.showId)
@@ -25,14 +25,13 @@ let Projector = React.createClass({
     this.trackQuestionMode = trackQuestionMode(Code.showId)
   },
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.trackPresenter.stop()
     this.trackGetDeck.stop()
     this.trackQuestionMode.stop()
   },
 
-  render: function () {
-
+  render() {
     let primaryColor = Colors.cyan500
 
     const dialogTitle = {
@@ -49,7 +48,7 @@ let Projector = React.createClass({
           autoDetectWindowHeight
           autoScrollBodyContent
           open={this.props.show.question}
-        >< Grid/>
+        ><Grid isProjector/>
         </Dialog>
         <div>Presentation Code: {this.props.params.code}</div>
         <Slide />

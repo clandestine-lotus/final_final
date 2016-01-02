@@ -3,15 +3,15 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import Login from 'sub_Login/client'
 import * as homeActions from 'dux/HomeReductions'
-// Use getMeteorData() instead
-import Codes from 'db/Codes'
-import Select from 'main_Select/client'
 
-import { RaisedButton, FlatButton, AppBar, Dialog } from 'material-ui'
+import Select from 'main_Select/client'
+import Nav from 'sub_AppNav'
+
+import Codes from 'db/Codes'
+
 // TODO: Use theming to pick colors
-import { Colors } from 'material-ui/styles'
+import { RaisedButton, FlatButton, Dialog, Styles } from 'material-ui'
 
 let Home = React.createClass({
   componentWillMount() {
@@ -34,25 +34,12 @@ let Home = React.createClass({
   },
 
   render() {
-    let primaryColor = Colors.cyan500
+    let primaryColor = Styles.Colors.cyan500
 
     let hero = {
       height: '100vh',
       backgroundImage: 'url("http://www.yafta.org/wp-content/uploads/2015/08/yafta_public-speaking_05-3600x2400.jpg")',
       backgroundSize: 'cover',
-    }
-
-    const title = {
-      color: 'white',
-      fontSize: '4rem',
-      fontWeight: '300',
-      textDecoration: 'none',
-    }
-
-    const nav = {
-      position: 'fixed',
-      top: '0',
-      left: '0',
     }
 
     const dialogTitle = {
@@ -85,27 +72,20 @@ let Home = React.createClass({
       margin: '0',
     })
 
-    const actions = 
+    const actions =
       [
-        <FlatButton 
+        <FlatButton
           containerElement={<Link to = {`/present/${this.props.showCode}`}/>}
           label="Start Presentation"
           disabled={!!!this.props.showCode}
         />
       ]
 
-    let redirect = this.props.home.get('presenter') ? <Link to = {`/present/${this.props.home.get('presentationCode')}`}>Join!</Link> : <Link to = {`/audience/${this.props.home.get('presentationCode')}`}>Join!</Link> 
+    let redirect = this.props.home.get('presenter') ? <Link to = {`/present/${this.props.home.get('presentationCode')}`}>Join!</Link> : <Link to = {`/audience/${this.props.home.get('presentationCode')}`}>Join!</Link>
 
     return (
       <div className="hero" style={hero}>
-      <AppBar
-        title={<Link to="/" style={title}>final_final</Link>}
-        iconElementRight={<Login />}
-        showMenuIconButton={false}
-        style={nav}
-      />
-
-
+        <Nav />
         <div>
           <Dialog
             title={<h3 style={dialogTitle}>Select a Presentation</h3>}
@@ -144,7 +124,7 @@ let Home = React.createClass({
 
 function mapStateToProps(state) {
   return {
-    home: state.home, 
+    home: state.home,
     showCode: state.show.showCode
   }
 }
