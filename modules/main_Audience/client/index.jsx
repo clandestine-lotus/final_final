@@ -65,7 +65,7 @@ let AudienceView = React.createClass({
                 <div className="presenterSlide">
                   <Slide />
                   <div className="row">
-                    <div id="slide_nav" className="twelve columns" style={{textAlign: "center"}}>
+                    <div id="slide_nav" className="twelve columns" style={{textAlign: 'center'}}>
                       <IconButton
                         tooltip="Previous Slide"
                         onClick={() => decrement() }
@@ -89,11 +89,11 @@ let AudienceView = React.createClass({
                   </div>
                 </div>
               </div>
-              <div className="row">
+              <div className="row" style={{height: 'calc(35vh - 64px)', overflowY: 'scroll'}}>
                 <Chat presentationId={this.props.params.showId} />
               </div>
             </div>
-            <div className="four columns">
+            <div className="four columns" style={{height: 'calc(100vh - 64px)', overflowY: 'scroll'}}>
               <AudienceList audience={this.props.audience.toArray()} />
             </div>
           </div>
