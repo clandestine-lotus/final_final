@@ -4,35 +4,64 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import {trackPresenter, setIds} from 'dux/show'
+import {trackPresenter, trackQuestionMode, setIds} from 'dux/show'
 import {getPresentation} from 'dux/deck'
 
 import Slide from 'sub_Slide'
+import Grid from 'sub_chat/client/grid'
 
 import Codes from 'db/Codes'
 
+import { Dialog } from 'material-ui'
+import { Colors } from 'material-ui/styles'
 
 let Projector = React.createClass({
 
-  componentDidMount () { 
+  componentDidMount () {
     const Code = Codes.findOne(this.props.params.code)
     this.props.setIds(Code)
     this.trackPresenter = trackPresenter(Code.showId)
     this.trackGetDeck = getPresentation(Code.gid)
+    this.trackQuestionMode = trackQuestionMode(Code.showId)
   },
 
-  componentWillUnmount () { 
+  componentWillUnmount () {
     this.trackPresenter.stop()
     this.trackGetDeck.stop()
+    this.trackQuestionMode.stop()
   },
 
   render: function () {
-    return <Slide />
+
+    let primaryColor = Colors.cyan500
+
+    const dialogTitle = {
+      backgroundColor: primaryColor,
+      color: 'white',
+      padding: '1rem 2rem',
+      fontWeight: '300',
+    }
+
+    return (
+      <div>
+        <Dialog
+          title={<h3 style={dialogTitle}>Questions</h3>}
+          autoDetectWindowHeight
+          autoScrollBodyContent
+          open={this.props.show.question}
+        >< Grid/>
+        </Dialog>
+        <div>Presentation Code: {this.props.params.code}</div>
+        <Slide />
+      </div>
+    )
   }
 })
 
 function mapStateToProps (state) {
-  return {}
+  return {
+    show: state.show
+  }
 }
 
 

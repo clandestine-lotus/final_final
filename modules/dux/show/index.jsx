@@ -14,7 +14,7 @@ const SET_TRANSITION_INDEX = 'SET_TRANSITION_INDEX'
 const SET_MAX_TRANSITION = 'SET_MAX_TRANSITION'
 const SET_PRESENTER_TRANSITION = 'SET_PRESENTER_TRANSITION'
 const INITIALIZE_PRESENTATION = 'INITIALIZE_PRESENTATION'
-
+const SET_QA = 'SET_QA'
 
 ////////////////////////
 // INTERNAL FUNCTIONS //
@@ -80,6 +80,13 @@ const initializePresentation = function (info) {
   }
 }
 
+const setQA = function (state) {
+  return { 
+    type: SET_QA,
+    payload: state
+  }
+}
+
 // setMax internal function for the tracker to change
 const setMax = function (index, transition, maxTransition) {
   return function (dispatch, getState) {
@@ -117,7 +124,7 @@ export function trackPresenter (id) {
     Meteor.subscribe('show', id)
     let show = Shows.findOne({_id: id})
     if (show){
-      const {dispatch} = require('../store.js')
+      let {dispatch} = require('../store.js')
       dispatch(setMax(show.presenterIndex, show.presenterTransition, show.maxTransition))
       // set presenter transition and index via DB updates
       dispatch(setPresenter(show.presenterIndex))
@@ -132,9 +139,20 @@ export function trackPresenter (id) {
   })
 }
 
+export function trackQuestionMode (showId) {
+  return Tracker.autorun(function (computation) {
+    Meteor.subscribe('show', showId)
+    let show = Shows.findOne({_id: showId})
+    if (show) {
+      let { dispatch } = require('../store.js')
+      dispatch(setQA(show.questionMode))
+    }
+  })
+}
 //////////////////////
 // EXPORTED ACTIONS //
 //////////////////////
+
 
 export function setShow (code) {
   return function (dispatch) {
@@ -280,7 +298,8 @@ const initialState = {
   ownerId: null,
   showId: null,
   gid: null,
-  showCode: null
+  showCode: null,
+  question: false
 }
 
 //////////////
@@ -309,6 +328,8 @@ export default function (state = initialState, action) {
     return Object.assign({}, state, {presenterTransition: action.payload})
   case INITIALIZE_PRESENTATION:
     return Object.assign({}, state, action.payload)
+  case SET_QA:
+    return Object.assign({}, state, {question: action.payload})
   default:
     return state;
   }

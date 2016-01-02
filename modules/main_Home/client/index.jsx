@@ -91,9 +91,6 @@ let Home = React.createClass({
           containerElement={<Link to = {`/present/${this.props.showCode}`}/>}
           label="Start Presentation"
           disabled={!!!this.props.showCode}
-        />,
-        <FlatButton
-          label="Cancel" 
         />
       ]
 
