@@ -31,7 +31,11 @@ let Post = React.createClass({
   // fires when answer has been selected
   acceptAnswer(e) {
     e.stopPropagation()
-    Meteor.call('questionAnswered', this.props.post.threadId, this.props.post.text)
+    if(this.props.post.threadId) {
+      Meteor.call('questionAnswered', this.props.post.threadId, this.props.post.text)
+    } else {
+      Meteor.call('questionAnswered', this.props.post._id, null)
+    }
   },
 
   upvote() {
@@ -53,7 +57,7 @@ let Post = React.createClass({
       onTapTouch={this.upvote}
     />)
 
-    const Answer = (!isReply ? <a></a> : 
+    const Answer = (!isReply && !isPresenter ? <a></a> : 
       <FlatButton
         secondary
         label={'Bazinga!'}
