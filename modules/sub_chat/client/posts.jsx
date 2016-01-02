@@ -91,7 +91,7 @@ let Posts = React.createClass({
       form = (
         <div>
           <Card>
-            <CardText style={{'text-align': 'center'}}>
+            <CardText style={{textAlign: 'center'}}>
               <TextField ref="threadInput" floatingLabelText={labelText} onEnterKeyDown={this.handleSubmit} />
               <IconButton disabled={false} onClick={this.handleSubmit} onTapTouch={this.handleSubmit} style={this.styles.send} >
                 <FontIcon hoverColor={Styles.Colors.cyan500} className="material-icons">

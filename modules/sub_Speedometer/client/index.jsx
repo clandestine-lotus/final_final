@@ -59,9 +59,11 @@ let Speedometer = React.createClass({
 
     return (
       <div>
+        <p style={{float: 'left', clear: 'left', color: 'dimgrey', fontSize: '.75em'}}>Too slow</p>
+        <p style={{float: 'right', clear: 'right', color: 'dimgrey', fontSize: '.75em'}}>Too fast</p>
         <div style={sliderStyle}>
           <div style={cursorStyle}></div>
-        </div><br />
+        </div>
       </div>
     )
   }

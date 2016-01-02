@@ -18,14 +18,12 @@ import Slide from 'sub_Slide'
 import SidebarView from 'sub_SlideSideBar/client'
 import AudienceList from 'sub_AudienceList/client'
 import Chat from 'sub_chat/client/posts'
-import Grid from 'sub_chat/client/grid'
 import Speedometer from 'sub_Speedometer/client/index'
 
 // TODO: subscribe for db access instead
 import Codes from 'db/Codes'
 
 import { Dialog, IconButton, FontIcon, Styles } from 'material-ui'
-import { Colors } from 'material-ui/styles'
 
 let Presenter = React.createClass({
 
@@ -56,6 +54,18 @@ let Presenter = React.createClass({
   },
 
   styles: {
+    primaryColor: Styles.Colors.cyan500,
+    chatbox: {
+      display: 'block',
+      maxHeight: '58vh',
+      overflowY: 'scroll'
+    },
+    dialogTitle: {
+      backgroundColor: Styles.Colors.cyan500,
+      color: 'white',
+      padding: '1rem 2rem',
+      fontWeight: '300',
+    },
     progress: {
       position: 'absolute',
       left: '50%',
@@ -76,8 +86,6 @@ let Presenter = React.createClass({
     if (e) {
       e.stopPropagation()
     }
-    // TODO: add "isQA" to db, and subscribe qa mode to it
-    // this.props.setQuestions()
     let state = !this.props.show.question
     Meteor.call('questionMode', this.props.show.showId, state)
   },
@@ -90,23 +98,13 @@ let Presenter = React.createClass({
   renderPresenter() {
     const { transitionHandler } = this.props
 
-    let primaryColor = Colors.cyan500
-
-    const dialogTitle = {
-      backgroundColor: primaryColor,
-      color: 'white',
-      padding: '1rem 2rem',
-      fontWeight: '300',
-    }
-
-
     return (
       <div>
         <Dialog
-          title={<h3 style={dialogTitle}>Questions</h3>}
+          title={<h3 style={this.styles.dialogTitle}>Questions</h3>}
+          titleStyle={{marginBottom: '0'}}
           autoDetectWindowHeight
           autoScrollBodyContent
-          repositionOnUpdate
           open={this.props.show.question}
           onRequestClose={this.startQA}
         ><Chat />
@@ -115,7 +113,7 @@ let Presenter = React.createClass({
           <div className="six columns">
             <div className="row">
               <div className="ten columns" ref="curSlidePanel">
-                Current
+                Current Slide
                 <Slide />
               </div>
               <div className="two columns" style={this.styles.presenterNav}>
@@ -124,7 +122,7 @@ let Presenter = React.createClass({
                   onClick={() => transitionHandler(-1)}
                   onTapTouch={() => transitionHandler(-1)}
                 ><FontIcon
-                  hoverColor={Styles.Colors.cyan500}
+                  hoverColor={this.styles.primaryColor}
                   className="material-icons"
                 >chevron_left</FontIcon>
                 </IconButton>
@@ -134,7 +132,7 @@ let Presenter = React.createClass({
                   onClick={() => transitionHandler(1)}
                   onTapTouch={() => transitionHandler(1)}
                 ><FontIcon
-                  hoverColor={Styles.Colors.cyan500}
+                  hoverColor={this.styles.primaryColor}
                   className="material-icons"
                 >chevron_right</FontIcon>
                 </IconButton>
@@ -144,7 +142,7 @@ let Presenter = React.createClass({
                   onClick={this.openProjector}
                   onTapTouch={this.openProjector}
                 ><FontIcon
-                  hoverColor={Styles.Colors.cyan500}
+                  hoverColor={this.styles.primaryColor}
                   className="material-icons"
                 >input</FontIcon>
                 </IconButton>
@@ -154,7 +152,7 @@ let Presenter = React.createClass({
                   onClick={this.startQA}
                   onTapTouch={this.startQA}
                 ><FontIcon
-                  hoverColor={Styles.Colors.cyan500}
+                  hoverColor={this.styles.primaryColor}
                   className="material-icons"
                 >help</FontIcon>
                 </IconButton>
@@ -162,20 +160,20 @@ let Presenter = React.createClass({
             </div>
             <Speedometer speed={this.props.speed} />
             <div className="row">
-              Next
+              <div style={{clear: 'both'}}>Next Slide</div>
               <Slide slideIndex={this.props.show.presenterIndex + 1} />
             </div>
           </div>
           <div className="six columns">
             <div className="row">
               <div id="sidebar_container" className="two columns" style={this.styles.sidebar} >
-                <SidebarView deck={this.props.deck} end={this.props.show.numSlides}/>
+                <SidebarView deck={this.props.deck} end={this.props.show.numSlides} />
               </div>
-              <div className="ten columns">
+              <div className="ten columns" style={this.styles.sidebar}>
                 <AudienceList audience={this.props.audience.toArray()} />
               </div>
             </div>
-            <div className="row">
+            <div className="row" style={this.styles.chatbox}>
               <Chat presentationId={this.props.params.showId} />
             </div>
           </div>
