@@ -65,7 +65,9 @@ let Post = React.createClass({
 
     const PostText = (<h6 style={style.noBotPad}><b>{post.text}</b></h6>)
     const PostName = (<sup style={style.noTopBotPad}><i>-{post.name} </i></sup>)
-    const AnswerText = (<h7> {post.answer} </h7>)
+    const AnswerText = (post.answer && post.answer.length > 1 ? 
+      <h7>A: {post.answer} </h7> 
+      : <b></b>)
 
     return (
       <div>
@@ -94,7 +96,7 @@ let Post = React.createClass({
 
             {!post.answered ? '' : 
               <CardText style={style.noBotPad} actAsExpander={!this.props.isReply} >
-                A: {AnswerText} 
+                {AnswerText} 
               </CardText>
             }
 

@@ -41,12 +41,13 @@ let Grid = React.createClass({
     return this.data.postsList.map((post) => {
       return (
         <GridTile>
-          <Post style={style.fullsize} isProjector key={post._id} post={post} />
+          <Post style={style.fullsize} isProjector={this.props.isProjector} key={post._id} post={post} />
         </GridTile>)
     })
   },
 
   render() {
+
 
     return (
       <GridList
