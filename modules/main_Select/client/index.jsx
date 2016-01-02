@@ -26,8 +26,6 @@ let SelectPresentation = React.createClass({
 
   renderDecks(){
     return this.props.previews.map((deck) => {
-      console.log(deck);
-
       return <Deck key={deck.gid} deck={deck} key={deck.gid} />
     })
   },
