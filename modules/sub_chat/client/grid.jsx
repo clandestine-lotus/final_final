@@ -25,8 +25,7 @@ const style = {
 let Grid = React.createClass({
   mixins: [ReactMeteorData],
 
-  componentDidMount() {
-    // Fixes dialog's padding-top not being set correctly
+  componentDidUpdate (){
     window.dispatchEvent(new Event('resize'))
   },
 
